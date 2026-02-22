@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import authRouter from './routes/auth';
+import masterRouter from './routes/master/index';
 
 dotenv.config();
 
@@ -23,6 +24,7 @@ app.use(cors({
 app.use(express.json());
 
 app.use('/api/auth', authRouter);
+app.use('/api/master', masterRouter);
 
 app.get('/api/health', (_req, res) => {
     res.json({
