@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Direktori Karyawan - BEBANG SDM</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1173d4",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101922",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 antialiased selection:bg-primary/20">
+<div class="flex min-h-screen w-full flex-row overflow-hidden">
+<!-- Sidebar -->
+<aside class="w-72 bg-white dark:bg-[#1A2632] border-r border-slate-200 dark:border-slate-800 flex flex-col shrink-0 transition-all duration-300">
+<!-- Brand -->
+<div class="h-20 flex items-center gap-3 px-6 border-b border-slate-100 dark:border-slate-800">
+<div class="size-10 rounded-lg bg-gradient-to-br from-primary to-blue-600 flex items-center justify-center text-white shrink-0 shadow-sm">
+<span class="material-symbols-outlined text-[24px]">dataset</span>
+</div>
+<div class="flex flex-col">
+<h1 class="text-base font-bold text-slate-900 dark:text-white leading-tight tracking-tight">BEBANG SDM</h1>
+<p class="text-xs text-slate-500 dark:text-slate-400 font-medium">Site Taliabu</p>
+</div>
+</div>
+<!-- Navigation -->
+<nav class="flex-1 overflow-y-auto px-4 py-6 flex flex-col gap-1 custom-scrollbar">
+<!-- Section: Main -->
+<div class="mb-2 px-2 text-xs font-semibold text-slate-400 uppercase tracking-wider">Main</div>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800/50 hover:text-primary transition-colors group" href="#">
+<span class="material-symbols-outlined text-[20px] text-slate-400 group-hover:text-primary transition-colors">dashboard</span>
+<span class="text-sm font-medium">Dashboard</span>
+</a>
+<!-- Section: Master Data -->
+<div class="mt-6 mb-2 px-2 text-xs font-semibold text-slate-400 uppercase tracking-wider">Data Center</div>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800/50 hover:text-primary transition-colors group" href="#">
+<span class="material-symbols-outlined text-[20px] text-slate-400 group-hover:text-primary transition-colors">folder_open</span>
+<span class="text-sm font-medium">Master Data</span>
+<span class="material-symbols-outlined text-[16px] ml-auto text-slate-300">expand_more</span>
+</a>
+<!-- Section: Manajemen Karyawan (Active) -->
+<div class="mt-6 mb-2 px-2 text-xs font-semibold text-slate-400 uppercase tracking-wider">Manajemen Karyawan</div>
+<div class="flex flex-col gap-1">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary/10 text-primary font-medium" href="#">
+<span class="material-symbols-outlined text-[20px] fill-1">group</span>
+<span class="text-sm">Karyawan</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800/50 hover:text-primary transition-colors group" href="#">
+<span class="material-symbols-outlined text-[20px] text-slate-400 group-hover:text-primary transition-colors">contract</span>
+<span class="text-sm font-medium">Kontrak Kerja</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800/50 hover:text-primary transition-colors group" href="#">
+<span class="material-symbols-outlined text-[20px] text-slate-400 group-hover:text-primary transition-colors">badge</span>
+<span class="text-sm font-medium">Mutasi &amp; Promosi</span>
+</a>
+</div>
+<!-- Section: Laporan -->
+<div class="mt-6 mb-2 px-2 text-xs font-semibold text-slate-400 uppercase tracking-wider">Laporan</div>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800/50 hover:text-primary transition-colors group" href="#">
+<span class="material-symbols-outlined text-[20px] text-slate-400 group-hover:text-primary transition-colors">analytics</span>
+<span class="text-sm font-medium">Laporan Bulanan</span>
+</a>
+</nav>
+<!-- User Profile (Bottom) -->
+<div class="p-4 border-t border-slate-100 dark:border-slate-800">
+<div class="flex items-center gap-3 p-2 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800/50 cursor-pointer transition-colors">
+<div class="size-9 rounded-full bg-slate-200 bg-center bg-cover" data-alt="User profile picture of HR Manager" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDOyjivnvVb5yy797Z-1tL2Pwvqd20jmoXZRK10dWfZInNB0-FAnewGbVac5MW9ynmSJmHTQtU9we9YPqF8o83i2WDoqNpNqtAGYLuzyD9HO9TlcjZLRYZAa1L6rrS1A6vDQpkH7sH7p6K6Xd1pfL1RL1uCh1EMzxqZkyDZChjeM-kvObdYTBuLI2YQR-YsBoaXMTM5IFX0Pf4d5f5YC750pS6iOHrRofnJWEPgozm8p3bkrkMKK5UEtswM17kyEDE5eK-EwQtqNqY');"></div>
+<div class="flex flex-col overflow-hidden">
+<p class="text-sm font-semibold text-slate-900 dark:text-white truncate">Aditya Pratama</p>
+<p class="text-xs text-slate-500 truncate">HR Manager</p>
+</div>
+<span class="material-symbols-outlined ml-auto text-slate-400 text-[20px]">settings</span>
+</div>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 flex flex-col h-screen overflow-hidden relative">
+<!-- Top Header -->
+<header class="h-20 bg-white dark:bg-[#1A2632] border-b border-slate-200 dark:border-slate-800 flex items-center justify-between px-8 shrink-0 z-10">
+<div class="flex flex-col">
+<nav class="flex items-center gap-2 text-xs text-slate-500 mb-1">
+<a class="hover:text-primary transition-colors" href="#">Home</a>
+<span class="material-symbols-outlined text-[10px]">chevron_right</span>
+<a class="hover:text-primary transition-colors" href="#">Manajemen Karyawan</a>
+<span class="material-symbols-outlined text-[10px]">chevron_right</span>
+<span class="text-slate-900 dark:text-white font-medium">Direktori</span>
+</nav>
+<h2 class="text-xl font-bold text-slate-900 dark:text-white tracking-tight">Direktori Karyawan</h2>
+</div>
+<div class="flex items-center gap-4">
+<button class="relative p-2 text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[24px]">notifications</span>
+<span class="absolute top-2 right-2 size-2 bg-red-500 rounded-full border-2 border-white dark:border-[#1A2632]"></span>
+</button>
+<div class="h-8 w-[1px] bg-slate-200 dark:bg-slate-700 mx-1"></div>
+<button class="flex items-center gap-2 bg-primary hover:bg-primary/90 text-white px-5 py-2.5 rounded-lg text-sm font-medium transition-all shadow-sm hover:shadow-md active:scale-[0.98]">
+<span class="material-symbols-outlined text-[20px]">add</span>
+                        Tambah Karyawan
+                    </button>
+</div>
+</header>
+<!-- Scrollable Content Area -->
+<div class="flex-1 overflow-y-auto p-8 custom-scrollbar">
+<!-- Filters & Actions -->
+<div class="mb-6 flex flex-col sm:flex-row gap-4 justify-between items-start sm:items-center bg-white dark:bg-[#1A2632] p-4 rounded-xl shadow-sm border border-slate-200 dark:border-slate-800">
+<!-- Search -->
+<div class="relative w-full sm:w-96 group">
+<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+<span class="material-symbols-outlined text-slate-400 group-focus-within:text-primary transition-colors">search</span>
+</div>
+<input class="block w-full pl-10 pr-3 py-2.5 border border-slate-200 dark:border-slate-700 rounded-lg leading-5 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary sm:text-sm transition-shadow" placeholder="Cari nama karyawan atau NIK..." type="text"/>
+</div>
+<!-- Filter Dropdowns -->
+<div class="flex items-center gap-3 w-full sm:w-auto overflow-x-auto pb-1 sm:pb-0">
+<div class="relative">
+<select class="appearance-none bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 py-2.5 pl-4 pr-10 rounded-lg text-sm focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary cursor-pointer">
+<option>Semua Divisi</option>
+<option>Operasional</option>
+<option>HR &amp; GA</option>
+<option>Finance</option>
+</select>
+<div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-slate-500">
+<span class="material-symbols-outlined text-[20px]">expand_more</span>
+</div>
+</div>
+<div class="relative">
+<select class="appearance-none bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 py-2.5 pl-4 pr-10 rounded-lg text-sm focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary cursor-pointer">
+<option>Status: Semua</option>
+<option>Aktif</option>
+<option>Cuti</option>
+<option>Resign</option>
+</select>
+<div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-slate-500">
+<span class="material-symbols-outlined text-[20px]">expand_more</span>
+</div>
+</div>
+<button class="flex items-center justify-center p-2.5 border border-slate-200 dark:border-slate-700 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-primary transition-colors" title="Export Data">
+<span class="material-symbols-outlined text-[20px]">download</span>
+</button>
+</div>
+</div>
+<!-- Data Table -->
+<div class="bg-white dark:bg-[#1A2632] rounded-xl shadow-sm border border-slate-200 dark:border-slate-800 overflow-hidden">
+<div class="overflow-x-auto">
+<table class="min-w-full divide-y divide-slate-200 dark:divide-slate-700">
+<thead class="bg-slate-50 dark:bg-slate-800/50">
+<tr>
+<th class="px-6 py-4 text-left text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider w-[140px]" scope="col">
+                                        NIK
+                                    </th>
+<th class="px-6 py-4 text-left text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider w-[80px]" scope="col">
+                                        Foto
+                                    </th>
+<th class="px-6 py-4 text-left text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider" scope="col">
+                                        Nama Lengkap
+                                    </th>
+<th class="px-6 py-4 text-left text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider" scope="col">
+                                        Divisi
+                                    </th>
+<th class="px-6 py-4 text-left text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider" scope="col">
+                                        Departemen
+                                    </th>
+<th class="px-6 py-4 text-left text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider" scope="col">
+                                        Posisi Jabatan
+                                    </th>
+<th class="px-6 py-4 text-left text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider" scope="col">
+                                        Status
+                                    </th>
+<th class="relative px-6 py-4" scope="col">
+<span class="sr-only">Actions</span>
+</th>
+</tr>
+</thead>
+<tbody class="bg-white dark:bg-[#1A2632] divide-y divide-slate-200 dark:divide-slate-700">
+<!-- Row 1 -->
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors group">
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="flex items-center gap-2">
+<span class="text-sm font-medium text-slate-900 dark:text-white font-mono">2023001</span>
+<button class="text-slate-400 hover:text-primary transition-colors" title="Lihat QR Code">
+<span class="material-symbols-outlined text-[18px]">qr_code_2</span>
+</button>
+</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="size-10 rounded-full bg-slate-200 bg-center bg-cover border border-slate-100 dark:border-slate-700" data-alt="Portrait of Budi Santoso" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAQPMxtPmv2nKV0ls6PsqofJvY27l1JqyNb9nRYHqfOh0zNKbWfjsrYx9jFte3XUz0pH9Jhd6n8rhrNEuzS5E2qjA3QouiAVA27Q4VHEfHNJ-k9ncdhj1ibEJ3YksDmxpnELyD64GI4qemx4H6Y8zrBIETnV-I_SjqZ3OCRVIzf5_PZOnA8bz1wZdTfUpxSBJvcT7md6X8K2hEGkM7IMk8cD_AVm8VejHiTAS9diM8If3Y3343kOyUkogxvFrXFv3E5WKScezLhrms');"></div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="text-sm font-medium text-slate-900 dark:text-white">Budi Santoso</div>
+<div class="text-xs text-slate-500">budi.santoso@bebang.co.id</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<span class="px-2.5 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-50 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300">
+                                            Operasional
+                                        </span>
+</td>
+<td class="px-6 py-4 whitespace-nowrap text-sm text-slate-600 dark:text-slate-300">
+                                        Mining
+                                    </td>
+<td class="px-6 py-4 whitespace-nowrap text-sm text-slate-600 dark:text-slate-300">
+                                        Operator Excavator
+                                    </td>
+<td class="px-6 py-4 whitespace-nowrap">
+<span class="px-2.5 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300">
+                                            Aktif
+                                        </span>
+</td>
+<td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+<div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-1 text-slate-400 hover:text-primary rounded hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors">
+<span class="material-symbols-outlined text-[20px]">edit</span>
+</button>
+<button class="p-1 text-slate-400 hover:text-red-600 rounded hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors">
+<span class="material-symbols-outlined text-[20px]">delete</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors group">
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="flex items-center gap-2">
+<span class="text-sm font-medium text-slate-900 dark:text-white font-mono">2023004</span>
+<button class="text-slate-400 hover:text-primary transition-colors" title="Lihat QR Code">
+<span class="material-symbols-outlined text-[18px]">qr_code_2</span>
+</button>
+</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="size-10 rounded-full bg-slate-200 bg-center bg-cover border border-slate-100 dark:border-slate-700" data-alt="Portrait of Siti Aminah" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAvjfCzosAv9n7uNCu0BKTjqOTKTNELEMzxcw7xaB4v8teRi9jCtATci5me0vIz70G36w7jzmZKg4kqRJMOXg6JHR-U7tTw-4JiZZ19TQ6rTQxKjkn3MTTViwWjZiC039KQWWX2j-YSkDDD0vfgHFppIcZ-ggv10xP-t-tLrHA2A5OgmC_PbZS0CCN_mkF1_6taXOUSYYOGt03kfboqBNn9V3lqseu3sjGVHJvCphuiPimuq7K5uRyjCq4OznVcpamOackXMD7zUgw');"></div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="text-sm font-medium text-slate-900 dark:text-white">Siti Aminah</div>
+<div class="text-xs text-slate-500">siti.aminah@bebang.co.id</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<span class="px-2.5 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-purple-50 text-purple-700 dark:bg-purple-900/30 dark:text-purple-300">
+                                            HR &amp; GA
+                                        </span>
+</td>
+<td class="px-6 py-4 whitespace-nowrap text-sm text-slate-600 dark:text-slate-300">
+                                        Human Resources
+                                    </td>
+<td class="px-6 py-4 whitespace-nowrap text-sm text-slate-600 dark:text-slate-300">
+                                        HR Staff
+                                    </td>
+<td class="px-6 py-4 whitespace-nowrap">
+<span class="px-2.5 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300">
+                                            Aktif
+                                        </span>
+</td>
+<td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+<div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-1 text-slate-400 hover:text-primary rounded hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors">
+<span class="material-symbols-outlined text-[20px]">edit</span>
+</button>
+<button class="p-1 text-slate-400 hover:text-red-600 rounded hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors">
+<span class="material-symbols-outlined text-[20px]">delete</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors group">
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="flex items-center gap-2">
+<span class="text-sm font-medium text-slate-900 dark:text-white font-mono">2023012</span>
+<button class="text-slate-400 hover:text-primary transition-colors" title="Lihat QR Code">
+<span class="material-symbols-outlined text-[18px]">qr_code_2</span>
+</button>
+</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="size-10 rounded-full bg-slate-200 bg-center bg-cover border border-slate-100 dark:border-slate-700" data-alt="Portrait of Rahmat Hidayat" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDBBDoZL-wdJwdCQ_iN_IEeRGzqFuh0u_cegTTzDsvSuDftPKQ3LhnjMU0gtiCsoxZrQ8Xx9fqWalLSxdCOvkeCqf6h8azYtqGSmIaCr8VqmY3tDcZC-EPuQSx3-HE0wJPkb74d_FjmcUPNTJjK-6H_Lh9oRWGXNg10pP0r8DhIM-C-C4Lis0Bmhpxeicoc9smq9cvfB6uwe8C9MqVK6MpBrnjDoWAwYIkkN3AaILH6WwCYwAse1luXVPrPa1AY3z1SIA11MSstyd0');"></div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="text-sm font-medium text-slate-900 dark:text-white">Rahmat Hidayat</div>
+<div class="text-xs text-slate-500">rahmat.h@bebang.co.id</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<span class="px-2.5 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-orange-50 text-orange-700 dark:bg-orange-900/30 dark:text-orange-300">
+                                            Engineering
+                                        </span>
+</td>
+<td class="px-6 py-4 whitespace-nowrap text-sm text-slate-600 dark:text-slate-300">
+                                        Survey
+                                    </td>
+<td class="px-6 py-4 whitespace-nowrap text-sm text-slate-600 dark:text-slate-300">
+                                        Surveyor
+                                    </td>
+<td class="px-6 py-4 whitespace-nowrap">
+<span class="px-2.5 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-300">
+                                            Cuti
+                                        </span>
+</td>
+<td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+<div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-1 text-slate-400 hover:text-primary rounded hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors">
+<span class="material-symbols-outlined text-[20px]">edit</span>
+</button>
+<button class="p-1 text-slate-400 hover:text-red-600 rounded hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors">
+<span class="material-symbols-outlined text-[20px]">delete</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors group">
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="flex items-center gap-2">
+<span class="text-sm font-medium text-slate-900 dark:text-white font-mono">2023015</span>
+<button class="text-slate-400 hover:text-primary transition-colors" title="Lihat QR Code">
+<span class="material-symbols-outlined text-[18px]">qr_code_2</span>
+</button>
+</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="size-10 rounded-full bg-slate-200 bg-center bg-cover border border-slate-100 dark:border-slate-700" data-alt="Portrait of Joko Susilo" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuA7uZVAnxeuWVH-CpDGFqpzrOreND21fghDlrT-dLJ5JJ2VTzmeXx0CaZ9Luuf2fYZ2w69DNlhJjS7_zff9u7oaB5_OP1yqGNOaNlR1XLBqN0O2rWQxCu6OAYLxQiHO9MnRe_4VN7FR1Jl-COGsrLQD6vZoI3JeByAJr2smAYRQd7mKvWmtPF1xJtmxRQcU5ekpgPpAYxZoSJuH2yP5EVJ8nfoiQbrpW5BKaSdr2ERWQ01U7viWn5gKMbTjdicoJxbvwyftV0pdWdw');"></div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="text-sm font-medium text-slate-900 dark:text-white">Joko Susilo</div>
+<div class="text-xs text-slate-500">joko.susilo@bebang.co.id</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<span class="px-2.5 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-teal-50 text-teal-700 dark:bg-teal-900/30 dark:text-teal-300">
+                                            Plant
+                                        </span>
+</td>
+<td class="px-6 py-4 whitespace-nowrap text-sm text-slate-600 dark:text-slate-300">
+                                        Maintenance
+                                    </td>
+<td class="px-6 py-4 whitespace-nowrap text-sm text-slate-600 dark:text-slate-300">
+                                        Mechanic II
+                                    </td>
+<td class="px-6 py-4 whitespace-nowrap">
+<span class="px-2.5 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300">
+                                            Aktif
+                                        </span>
+</td>
+<td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+<div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-1 text-slate-400 hover:text-primary rounded hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors">
+<span class="material-symbols-outlined text-[20px]">edit</span>
+</button>
+<button class="p-1 text-slate-400 hover:text-red-600 rounded hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors">
+<span class="material-symbols-outlined text-[20px]">delete</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 5 -->
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors group">
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="flex items-center gap-2">
+<span class="text-sm font-medium text-slate-900 dark:text-white font-mono">2023022</span>
+<button class="text-slate-400 hover:text-primary transition-colors" title="Lihat QR Code">
+<span class="material-symbols-outlined text-[18px]">qr_code_2</span>
+</button>
+</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="size-10 rounded-full bg-slate-200 bg-center bg-cover border border-slate-100 dark:border-slate-700" data-alt="Portrait of Dewi Sartika" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDqBain9Z5wTC43bMOZ3Bbr33qroPg_ERI0RoScML-Ja1Ja87V_HhZzh2H2BwaNP0P6ymeFBCoSAQrb9zFgS5DRkU2ed-0r-gwmHGQq0x8ImMfzWKk8T-890n1wIP4qRF6aq_r5So_HuV9HT1ik08Yx70hJApo65YrAQ3iyOQhDulkyijg9yEfZd6Fgyi465vl-m1fMBRiVKlG2mel4oQlZ4TD0QP_qJVW3WcRwLPrhxcXQV97XlBIBUVRzItMPTyRQr5vLxHpEQYk');"></div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="text-sm font-medium text-slate-900 dark:text-white">Dewi Sartika</div>
+<div class="text-xs text-slate-500">dewi.s@bebang.co.id</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<span class="px-2.5 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-indigo-50 text-indigo-700 dark:bg-indigo-900/30 dark:text-indigo-300">
+                                            Finance
+                                        </span>
+</td>
+<td class="px-6 py-4 whitespace-nowrap text-sm text-slate-600 dark:text-slate-300">
+                                        Accounting
+                                    </td>
+<td class="px-6 py-4 whitespace-nowrap text-sm text-slate-600 dark:text-slate-300">
+                                        Admin Finance
+                                    </td>
+<td class="px-6 py-4 whitespace-nowrap">
+<span class="px-2.5 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-slate-100 text-slate-800 dark:bg-slate-700 dark:text-slate-300">
+                                            Non-Aktif
+                                        </span>
+</td>
+<td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+<div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-1 text-slate-400 hover:text-primary rounded hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors">
+<span class="material-symbols-outlined text-[20px]">edit</span>
+</button>
+<button class="p-1 text-slate-400 hover:text-red-600 rounded hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors">
+<span class="material-symbols-outlined text-[20px]">delete</span>
+</button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination -->
+<div class="bg-white dark:bg-[#1A2632] px-4 py-3 flex items-center justify-between border-t border-slate-200 dark:border-slate-800 sm:px-6">
+<div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
+<div>
+<p class="text-sm text-slate-500 dark:text-slate-400">
+                                    Menampilkan <span class="font-medium text-slate-900 dark:text-white">1</span> sampai <span class="font-medium text-slate-900 dark:text-white">5</span> dari <span class="font-medium text-slate-900 dark:text-white">50</span> data
+                                </p>
+</div>
+<div>
+<nav aria-label="Pagination" class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px">
+<a class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-sm font-medium text-slate-500 hover:bg-slate-50 dark:hover:bg-slate-700" href="#">
+<span class="sr-only">Previous</span>
+<span class="material-symbols-outlined text-[16px]">chevron_left</span>
+</a>
+<a aria-current="page" class="z-10 bg-primary/10 border-primary text-primary relative inline-flex items-center px-4 py-2 border text-sm font-medium" href="#">
+                                        1
+                                    </a>
+<a class="bg-white dark:bg-slate-800 border-slate-300 dark:border-slate-700 text-slate-500 hover:bg-slate-50 dark:hover:bg-slate-700 relative inline-flex items-center px-4 py-2 border text-sm font-medium" href="#">
+                                        2
+                                    </a>
+<a class="bg-white dark:bg-slate-800 border-slate-300 dark:border-slate-700 text-slate-500 hover:bg-slate-50 dark:hover:bg-slate-700 relative inline-flex items-center px-4 py-2 border text-sm font-medium" href="#">
+                                        3
+                                    </a>
+<span class="relative inline-flex items-center px-4 py-2 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-sm font-medium text-slate-700 dark:text-slate-400">
+                                        ...
+                                    </span>
+<a class="bg-white dark:bg-slate-800 border-slate-300 dark:border-slate-700 text-slate-500 hover:bg-slate-50 dark:hover:bg-slate-700 relative inline-flex items-center px-4 py-2 border text-sm font-medium" href="#">
+                                        10
+                                    </a>
+<a class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-sm font-medium text-slate-500 hover:bg-slate-50 dark:hover:bg-slate-700" href="#">
+<span class="sr-only">Next</span>
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+</a>
+</nav>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

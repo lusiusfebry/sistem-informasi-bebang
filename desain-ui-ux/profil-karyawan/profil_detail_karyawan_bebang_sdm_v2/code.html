@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Profil Detail Karyawan BEBANG SDM V2</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#1173d4",
+              "background-light": "#f6f7f8",
+              "background-dark": "#101922",
+            },
+            fontFamily: {
+              "display": ["Inter", "sans-serif"]
+            },
+            borderRadius: {
+              "DEFAULT": "0.25rem", 
+              "lg": "0.5rem", 
+              "xl": "0.75rem", 
+              "full": "9999px"
+            },
+          },
+        },
+      }
+    </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-display min-h-screen flex flex-col">
+<!-- Top Navbar -->
+<header class="bg-white dark:bg-[#1A2633] border-b border-slate-200 dark:border-slate-800 sticky top-0 z-50">
+<div class="px-6 md:px-10 py-3 flex items-center justify-between">
+<div class="flex items-center gap-4">
+<div class="size-8 text-primary">
+<span class="material-symbols-outlined text-3xl">diversity_3</span>
+</div>
+<h2 class="text-lg font-bold tracking-tight text-slate-900 dark:text-white">BEBANG SDM</h2>
+</div>
+<nav class="hidden md:flex items-center gap-8">
+<a class="text-sm font-medium text-slate-600 dark:text-slate-400 hover:text-primary dark:hover:text-primary transition-colors" href="#">Dashboard</a>
+<a class="text-sm font-medium text-primary hover:text-primary/80 transition-colors" href="#">Karyawan</a>
+<a class="text-sm font-medium text-slate-600 dark:text-slate-400 hover:text-primary dark:hover:text-primary transition-colors" href="#">Laporan</a>
+<a class="text-sm font-medium text-slate-600 dark:text-slate-400 hover:text-primary dark:hover:text-primary transition-colors" href="#">Pengaturan</a>
+</nav>
+<div class="flex items-center gap-4">
+<button class="flex items-center justify-center size-10 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors relative">
+<span class="material-symbols-outlined text-[20px]">notifications</span>
+<span class="absolute top-2 right-2 size-2 bg-red-500 rounded-full border border-white dark:border-slate-800"></span>
+</button>
+<div class="size-10 rounded-full bg-slate-200 dark:bg-slate-700 overflow-hidden bg-center bg-cover" data-alt="Admin User Profile" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDUGKEjdcjJz6UguuVOtax9pE7Yz0spK746cTZ823Cfc_YNKfTQ0F74UqGUJfwz_lK9ktPdqeYGfkbUTIh-5Al58H7FIT3nxaLvrqp7Xb_HNtEDgKpKHvPJ9OBiXJrRDDvVo0T16z6tk9m3F0gs6oyhOCVclpwxy29jp-SmyL5T0CfxvcY9FRAbqb04djEHnq5mG-0rzWxl38f5VRg5DSngEKqh7oS_iN25EPZk_XLWhK3VSylu4fCnU26XbUwBBrfFuEURhaS5pVo');"></div>
+</div>
+</div>
+</header>
+<!-- Main Layout -->
+<main class="flex-1 w-full max-w-[1280px] mx-auto p-6 md:p-8 space-y-6">
+<!-- Breadcrumbs -->
+<nav class="flex text-sm text-slate-500 dark:text-slate-400">
+<a class="hover:text-primary" href="#">Home</a>
+<span class="mx-2">/</span>
+<a class="hover:text-primary" href="#">Data Karyawan</a>
+<span class="mx-2">/</span>
+<span class="font-semibold text-slate-900 dark:text-white">Detail Profil</span>
+</nav>
+<!-- Employee Header Card -->
+<div class="bg-white dark:bg-[#1A2633] rounded-xl shadow-sm border border-slate-200 dark:border-slate-800 p-6 relative overflow-hidden">
+<!-- Background decorative element -->
+<div class="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
+<div class="flex flex-col md:flex-row items-start md:items-center gap-6 relative z-10">
+<!-- Avatar -->
+<div class="relative group">
+<div class="size-32 rounded-xl bg-slate-200 dark:bg-slate-700 overflow-hidden shadow-md ring-4 ring-white dark:ring-slate-800">
+<img alt="Employee Photo" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCpLUseH0SNJlKDpsw_o3lZP2-NldsN9C2STGWcdkqkEnQyNk8zNxSWalQlSAluq7No2GwOp-Xxe-aOkIx4UUQNYyh3Mjp0BcaqVhEgqhuKecpze6csLJWiRRj7P8rq4ymMiAfxL6P2YKtc4_EeTQk8OR31D7cf6v6wzJemmvbuNSWVR7WvxqtfPeuqD9-GwbSWLBtnw0A4Ia1jsxvnfN-szKhUSmFVf3P6a4LHmrCop3E04IasMKDLbgdlpnPyMG9uqEqXSRlBZ00"/>
+</div>
+<button class="absolute bottom-2 right-2 p-1.5 bg-white dark:bg-slate-800 rounded-full shadow-md text-slate-600 dark:text-slate-300 hover:text-primary transition-colors" title="Change Photo">
+<span class="material-symbols-outlined text-[18px]">photo_camera</span>
+</button>
+</div>
+<!-- Info Block -->
+<div class="flex-1 min-w-0">
+<div class="flex flex-col gap-1 mb-3">
+<h1 class="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white leading-tight">Budi Santoso</h1>
+<div class="flex items-center gap-2 text-slate-500 dark:text-slate-400 text-sm font-medium">
+<span class="material-symbols-outlined text-[18px]">badge</span>
+<span>NIK: 2023001</span>
+<span class="w-1 h-1 rounded-full bg-slate-300 dark:bg-slate-600 mx-1"></span>
+<span class="px-2 py-0.5 rounded-full bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 text-xs font-semibold">Aktif</span>
+</div>
+</div>
+<!-- Job Details Grid -->
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 text-sm mt-4">
+<div class="flex flex-col bg-slate-50 dark:bg-slate-800/50 p-2.5 rounded-lg border border-slate-100 dark:border-slate-700/50">
+<span class="text-xs text-slate-500 dark:text-slate-400 mb-1">Posisi</span>
+<span class="font-semibold text-slate-800 dark:text-slate-200 truncate">Manager Operasional</span>
+</div>
+<div class="flex flex-col bg-slate-50 dark:bg-slate-800/50 p-2.5 rounded-lg border border-slate-100 dark:border-slate-700/50">
+<span class="text-xs text-slate-500 dark:text-slate-400 mb-1">Divisi</span>
+<span class="font-semibold text-slate-800 dark:text-slate-200 truncate">Divisi Tambang</span>
+</div>
+<div class="flex flex-col bg-slate-50 dark:bg-slate-800/50 p-2.5 rounded-lg border border-slate-100 dark:border-slate-700/50">
+<span class="text-xs text-slate-500 dark:text-slate-400 mb-1">Departemen</span>
+<span class="font-semibold text-slate-800 dark:text-slate-200 truncate">Dept. Produksi</span>
+</div>
+<div class="flex flex-col bg-slate-50 dark:bg-slate-800/50 p-2.5 rounded-lg border border-slate-100 dark:border-slate-700/50">
+<span class="text-xs text-slate-500 dark:text-slate-400 mb-1">Site</span>
+<span class="font-semibold text-slate-800 dark:text-slate-200 truncate">Taliabu</span>
+</div>
+</div>
+</div>
+<!-- QR Code & Actions -->
+<div class="flex flex-col items-center md:items-end gap-4 ml-auto min-w-[120px]">
+<div class="bg-white p-2 rounded-lg border border-slate-200 shadow-sm">
+<!-- Placeholder QR Code using a pattern/gradient to simulate complex data -->
+<div class="w-24 h-24 bg-slate-900" data-alt="QR Code for Employee Identification" style="background-image: repeating-linear-gradient(45deg, transparent, transparent 5px, #fff 5px, #fff 10px), repeating-linear-gradient(-45deg, transparent, transparent 5px, #fff 5px, #fff 10px);"></div>
+</div>
+<div class="flex gap-2 w-full justify-end">
+<button class="flex-1 md:flex-none flex items-center justify-center gap-2 px-4 py-2 text-sm font-semibold text-primary bg-primary/10 hover:bg-primary/20 rounded-lg transition-colors">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+                            Edit
+                        </button>
+<button class="flex-1 md:flex-none flex items-center justify-center gap-2 px-4 py-2 text-sm font-semibold text-slate-600 dark:text-slate-300 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 rounded-lg transition-colors">
+<span class="material-symbols-outlined text-[18px]">print</span>
+                            Cetak
+                        </button>
+</div>
+</div>
+</div>
+<!-- Tabs -->
+<div class="mt-8 border-b border-slate-200 dark:border-slate-700">
+<div class="flex gap-6 md:gap-8 overflow-x-auto pb-[1px] -mb-[1px]">
+<a class="pb-3 border-b-2 border-primary text-primary font-semibold text-sm whitespace-nowrap flex items-center gap-2" href="#">
+<span class="material-symbols-outlined text-[20px]">person</span>
+                        Personal Information
+                    </a>
+<a class="pb-3 border-b-2 border-transparent text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:border-slate-300 transition-all font-medium text-sm whitespace-nowrap flex items-center gap-2" href="#">
+<span class="material-symbols-outlined text-[20px]">work</span>
+                        Informasi HR
+                    </a>
+<a class="pb-3 border-b-2 border-transparent text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:border-slate-300 transition-all font-medium text-sm whitespace-nowrap flex items-center gap-2" href="#">
+<span class="material-symbols-outlined text-[20px]">diversity_1</span>
+                        Informasi Keluarga
+                    </a>
+</div>
+</div>
+</div>
+<!-- Content Area: Personal Information -->
+<div class="grid grid-cols-1 xl:grid-cols-3 gap-6">
+<!-- Column 1: Biodata & Identifikasi -->
+<div class="space-y-6 xl:col-span-2">
+<!-- Biodata Card -->
+<div class="bg-white dark:bg-[#1A2633] rounded-xl shadow-sm border border-slate-200 dark:border-slate-800 p-6">
+<div class="flex items-center gap-3 mb-6 pb-4 border-b border-slate-100 dark:border-slate-700/50">
+<div class="p-2 rounded-lg bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400">
+<span class="material-symbols-outlined">badge</span>
+</div>
+<h3 class="text-lg font-bold text-slate-900 dark:text-white">Biodata Diri</h3>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="space-y-1">
+<label class="text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wide">Nama Lengkap</label>
+<p class="text-sm font-semibold text-slate-900 dark:text-slate-100 p-2.5 bg-slate-50 dark:bg-slate-800 rounded border border-slate-100 dark:border-slate-700">Budi Santoso</p>
+</div>
+<div class="space-y-1">
+<label class="text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wide">Tempat Lahir</label>
+<p class="text-sm font-semibold text-slate-900 dark:text-slate-100 p-2.5 bg-slate-50 dark:bg-slate-800 rounded border border-slate-100 dark:border-slate-700">Jakarta</p>
+</div>
+<div class="space-y-1">
+<label class="text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wide">Tanggal Lahir</label>
+<div class="relative">
+<span class="absolute right-3 top-2.5 text-slate-400 material-symbols-outlined text-[18px]">calendar_today</span>
+<p class="text-sm font-semibold text-slate-900 dark:text-slate-100 p-2.5 bg-slate-50 dark:bg-slate-800 rounded border border-slate-100 dark:border-slate-700">12 Mei 1985</p>
+</div>
+</div>
+<div class="space-y-1">
+<label class="text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wide">Jenis Kelamin</label>
+<p class="text-sm font-semibold text-slate-900 dark:text-slate-100 p-2.5 bg-slate-50 dark:bg-slate-800 rounded border border-slate-100 dark:border-slate-700">Laki-Laki</p>
+</div>
+<div class="space-y-1">
+<label class="text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wide">Golongan Darah</label>
+<p class="text-sm font-semibold text-slate-900 dark:text-slate-100 p-2.5 bg-slate-50 dark:bg-slate-800 rounded border border-slate-100 dark:border-slate-700">O+</p>
+</div>
+<div class="space-y-1">
+<label class="text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wide">Status Pernikahan</label>
+<p class="text-sm font-semibold text-slate-900 dark:text-slate-100 p-2.5 bg-slate-50 dark:bg-slate-800 rounded border border-slate-100 dark:border-slate-700">Menikah</p>
+</div>
+</div>
+</div>
+<!-- Identifikasi Card -->
+<div class="bg-white dark:bg-[#1A2633] rounded-xl shadow-sm border border-slate-200 dark:border-slate-800 p-6">
+<div class="flex items-center gap-3 mb-6 pb-4 border-b border-slate-100 dark:border-slate-700/50">
+<div class="p-2 rounded-lg bg-purple-50 dark:bg-purple-900/20 text-purple-600 dark:text-purple-400">
+<span class="material-symbols-outlined">fingerprint</span>
+</div>
+<h3 class="text-lg font-bold text-slate-900 dark:text-white">Identifikasi &amp; Dokumen</h3>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="space-y-1">
+<label class="text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wide">Agama</label>
+<p class="text-sm font-semibold text-slate-900 dark:text-slate-100 p-2.5 bg-slate-50 dark:bg-slate-800 rounded border border-slate-100 dark:border-slate-700">Islam</p>
+</div>
+<div class="space-y-1">
+<label class="text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wide">Kewarganegaraan</label>
+<p class="text-sm font-semibold text-slate-900 dark:text-slate-100 p-2.5 bg-slate-50 dark:bg-slate-800 rounded border border-slate-100 dark:border-slate-700">WNI</p>
+</div>
+<div class="space-y-1 md:col-span-2">
+<label class="text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wide">Nomor KTP (NIK)</label>
+<div class="flex gap-2">
+<p class="flex-1 text-sm font-semibold text-slate-900 dark:text-slate-100 p-2.5 bg-slate-50 dark:bg-slate-800 rounded border border-slate-100 dark:border-slate-700 font-mono">3174091205850001</p>
+<button class="p-2 text-slate-400 hover:text-primary border border-slate-200 dark:border-slate-700 rounded bg-white dark:bg-slate-800" title="Copy">
+<span class="material-symbols-outlined text-[18px]">content_copy</span>
+</button>
+</div>
+</div>
+<div class="space-y-1 md:col-span-2">
+<label class="text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wide">Nomor KK</label>
+<p class="text-sm font-semibold text-slate-900 dark:text-slate-100 p-2.5 bg-slate-50 dark:bg-slate-800 rounded border border-slate-100 dark:border-slate-700 font-mono">3174092001010005</p>
+</div>
+<div class="space-y-1 md:col-span-2">
+<label class="text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wide">NPWP</label>
+<p class="text-sm font-semibold text-slate-900 dark:text-slate-100 p-2.5 bg-slate-50 dark:bg-slate-800 rounded border border-slate-100 dark:border-slate-700 font-mono">09.123.456.7-123.000</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Column 2: Address & Financial -->
+<div class="space-y-6">
+<!-- Contact & Address Card -->
+<div class="bg-white dark:bg-[#1A2633] rounded-xl shadow-sm border border-slate-200 dark:border-slate-800 p-6 h-fit">
+<div class="flex items-center gap-3 mb-6 pb-4 border-b border-slate-100 dark:border-slate-700/50">
+<div class="p-2 rounded-lg bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600 dark:text-emerald-400">
+<span class="material-symbols-outlined">home_pin</span>
+</div>
+<h3 class="text-lg font-bold text-slate-900 dark:text-white">Alamat &amp; Kontak</h3>
+</div>
+<div class="space-y-4">
+<div class="space-y-1">
+<label class="text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wide">Email Pribadi</label>
+<div class="flex items-center gap-2 p-2.5 bg-slate-50 dark:bg-slate-800 rounded border border-slate-100 dark:border-slate-700">
+<span class="material-symbols-outlined text-[18px] text-slate-400">mail</span>
+<p class="text-sm font-semibold text-slate-900 dark:text-slate-100 truncate">budi.santoso@gmail.com</p>
+</div>
+</div>
+<div class="space-y-1">
+<label class="text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wide">Nomor Telepon</label>
+<div class="flex items-center gap-2 p-2.5 bg-slate-50 dark:bg-slate-800 rounded border border-slate-100 dark:border-slate-700">
+<span class="material-symbols-outlined text-[18px] text-slate-400">call</span>
+<p class="text-sm font-semibold text-slate-900 dark:text-slate-100 font-mono">+62 812 3456 7890</p>
+</div>
+</div>
+<div class="space-y-1">
+<label class="text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wide">Alamat Domisili</label>
+<p class="text-sm font-semibold text-slate-900 dark:text-slate-100 p-2.5 bg-slate-50 dark:bg-slate-800 rounded border border-slate-100 dark:border-slate-700 min-h-[80px]">
+                                Jl. Kemang Raya No. 15, RT 005/RW 001, Kel. Bangka, Kec. Mampang Prapatan
+                            </p>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div class="space-y-1">
+<label class="text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wide">Kota</label>
+<p class="text-sm font-semibold text-slate-900 dark:text-slate-100 p-2.5 bg-slate-50 dark:bg-slate-800 rounded border border-slate-100 dark:border-slate-700">Jakarta Selatan</p>
+</div>
+<div class="space-y-1">
+<label class="text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wide">Kode Pos</label>
+<p class="text-sm font-semibold text-slate-900 dark:text-slate-100 p-2.5 bg-slate-50 dark:bg-slate-800 rounded border border-slate-100 dark:border-slate-700">12730</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Financial Card -->
+<div class="bg-white dark:bg-[#1A2633] rounded-xl shadow-sm border border-slate-200 dark:border-slate-800 p-6 h-fit">
+<div class="flex items-center gap-3 mb-6 pb-4 border-b border-slate-100 dark:border-slate-700/50">
+<div class="p-2 rounded-lg bg-orange-50 dark:bg-orange-900/20 text-orange-600 dark:text-orange-400">
+<span class="material-symbols-outlined">account_balance_wallet</span>
+</div>
+<h3 class="text-lg font-bold text-slate-900 dark:text-white">Rekening Bank</h3>
+</div>
+<div class="space-y-4">
+<div class="space-y-1">
+<label class="text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wide">Nama Bank</label>
+<p class="text-sm font-semibold text-slate-900 dark:text-slate-100 p-2.5 bg-slate-50 dark:bg-slate-800 rounded border border-slate-100 dark:border-slate-700">Bank Mandiri</p>
+</div>
+<div class="space-y-1">
+<label class="text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wide">Nomor Rekening</label>
+<p class="text-sm font-semibold text-slate-900 dark:text-slate-100 p-2.5 bg-slate-50 dark:bg-slate-800 rounded border border-slate-100 dark:border-slate-700 font-mono tracking-wider">123-00-0987654-3</p>
+</div>
+<div class="space-y-1">
+<label class="text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wide">Pemilik Rekening</label>
+<p class="text-sm font-semibold text-slate-900 dark:text-slate-100 p-2.5 bg-slate-50 dark:bg-slate-800 rounded border border-slate-100 dark:border-slate-700">Budi Santoso</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</body></html>

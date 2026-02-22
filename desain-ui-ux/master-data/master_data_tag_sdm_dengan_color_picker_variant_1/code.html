@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Master Data Tag SDM - BEBANG HR</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1173d4",
+                        "primary-hover": "#0e61b3",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101922",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen flex overflow-hidden">
+<!-- Sidebar -->
+<aside class="w-64 bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 flex-shrink-0 flex flex-col h-screen fixed left-0 top-0 z-20">
+<div class="h-16 flex items-center gap-3 px-6 border-b border-slate-100 dark:border-slate-800">
+<div class="bg-primary/10 rounded-lg p-1.5">
+<span class="material-symbols-outlined text-primary text-2xl">grid_view</span>
+</div>
+<div class="flex flex-col">
+<h1 class="text-slate-900 dark:text-white text-base font-bold leading-none tracking-tight">BEBANG HR</h1>
+<p class="text-slate-500 dark:text-slate-400 text-xs font-medium mt-1">Admin Panel</p>
+</div>
+</div>
+<nav class="flex-1 overflow-y-auto py-4 px-3 space-y-1">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 group transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px] text-slate-400 group-hover:text-primary transition-colors">dashboard</span>
+<span class="text-sm font-medium">Dashboard</span>
+</a>
+<div class="pt-4 pb-2 px-3 text-xs font-semibold text-slate-400 uppercase tracking-wider">Master Data</div>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 group transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px] text-slate-400 group-hover:text-primary transition-colors">group</span>
+<span class="text-sm font-medium">Pegawai</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 group transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px] text-slate-400 group-hover:text-primary transition-colors">work</span>
+<span class="text-sm font-medium">Jabatan</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 group transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px] text-slate-400 group-hover:text-primary transition-colors">apartment</span>
+<span class="text-sm font-medium">Divisi</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary/10 text-primary group transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px] text-primary fill-1">label</span>
+<span class="text-sm font-semibold">Tag SDM</span>
+</a>
+<div class="pt-4 pb-2 px-3 text-xs font-semibold text-slate-400 uppercase tracking-wider">Manajemen</div>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 group transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px] text-slate-400 group-hover:text-primary transition-colors">schedule</span>
+<span class="text-sm font-medium">Absensi</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 group transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px] text-slate-400 group-hover:text-primary transition-colors">payments</span>
+<span class="text-sm font-medium">Gaji</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 group transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px] text-slate-400 group-hover:text-primary transition-colors">event_busy</span>
+<span class="text-sm font-medium">Cuti</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 group transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px] text-slate-400 group-hover:text-primary transition-colors">school</span>
+<span class="text-sm font-medium">Pelatihan</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 group transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px] text-slate-400 group-hover:text-primary transition-colors">content_paste</span>
+<span class="text-sm font-medium">Penilaian</span>
+</a>
+</nav>
+<div class="p-4 border-t border-slate-100 dark:border-slate-800">
+<div class="flex items-center gap-3 px-3 py-2">
+<div class="size-8 rounded-full bg-cover bg-center ring-2 ring-white dark:ring-slate-700" data-alt="User Avatar" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCAISUtpyFwbLyrtzMgqLXCF6y5mHPp0RIc8KnaYVREx0N0xuwutly9k_8fnBGxjHcSsNo6oteCcggRc-rcqA0YELOeYGpfPVuYttlo8HLqfyKJUXlAfPUletrWptHGOUiZKOXRyn7xeJH0y_8MouUIKml473hMkog71Z97rgJNmyu10ISS3KxUGc_bNhp0qx9EHLFbEUbaXox-ol3GgltuZHPy8-XWuEevaYlamAunWOmFvwu61kW-bT_jZmvYy_TbCjS87jVimwQ')"></div>
+<div class="flex flex-col">
+<p class="text-sm font-medium text-slate-900 dark:text-white">Admin User</p>
+<p class="text-xs text-slate-500 dark:text-slate-400">admin@bebang.com</p>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="ml-64 flex-1 flex flex-col h-screen overflow-hidden">
+<!-- Header -->
+<header class="bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 px-8 py-5 flex-shrink-0">
+<div class="flex flex-col gap-1">
+<nav class="flex items-center gap-2 text-sm text-slate-500 dark:text-slate-400 mb-2">
+<a class="hover:text-primary transition-colors" href="#">Home</a>
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+<a class="hover:text-primary transition-colors" href="#">Master Data</a>
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+<span class="text-slate-900 dark:text-white font-medium">Tag SDM</span>
+</nav>
+<div class="flex justify-between items-end">
+<div>
+<h2 class="text-2xl font-bold text-slate-900 dark:text-white tracking-tight">Master Data Tag SDM</h2>
+<p class="text-slate-500 dark:text-slate-400 mt-1">Manage employee tags, labels, and color coding for visual identification.</p>
+</div>
+<button class="bg-primary hover:bg-primary-hover text-white px-4 py-2.5 rounded-lg text-sm font-medium flex items-center gap-2 shadow-sm shadow-primary/30 transition-all hover:shadow-primary/50">
+<span class="material-symbols-outlined text-[20px]">add</span>
+                        Tambah Tag
+                    </button>
+</div>
+</div>
+</header>
+<!-- Content Body -->
+<div class="flex-1 overflow-auto p-8 bg-background-light dark:bg-background-dark">
+<!-- Filters & Search -->
+<div class="flex flex-wrap items-center justify-between gap-4 mb-6">
+<div class="relative group">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-primary transition-colors text-[20px]">search</span>
+<input class="pl-10 pr-4 py-2.5 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-sm w-80 focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all shadow-sm" placeholder="Cari tag..." type="text"/>
+</div>
+<div class="flex items-center gap-3">
+<button class="px-4 py-2.5 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-sm font-medium text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 flex items-center gap-2 shadow-sm transition-colors">
+<span class="material-symbols-outlined text-[20px]">filter_list</span>
+                        Filter
+                    </button>
+<button class="px-4 py-2.5 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-sm font-medium text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 flex items-center gap-2 shadow-sm transition-colors">
+<span class="material-symbols-outlined text-[20px]">download</span>
+                        Export
+                    </button>
+</div>
+</div>
+<!-- Table -->
+<div class="bg-white dark:bg-slate-900 rounded-xl shadow-sm border border-slate-200 dark:border-slate-800 overflow-hidden">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-slate-50 dark:bg-slate-800/50 border-b border-slate-200 dark:border-slate-800 text-slate-500 dark:text-slate-400 text-xs uppercase tracking-wider font-semibold">
+<th class="px-6 py-4 w-16 text-center">No</th>
+<th class="px-6 py-4 w-1/5">Nama Tag</th>
+<th class="px-6 py-4 w-1/6">Warna Tag</th>
+<th class="px-6 py-4">Keterangan</th>
+<th class="px-6 py-4 w-32">Status</th>
+<th class="px-6 py-4 w-32 text-right">Aksi</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-100 dark:divide-slate-800">
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors group">
+<td class="px-6 py-4 text-center text-slate-500 text-sm">1</td>
+<td class="px-6 py-4">
+<span class="font-medium text-slate-900 dark:text-white text-sm">Kontrak</span>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="size-6 rounded-full shadow-sm ring-1 ring-black/5" style="background-color: #EF4444;"></div>
+<span class="text-xs font-mono text-slate-500 bg-slate-100 dark:bg-slate-800 px-2 py-1 rounded">#EF4444</span>
+</div>
+</td>
+<td class="px-6 py-4 text-sm text-slate-600 dark:text-slate-400">
+                                Pegawai kontrak 1 tahun
+                            </td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-100 text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-400">
+                                    Aktif
+                                </span>
+</td>
+<td class="px-6 py-4 text-right">
+<div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-1.5 text-slate-400 hover:text-primary hover:bg-primary/10 rounded transition-colors">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+</button>
+<button class="p-1.5 text-slate-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 rounded transition-colors">
+<span class="material-symbols-outlined text-[18px]">delete</span>
+</button>
+</div>
+</td>
+</tr>
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors group">
+<td class="px-6 py-4 text-center text-slate-500 text-sm">2</td>
+<td class="px-6 py-4">
+<span class="font-medium text-slate-900 dark:text-white text-sm">Tetap</span>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="size-6 rounded-full shadow-sm ring-1 ring-black/5" style="background-color: #10B981;"></div>
+<span class="text-xs font-mono text-slate-500 bg-slate-100 dark:bg-slate-800 px-2 py-1 rounded">#10B981</span>
+</div>
+</td>
+<td class="px-6 py-4 text-sm text-slate-600 dark:text-slate-400">
+                                Pegawai tetap full-time
+                            </td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-100 text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-400">
+                                    Aktif
+                                </span>
+</td>
+<td class="px-6 py-4 text-right">
+<div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-1.5 text-slate-400 hover:text-primary hover:bg-primary/10 rounded transition-colors">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+</button>
+<button class="p-1.5 text-slate-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 rounded transition-colors">
+<span class="material-symbols-outlined text-[18px]">delete</span>
+</button>
+</div>
+</td>
+</tr>
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors group">
+<td class="px-6 py-4 text-center text-slate-500 text-sm">3</td>
+<td class="px-6 py-4">
+<span class="font-medium text-slate-900 dark:text-white text-sm">Remote</span>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="size-6 rounded-full shadow-sm ring-1 ring-black/5" style="background-color: #8B5CF6;"></div>
+<span class="text-xs font-mono text-slate-500 bg-slate-100 dark:bg-slate-800 px-2 py-1 rounded">#8B5CF6</span>
+</div>
+</td>
+<td class="px-6 py-4 text-sm text-slate-600 dark:text-slate-400">
+                                Bekerja dari rumah
+                            </td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-400">
+                                    Tidak Aktif
+                                </span>
+</td>
+<td class="px-6 py-4 text-right">
+<div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-1.5 text-slate-400 hover:text-primary hover:bg-primary/10 rounded transition-colors">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+</button>
+<button class="p-1.5 text-slate-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 rounded transition-colors">
+<span class="material-symbols-outlined text-[18px]">delete</span>
+</button>
+</div>
+</td>
+</tr>
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors group">
+<td class="px-6 py-4 text-center text-slate-500 text-sm">4</td>
+<td class="px-6 py-4">
+<span class="font-medium text-slate-900 dark:text-white text-sm">Probation</span>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="size-6 rounded-full shadow-sm ring-1 ring-black/5" style="background-color: #F59E0B;"></div>
+<span class="text-xs font-mono text-slate-500 bg-slate-100 dark:bg-slate-800 px-2 py-1 rounded">#F59E0B</span>
+</div>
+</td>
+<td class="px-6 py-4 text-sm text-slate-600 dark:text-slate-400">
+                                Masa percobaan 3 bulan
+                            </td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-100 text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-400">
+                                    Aktif
+                                </span>
+</td>
+<td class="px-6 py-4 text-right">
+<div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-1.5 text-slate-400 hover:text-primary hover:bg-primary/10 rounded transition-colors">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+</button>
+<button class="p-1.5 text-slate-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 rounded transition-colors">
+<span class="material-symbols-outlined text-[18px]">delete</span>
+</button>
+</div>
+</td>
+</tr>
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors group">
+<td class="px-6 py-4 text-center text-slate-500 text-sm">5</td>
+<td class="px-6 py-4">
+<span class="font-medium text-slate-900 dark:text-white text-sm">Intern</span>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="size-6 rounded-full shadow-sm ring-1 ring-black/5" style="background-color: #3B82F6;"></div>
+<span class="text-xs font-mono text-slate-500 bg-slate-100 dark:bg-slate-800 px-2 py-1 rounded">#3B82F6</span>
+</div>
+</td>
+<td class="px-6 py-4 text-sm text-slate-600 dark:text-slate-400">
+                                Mahasiswa magang
+                            </td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-100 text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-400">
+                                    Aktif
+                                </span>
+</td>
+<td class="px-6 py-4 text-right">
+<div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-1.5 text-slate-400 hover:text-primary hover:bg-primary/10 rounded transition-colors">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+</button>
+<button class="p-1.5 text-slate-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 rounded transition-colors">
+<span class="material-symbols-outlined text-[18px]">delete</span>
+</button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="px-6 py-4 border-t border-slate-200 dark:border-slate-800 flex items-center justify-between">
+<p class="text-sm text-slate-500 dark:text-slate-400">
+                        Showing <span class="font-medium">1</span> to <span class="font-medium">5</span> of <span class="font-medium">5</span> results
+                    </p>
+<div class="flex gap-2">
+<button class="px-3 py-1 text-sm text-slate-500 hover:text-slate-700 disabled:opacity-50 dark:text-slate-400 dark:hover:text-slate-200" disabled="">Previous</button>
+<button class="px-3 py-1 text-sm bg-primary text-white rounded hover:bg-primary-hover transition-colors">1</button>
+<button class="px-3 py-1 text-sm text-slate-500 hover:text-slate-700 disabled:opacity-50 dark:text-slate-400 dark:hover:text-slate-200" disabled="">Next</button>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Modal (Demonstration: Centered & Visible for design context, normally hidden) -->
+<!-- In a real app, remove 'hidden' class to show, and use z-50 overlay -->
+<div class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm hidden"> <!-- Add 'flex' remove 'hidden' to see modal overlay -->
+<div class="bg-white dark:bg-slate-900 rounded-xl shadow-2xl w-full max-w-lg overflow-hidden border border-slate-200 dark:border-slate-800 transform transition-all">
+<div class="px-6 py-4 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between bg-slate-50/50 dark:bg-slate-800/30">
+<h3 class="text-lg font-bold text-slate-900 dark:text-white">Tambah Tag Baru</h3>
+<button class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 transition-colors">
+<span class="material-symbols-outlined">close</span>
+</button>
+</div>
+<div class="p-6 space-y-5">
+<!-- Nama Tag -->
+<div class="space-y-1.5">
+<label class="text-sm font-semibold text-slate-700 dark:text-slate-300">Nama Tag</label>
+<input class="w-full rounded-lg border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-sm focus:ring-primary focus:border-primary px-3 py-2.5 shadow-sm transition-all" placeholder="Contoh: Full-time" type="text"/>
+</div>
+<!-- Warna Tag Picker -->
+<div class="space-y-2">
+<label class="text-sm font-semibold text-slate-700 dark:text-slate-300">Warna Tag</label>
+<div class="bg-slate-50 dark:bg-slate-800/50 p-4 rounded-lg border border-slate-200 dark:border-slate-700">
+<div class="flex flex-wrap gap-3 mb-4">
+<!-- Predefined Colors -->
+<button class="size-8 rounded-full bg-red-500 hover:scale-110 transition-transform ring-2 ring-transparent hover:ring-offset-2 ring-offset-white dark:ring-offset-slate-900 hover:ring-red-500"></button>
+<button class="size-8 rounded-full bg-orange-500 hover:scale-110 transition-transform ring-2 ring-transparent hover:ring-offset-2 ring-offset-white dark:ring-offset-slate-900 hover:ring-orange-500"></button>
+<button class="size-8 rounded-full bg-amber-500 hover:scale-110 transition-transform ring-2 ring-transparent hover:ring-offset-2 ring-offset-white dark:ring-offset-slate-900 hover:ring-amber-500"></button>
+<button class="size-8 rounded-full bg-emerald-500 hover:scale-110 transition-transform ring-2 ring-transparent hover:ring-offset-2 ring-offset-white dark:ring-offset-slate-900 hover:ring-emerald-500"></button>
+<button class="size-8 rounded-full bg-teal-500 hover:scale-110 transition-transform ring-2 ring-transparent hover:ring-offset-2 ring-offset-white dark:ring-offset-slate-900 hover:ring-teal-500"></button>
+<button class="size-8 rounded-full bg-cyan-500 hover:scale-110 transition-transform ring-2 ring-transparent hover:ring-offset-2 ring-offset-white dark:ring-offset-slate-900 hover:ring-cyan-500"></button>
+<button class="size-8 rounded-full bg-blue-500 hover:scale-110 transition-transform ring-2 ring-white ring-offset-2 ring-offset-white dark:ring-offset-slate-900 dark:ring-slate-700 shadow-lg scale-110"></button> <!-- Active Example -->
+<button class="size-8 rounded-full bg-indigo-500 hover:scale-110 transition-transform ring-2 ring-transparent hover:ring-offset-2 ring-offset-white dark:ring-offset-slate-900 hover:ring-indigo-500"></button>
+<button class="size-8 rounded-full bg-violet-500 hover:scale-110 transition-transform ring-2 ring-transparent hover:ring-offset-2 ring-offset-white dark:ring-offset-slate-900 hover:ring-violet-500"></button>
+<button class="size-8 rounded-full bg-pink-500 hover:scale-110 transition-transform ring-2 ring-transparent hover:ring-offset-2 ring-offset-white dark:ring-offset-slate-900 hover:ring-pink-500"></button>
+<button class="size-8 rounded-full bg-slate-500 hover:scale-110 transition-transform ring-2 ring-transparent hover:ring-offset-2 ring-offset-white dark:ring-offset-slate-900 hover:ring-slate-500"></button>
+</div>
+<div class="flex items-center gap-3">
+<div class="flex-1 h-px bg-slate-200 dark:bg-slate-700"></div>
+<span class="text-xs text-slate-400 font-medium uppercase">Custom Hex</span>
+<div class="flex-1 h-px bg-slate-200 dark:bg-slate-700"></div>
+</div>
+<div class="flex items-center gap-3 mt-3">
+<div class="size-10 rounded-lg border border-slate-200 dark:border-slate-700 bg-blue-500 shadow-sm"></div>
+<div class="flex-1 relative">
+<span class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 font-mono text-sm">#</span>
+<input class="w-full pl-7 rounded-lg border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-sm font-mono uppercase focus:ring-primary focus:border-primary py-2 shadow-sm" type="text" value="3B82F6"/>
+</div>
+</div>
+</div>
+</div>
+<!-- Keterangan -->
+<div class="space-y-1.5">
+<label class="text-sm font-semibold text-slate-700 dark:text-slate-300">Keterangan</label>
+<textarea class="w-full rounded-lg border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-sm focus:ring-primary focus:border-primary px-3 py-2.5 shadow-sm resize-none" placeholder="Deskripsi singkat..." rows="3"></textarea>
+</div>
+<!-- Status Switch -->
+<div class="flex items-center justify-between p-3 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-800/30">
+<div class="flex flex-col">
+<span class="text-sm font-semibold text-slate-900 dark:text-white">Status Aktif</span>
+<span class="text-xs text-slate-500 dark:text-slate-400">Tag akan dapat digunakan jika aktif</span>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox" value=""/>
+<div class="w-11 h-6 bg-slate-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary/30 dark:peer-focus:ring-primary/80 rounded-full peer dark:bg-slate-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-primary"></div>
+</label>
+</div>
+</div>
+<div class="px-6 py-4 bg-slate-50 dark:bg-slate-800/50 border-t border-slate-100 dark:border-slate-800 flex justify-end gap-3">
+<button class="px-4 py-2 rounded-lg text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-white dark:hover:bg-slate-800 border border-slate-300 dark:border-slate-700 transition-colors shadow-sm">Batal</button>
+<button class="px-4 py-2 rounded-lg text-sm font-bold text-white bg-primary hover:bg-primary-hover shadow-md shadow-primary/30 transition-all transform active:scale-95">Simpan</button>
+</div>
+</div>
+</div>
+<!-- Inline demonstration of the Modal workflow (Static presentation for user to see 'Tambah' action UI) -->
+<!-- This section creates a separate visual block on the page to show what the modal looks like, as requested in the prompt flow description -->
+<div class="absolute right-8 bottom-8 z-40 w-96 bg-white dark:bg-slate-900 rounded-xl shadow-[0_20px_60px_-15px_rgba(0,0,0,0.3)] border border-slate-200 dark:border-slate-800 overflow-hidden animate-in fade-in slide-in-from-bottom-10 duration-700 hidden lg:block">
+<div class="px-5 py-3 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between bg-slate-50/80 dark:bg-slate-800/50 backdrop-blur-sm">
+<h3 class="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[20px]">palette</span>
+                New Tag Preview
+            </h3>
+</div>
+<div class="p-5 space-y-4">
+<div class="space-y-1">
+<label class="text-xs font-semibold text-slate-500 uppercase">Warna Tag</label>
+<div class="grid grid-cols-5 gap-2">
+<div class="size-8 rounded-full bg-blue-500 ring-2 ring-offset-2 ring-primary dark:ring-offset-slate-900 cursor-pointer"></div>
+<div class="size-8 rounded-full bg-rose-500 hover:opacity-80 cursor-pointer"></div>
+<div class="size-8 rounded-full bg-amber-400 hover:opacity-80 cursor-pointer"></div>
+<div class="size-8 rounded-full bg-emerald-500 hover:opacity-80 cursor-pointer"></div>
+<div class="size-8 rounded-full bg-violet-500 hover:opacity-80 cursor-pointer"></div>
+</div>
+</div>
+<div class="space-y-1">
+<label class="text-xs font-semibold text-slate-500 uppercase">Input</label>
+<div class="flex gap-2">
+<input class="flex-1 rounded border-slate-200 dark:border-slate-700 text-sm py-1.5 px-2 bg-slate-50 dark:bg-slate-800" type="text" value="Full-Time"/>
+<button class="bg-primary text-white rounded text-xs font-bold px-3 py-1.5">Add</button>
+</div>
+</div>
+<div class="text-[10px] text-slate-400 text-center italic">
+                *Mini preview of the modal component
+            </div>
+</div>
+</div>
+</body></html>

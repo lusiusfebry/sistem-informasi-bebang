@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Master Data Status Karyawan SDM V2</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1173d4",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101922",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 antialiased overflow-hidden">
+<div class="flex h-screen w-full overflow-hidden">
+<!-- Sidebar -->
+<aside class="w-72 bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 flex flex-col h-full shrink-0 overflow-y-auto z-10">
+<div class="p-6 pb-2">
+<div class="flex items-center gap-3 mb-8">
+<div class="bg-primary/10 flex items-center justify-center rounded-lg w-10 h-10 shrink-0">
+<span class="material-symbols-outlined text-primary" style="font-size: 24px;">grid_view</span>
+</div>
+<div class="flex flex-col">
+<h1 class="text-slate-900 dark:text-white text-lg font-bold leading-tight">BEBANG IS</h1>
+<p class="text-slate-500 dark:text-slate-400 text-xs font-medium">HR Module</p>
+</div>
+</div>
+<div class="flex flex-col gap-1">
+<div class="flex items-center gap-3 px-3 py-2 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg cursor-pointer transition-colors">
+<span class="material-symbols-outlined" style="font-size: 20px;">dashboard</span>
+<span class="text-sm font-medium">Dashboard</span>
+</div>
+<div class="mt-4 mb-2 px-3 text-xs font-semibold text-slate-400 uppercase tracking-wider">Master Data</div>
+<div class="flex items-center gap-3 px-3 py-2 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg cursor-pointer transition-colors">
+<span class="material-symbols-outlined" style="font-size: 20px;">church</span>
+<span class="text-sm font-medium">Agama</span>
+</div>
+<div class="flex items-center gap-3 px-3 py-2 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg cursor-pointer transition-colors">
+<span class="material-symbols-outlined" style="font-size: 20px;">account_balance</span>
+<span class="text-sm font-medium">Bank</span>
+</div>
+<div class="flex items-center gap-3 px-3 py-2 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg cursor-pointer transition-colors">
+<span class="material-symbols-outlined" style="font-size: 20px;">domain</span>
+<span class="text-sm font-medium">Departemen</span>
+</div>
+<div class="flex items-center gap-3 px-3 py-2 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg cursor-pointer transition-colors">
+<span class="material-symbols-outlined" style="font-size: 20px;">corporate_fare</span>
+<span class="text-sm font-medium">Divisi</span>
+</div>
+<div class="flex items-center gap-3 px-3 py-2 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg cursor-pointer transition-colors">
+<span class="material-symbols-outlined" style="font-size: 20px;">military_tech</span>
+<span class="text-sm font-medium">Golongan</span>
+</div>
+<div class="flex items-center gap-3 px-3 py-2 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg cursor-pointer transition-colors">
+<span class="material-symbols-outlined" style="font-size: 20px;">work</span>
+<span class="text-sm font-medium">Jabatan</span>
+</div>
+<!-- Active State -->
+<div class="flex items-center gap-3 px-3 py-2 bg-primary/10 text-primary rounded-lg cursor-pointer font-medium relative group">
+<div class="absolute left-0 h-full w-1 bg-primary rounded-r-full top-0"></div>
+<span class="material-symbols-outlined" style="font-size: 20px; font-variation-settings: 'FILL' 1;">badge</span>
+<span class="text-sm">Status Karyawan</span>
+</div>
+<div class="flex items-center gap-3 px-3 py-2 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg cursor-pointer transition-colors">
+<span class="material-symbols-outlined" style="font-size: 20px;">location_on</span>
+<span class="text-sm font-medium">Lokasi</span>
+</div>
+<div class="flex items-center gap-3 px-3 py-2 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg cursor-pointer transition-colors">
+<span class="material-symbols-outlined" style="font-size: 20px;">school</span>
+<span class="text-sm font-medium">Pendidikan</span>
+</div>
+<div class="flex items-center gap-3 px-3 py-2 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg cursor-pointer transition-colors">
+<span class="material-symbols-outlined" style="font-size: 20px;">receipt_long</span>
+<span class="text-sm font-medium">PTKP</span>
+</div>
+</div>
+</div>
+<div class="mt-auto p-4 border-t border-slate-200 dark:border-slate-800">
+<div class="flex items-center gap-3 px-3 py-2">
+<div class="w-8 h-8 rounded-full bg-slate-200 dark:bg-slate-700 bg-cover bg-center" data-alt="User profile photo" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDYJCt28MHkJsdEhdQK5DNKg72xT3ETcNNm8iKt44dP0CvRtekZ5oNZTd6I-jk6EH6FRB3-KdzIOdVI4DWfrFiVTqjdHjHsCmLTAxjxxDlIFydeqkmRryk10v3inSswFv2PVYZUHl8IBVewL777ppOELTZV_sFxeOcyNitt9mvI60yGWImIfLsEx853bBFQgin-Cw3gayQIp40RqIwMkHkUwP5RkY5tegPSkbbDl6eiE2iyKMfDc3v5Udf12FQfQrm65h7QnXLLR1o');"></div>
+<div class="flex flex-col overflow-hidden">
+<span class="text-sm font-medium text-slate-900 dark:text-white truncate">Tom Cook</span>
+<span class="text-xs text-slate-500 dark:text-slate-400 truncate">HR Admin</span>
+</div>
+<button class="ml-auto text-slate-400 hover:text-slate-600 dark:hover:text-slate-300">
+<span class="material-symbols-outlined" style="font-size: 20px;">logout</span>
+</button>
+</div>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 flex flex-col min-w-0 bg-background-light dark:bg-background-dark overflow-hidden">
+<!-- Header -->
+<header class="bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 px-8 py-5 flex flex-col gap-4">
+<!-- Breadcrumbs -->
+<nav class="flex items-center gap-2 text-sm text-slate-500 dark:text-slate-400">
+<a class="hover:text-primary transition-colors" href="#">Home</a>
+<span class="material-symbols-outlined text-[16px] text-slate-400">chevron_right</span>
+<a class="hover:text-primary transition-colors" href="#">Master Data</a>
+<span class="material-symbols-outlined text-[16px] text-slate-400">chevron_right</span>
+<span class="text-slate-900 dark:text-white font-medium">Status Karyawan</span>
+</nav>
+<div class="flex flex-wrap items-end justify-between gap-4">
+<div>
+<h2 class="text-2xl font-bold text-slate-900 dark:text-white tracking-tight">Master Data Status Karyawan</h2>
+<p class="text-slate-500 dark:text-slate-400 mt-1 max-w-2xl text-sm">Manage employee employment status types and definitions for PT PSG Site Taliabu.</p>
+</div>
+<button class="bg-primary hover:bg-blue-700 text-white px-4 py-2.5 rounded-lg flex items-center gap-2 text-sm font-medium shadow-sm transition-all active:scale-95">
+<span class="material-symbols-outlined" style="font-size: 20px;">add</span>
+                        Tambah Status
+                    </button>
+</div>
+</header>
+<!-- Table Section -->
+<div class="flex-1 overflow-auto p-8">
+<div class="bg-white dark:bg-slate-900 rounded-xl shadow-sm border border-slate-200 dark:border-slate-800 flex flex-col h-full max-h-full">
+<!-- Toolbar -->
+<div class="p-4 border-b border-slate-200 dark:border-slate-800 flex flex-col sm:flex-row gap-4 justify-between items-center bg-white dark:bg-slate-900 rounded-t-xl sticky top-0 z-10">
+<div class="relative w-full sm:max-w-md">
+<span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
+<span class="material-symbols-outlined" style="font-size: 20px;">search</span>
+</span>
+<input class="pl-10 pr-4 py-2 w-full text-sm border-slate-300 dark:border-slate-700 rounded-lg focus:ring-primary focus:border-primary bg-slate-50 dark:bg-slate-800 dark:text-white dark:placeholder-slate-500" placeholder="Cari kode atau nama status..." type="text"/>
+</div>
+<div class="flex items-center gap-3 w-full sm:w-auto">
+<div class="relative group">
+<button class="flex items-center gap-2 px-3 py-2 text-sm font-medium text-slate-600 dark:text-slate-300 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-700">
+<span class="material-symbols-outlined" style="font-size: 18px;">filter_list</span>
+<span>Filter Status</span>
+<span class="material-symbols-outlined text-slate-400" style="font-size: 18px;">expand_more</span>
+</button>
+<!-- Dropdown (hidden by default) -->
+</div>
+<div class="h-8 w-[1px] bg-slate-200 dark:bg-slate-700 hidden sm:block"></div>
+<button class="p-2 text-slate-500 dark:text-slate-400 hover:text-primary dark:hover:text-primary transition-colors" title="Reload Data">
+<span class="material-symbols-outlined" style="font-size: 20px;">refresh</span>
+</button>
+</div>
+</div>
+<!-- Table -->
+<div class="overflow-auto flex-1">
+<table class="w-full text-left border-collapse">
+<thead class="bg-slate-50 dark:bg-slate-800/50 sticky top-0 z-10">
+<tr>
+<th class="px-6 py-3 text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider border-b border-slate-200 dark:border-slate-700 w-16">No</th>
+<th class="px-6 py-3 text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider border-b border-slate-200 dark:border-slate-700 w-32">Kode</th>
+<th class="px-6 py-3 text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider border-b border-slate-200 dark:border-slate-700 w-1/4">Nama Status</th>
+<th class="px-6 py-3 text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider border-b border-slate-200 dark:border-slate-700">Keterangan</th>
+<th class="px-6 py-3 text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider border-b border-slate-200 dark:border-slate-700 w-32">Status</th>
+<th class="px-6 py-3 text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider border-b border-slate-200 dark:border-slate-700 w-24 text-right">Aksi</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-200 dark:divide-slate-800">
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors group">
+<td class="px-6 py-4 text-sm text-slate-500 dark:text-slate-400">1</td>
+<td class="px-6 py-4 text-sm font-medium text-slate-900 dark:text-white">PKWTT</td>
+<td class="px-6 py-4 text-sm text-slate-700 dark:text-slate-300">Perjanjian Kerja Waktu Tidak Tertentu</td>
+<td class="px-6 py-4 text-sm text-slate-500 dark:text-slate-400">Karyawan tetap dengan masa kerja tidak dibatasi waktu tertentu.</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-100 text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800">
+                                            Active
+                                        </span>
+</td>
+<td class="px-6 py-4 text-right whitespace-nowrap">
+<div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="text-slate-400 hover:text-primary transition-colors p-1 rounded hover:bg-primary/10" title="Edit">
+<span class="material-symbols-outlined" style="font-size: 18px;">edit</span>
+</button>
+<button class="text-slate-400 hover:text-red-600 transition-colors p-1 rounded hover:bg-red-50 dark:hover:bg-red-900/20" title="Delete">
+<span class="material-symbols-outlined" style="font-size: 18px;">delete</span>
+</button>
+</div>
+</td>
+</tr>
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors group">
+<td class="px-6 py-4 text-sm text-slate-500 dark:text-slate-400">2</td>
+<td class="px-6 py-4 text-sm font-medium text-slate-900 dark:text-white">PKWT</td>
+<td class="px-6 py-4 text-sm text-slate-700 dark:text-slate-300">Perjanjian Kerja Waktu Tertentu</td>
+<td class="px-6 py-4 text-sm text-slate-500 dark:text-slate-400">Karyawan kontrak dengan masa kerja tertentu sesuai perjanjian.</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-100 text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800">
+                                            Active
+                                        </span>
+</td>
+<td class="px-6 py-4 text-right whitespace-nowrap">
+<div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="text-slate-400 hover:text-primary transition-colors p-1 rounded hover:bg-primary/10" title="Edit">
+<span class="material-symbols-outlined" style="font-size: 18px;">edit</span>
+</button>
+<button class="text-slate-400 hover:text-red-600 transition-colors p-1 rounded hover:bg-red-50 dark:hover:bg-red-900/20" title="Delete">
+<span class="material-symbols-outlined" style="font-size: 18px;">delete</span>
+</button>
+</div>
+</td>
+</tr>
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors group">
+<td class="px-6 py-4 text-sm text-slate-500 dark:text-slate-400">3</td>
+<td class="px-6 py-4 text-sm font-medium text-slate-900 dark:text-white">PROB</td>
+<td class="px-6 py-4 text-sm text-slate-700 dark:text-slate-300">Probation / Masa Percobaan</td>
+<td class="px-6 py-4 text-sm text-slate-500 dark:text-slate-400">Masa percobaan kerja selama 3 bulan sebelum pengangkatan.</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-100 text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800">
+                                            Active
+                                        </span>
+</td>
+<td class="px-6 py-4 text-right whitespace-nowrap">
+<div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="text-slate-400 hover:text-primary transition-colors p-1 rounded hover:bg-primary/10" title="Edit">
+<span class="material-symbols-outlined" style="font-size: 18px;">edit</span>
+</button>
+<button class="text-slate-400 hover:text-red-600 transition-colors p-1 rounded hover:bg-red-50 dark:hover:bg-red-900/20" title="Delete">
+<span class="material-symbols-outlined" style="font-size: 18px;">delete</span>
+</button>
+</div>
+</td>
+</tr>
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors group">
+<td class="px-6 py-4 text-sm text-slate-500 dark:text-slate-400">4</td>
+<td class="px-6 py-4 text-sm font-medium text-slate-900 dark:text-white">HL</td>
+<td class="px-6 py-4 text-sm text-slate-700 dark:text-slate-300">Harian Lepas</td>
+<td class="px-6 py-4 text-sm text-slate-500 dark:text-slate-400">Pekerja dengan upah harian, dibayar berdasarkan kehadiran.</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-100 text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800">
+                                            Active
+                                        </span>
+</td>
+<td class="px-6 py-4 text-right whitespace-nowrap">
+<div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="text-slate-400 hover:text-primary transition-colors p-1 rounded hover:bg-primary/10" title="Edit">
+<span class="material-symbols-outlined" style="font-size: 18px;">edit</span>
+</button>
+<button class="text-slate-400 hover:text-red-600 transition-colors p-1 rounded hover:bg-red-50 dark:hover:bg-red-900/20" title="Delete">
+<span class="material-symbols-outlined" style="font-size: 18px;">delete</span>
+</button>
+</div>
+</td>
+</tr>
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors group">
+<td class="px-6 py-4 text-sm text-slate-500 dark:text-slate-400">5</td>
+<td class="px-6 py-4 text-sm font-medium text-slate-900 dark:text-white">MAG</td>
+<td class="px-6 py-4 text-sm text-slate-700 dark:text-slate-300">Magang / Internship</td>
+<td class="px-6 py-4 text-sm text-slate-500 dark:text-slate-400">Program pelatihan kerja bagi siswa atau mahasiswa.</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-slate-100 text-slate-800 dark:bg-slate-800 dark:text-slate-400 border border-slate-200 dark:border-slate-700">
+                                            Inactive
+                                        </span>
+</td>
+<td class="px-6 py-4 text-right whitespace-nowrap">
+<div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="text-slate-400 hover:text-primary transition-colors p-1 rounded hover:bg-primary/10" title="Edit">
+<span class="material-symbols-outlined" style="font-size: 18px;">edit</span>
+</button>
+<button class="text-slate-400 hover:text-red-600 transition-colors p-1 rounded hover:bg-red-50 dark:hover:bg-red-900/20" title="Delete">
+<span class="material-symbols-outlined" style="font-size: 18px;">delete</span>
+</button>
+</div>
+</td>
+</tr>
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors group">
+<td class="px-6 py-4 text-sm text-slate-500 dark:text-slate-400">6</td>
+<td class="px-6 py-4 text-sm font-medium text-slate-900 dark:text-white">OUT</td>
+<td class="px-6 py-4 text-sm text-slate-700 dark:text-slate-300">Outsourcing</td>
+<td class="px-6 py-4 text-sm text-slate-500 dark:text-slate-400">Tenaga kerja dari pihak ketiga (vendor).</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-100 text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800">
+                                            Active
+                                        </span>
+</td>
+<td class="px-6 py-4 text-right whitespace-nowrap">
+<div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="text-slate-400 hover:text-primary transition-colors p-1 rounded hover:bg-primary/10" title="Edit">
+<span class="material-symbols-outlined" style="font-size: 18px;">edit</span>
+</button>
+<button class="text-slate-400 hover:text-red-600 transition-colors p-1 rounded hover:bg-red-50 dark:hover:bg-red-900/20" title="Delete">
+<span class="material-symbols-outlined" style="font-size: 18px;">delete</span>
+</button>
+</div>
+</td>
+</tr>
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors group">
+<td class="px-6 py-4 text-sm text-slate-500 dark:text-slate-400">7</td>
+<td class="px-6 py-4 text-sm font-medium text-slate-900 dark:text-white">EXP</td>
+<td class="px-6 py-4 text-sm text-slate-700 dark:text-slate-300">Expat</td>
+<td class="px-6 py-4 text-sm text-slate-500 dark:text-slate-400">Tenaga kerja asing dengan izin kerja khusus.</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-100 text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800">
+                                            Active
+                                        </span>
+</td>
+<td class="px-6 py-4 text-right whitespace-nowrap">
+<div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="text-slate-400 hover:text-primary transition-colors p-1 rounded hover:bg-primary/10" title="Edit">
+<span class="material-symbols-outlined" style="font-size: 18px;">edit</span>
+</button>
+<button class="text-slate-400 hover:text-red-600 transition-colors p-1 rounded hover:bg-red-50 dark:hover:bg-red-900/20" title="Delete">
+<span class="material-symbols-outlined" style="font-size: 18px;">delete</span>
+</button>
+</div>
+</td>
+</tr>
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors group">
+<td class="px-6 py-4 text-sm text-slate-500 dark:text-slate-400">8</td>
+<td class="px-6 py-4 text-sm font-medium text-slate-900 dark:text-white">RET</td>
+<td class="px-6 py-4 text-sm text-slate-700 dark:text-slate-300">Retired</td>
+<td class="px-6 py-4 text-sm text-slate-500 dark:text-slate-400">Karyawan yang sudah memasuki masa pensiun.</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-slate-100 text-slate-800 dark:bg-slate-800 dark:text-slate-400 border border-slate-200 dark:border-slate-700">
+                                            Inactive
+                                        </span>
+</td>
+<td class="px-6 py-4 text-right whitespace-nowrap">
+<div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="text-slate-400 hover:text-primary transition-colors p-1 rounded hover:bg-primary/10" title="Edit">
+<span class="material-symbols-outlined" style="font-size: 18px;">edit</span>
+</button>
+<button class="text-slate-400 hover:text-red-600 transition-colors p-1 rounded hover:bg-red-50 dark:hover:bg-red-900/20" title="Delete">
+<span class="material-symbols-outlined" style="font-size: 18px;">delete</span>
+</button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination -->
+<div class="px-6 py-4 border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 rounded-b-xl flex flex-col sm:flex-row items-center justify-between gap-4">
+<div class="flex items-center gap-2 text-sm text-slate-500 dark:text-slate-400">
+<span>Show</span>
+<select class="form-select py-1 pl-2 pr-8 text-sm border-slate-300 dark:border-slate-700 rounded bg-white dark:bg-slate-800 focus:ring-primary focus:border-primary">
+<option>10</option>
+<option>25</option>
+<option>50</option>
+</select>
+<span>of 24 entries</span>
+</div>
+<div class="flex items-center gap-1">
+<button class="p-2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 disabled:opacity-50 disabled:cursor-not-allowed">
+<span class="material-symbols-outlined" style="font-size: 20px;">chevron_left</span>
+</button>
+<button class="w-8 h-8 flex items-center justify-center rounded bg-primary text-white text-sm font-medium">1</button>
+<button class="w-8 h-8 flex items-center justify-center rounded hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-400 text-sm font-medium transition-colors">2</button>
+<button class="w-8 h-8 flex items-center justify-center rounded hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-400 text-sm font-medium transition-colors">3</button>
+<button class="p-2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-300">
+<span class="material-symbols-outlined" style="font-size: 20px;">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

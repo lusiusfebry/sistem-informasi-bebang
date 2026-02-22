@@ -1,0 +1,19 @@
+.tmp/
+.env
+credentials.json
+token.json
+
+# Dependencies
+node_modules/
+dist/
+build/
+
+# Logs
+*.log
+
+# Env
+frontend/.env
+backend/.env
+
+# Uploads
+backend/uploads/

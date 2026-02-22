@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Employee Profile - HR Information</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1173d4",
+                        "secondary": "#617589",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101922",
+                        "surface-light": "#ffffff",
+                        "surface-dark": "#1a2632",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 antialiased overflow-hidden">
+<div class="flex h-screen w-full overflow-hidden">
+<!-- Sidebar -->
+<div class="flex flex-col w-72 bg-white dark:bg-surface-dark border-r border-slate-200 dark:border-slate-800 h-full overflow-y-auto shrink-0 transition-all">
+<div class="p-6 pb-2">
+<div class="flex items-center gap-3 mb-8">
+<div class="bg-center bg-no-repeat bg-cover rounded-lg h-10 w-10 shrink-0" data-alt="Company Logo Abstract" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBqqmAlLVBIRBBxFYSOcBQbzd1JcuaimlFCVSd1N2Y-E5-QAFgLvs9mJl2fY4lIdd66Qw-OJQaUOAuHmw8eSK1qnuZHq--S1kRz0pVyNI_KuL01ybsq7aPUZGAHkUCna-GX973VpPVKPApjsjl1YiXzDxz0-GwojZfL_sD0ywm-4eXsA7HEBCQYl8GVxH3rnu6yqPkdkj-UHCDkbeMu6ePjGRZA5nYaxVAqFaGjzDrYKGhZfTNfZ4xXN-o2RHU7F8JsE8rUODDjtgc");'></div>
+<div class="flex flex-col">
+<h1 class="text-slate-900 dark:text-white text-base font-bold leading-tight">BEBANG IS</h1>
+<p class="text-slate-500 dark:text-slate-400 text-xs font-normal">PT Prima Sarana Gemilang</p>
+</div>
+</div>
+<div class="flex flex-col gap-1">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors group" href="#">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-primary transition-colors">dashboard</span>
+<span class="text-sm font-medium">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary/10 text-primary dark:text-blue-400" href="#">
+<span class="material-symbols-outlined fill-1">group</span>
+<span class="text-sm font-semibold">Karyawan</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors group" href="#">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-primary transition-colors">schedule</span>
+<span class="text-sm font-medium">Absensi</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors group" href="#">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-primary transition-colors">payments</span>
+<span class="text-sm font-medium">Penggajian</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors group" href="#">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-primary transition-colors">person_add</span>
+<span class="text-sm font-medium">Rekrutmen</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors group" href="#">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-primary transition-colors">description</span>
+<span class="text-sm font-medium">Laporan</span>
+</a>
+</div>
+</div>
+<div class="mt-auto p-6 border-t border-slate-200 dark:border-slate-800">
+<div class="flex items-center gap-3 px-3 py-2 cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg transition-colors">
+<div class="bg-center bg-no-repeat bg-cover rounded-full h-8 w-8 bg-slate-200" data-alt="User Avatar" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBjSJXEiDiLUeB1PzW2Wk4S2a5TSc9j8nj0ORiqYTl8nmBJspmJEttGdm7BDGX_X_v5ItT3379sYt08E4WqdGTpWB29B0W1lBVZJh7p_TxSb4mLebmvFkP--B9WLFAWtBpoRazP2_SOkOwughFKvqDsH64OC8mrVL3OY-i6bk9P62FDzxyam3_OK77Ok3B4xin4Tq-DeguwcrGFcyXrtFxJERo4mme3KHv826gfv6cKV8l9k68LPtFRvc6WiG2abseioUqovdgGMRU");'></div>
+<div class="flex flex-col">
+<p class="text-slate-900 dark:text-white text-sm font-medium">Admin HR</p>
+<p class="text-slate-500 text-xs">View Profile</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Main Content -->
+<main class="flex-1 flex flex-col h-full overflow-hidden bg-background-light dark:bg-background-dark relative">
+<!-- Top Header (Breadcrumb) -->
+<header class="h-16 shrink-0 border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-surface-dark px-8 flex items-center justify-between z-10">
+<div class="flex items-center gap-2 text-sm">
+<a class="text-slate-500 hover:text-primary transition-colors" href="#">Karyawan</a>
+<span class="text-slate-300">/</span>
+<a class="text-slate-500 hover:text-primary transition-colors" href="#">Daftar Karyawan</a>
+<span class="text-slate-300">/</span>
+<span class="font-medium text-slate-900 dark:text-white">Profil Karyawan</span>
+</div>
+<div class="flex items-center gap-4">
+<button class="text-slate-500 hover:text-primary transition-colors relative">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-0 right-0 h-2 w-2 rounded-full bg-red-500 border border-white dark:border-surface-dark"></span>
+</button>
+<button class="text-slate-500 hover:text-primary transition-colors">
+<span class="material-symbols-outlined">help</span>
+</button>
+</div>
+</header>
+<!-- Scrollable Content -->
+<div class="flex-1 overflow-y-auto p-8">
+<div class="max-w-6xl mx-auto flex flex-col gap-6">
+<!-- Employee Summary Card -->
+<div class="bg-white dark:bg-surface-dark rounded-xl border border-slate-200 dark:border-slate-700 p-6 shadow-sm">
+<div class="flex flex-col md:flex-row gap-6 items-start md:items-center justify-between">
+<div class="flex gap-5 items-center">
+<div class="relative">
+<div class="h-24 w-24 rounded-full bg-slate-200 bg-cover bg-center border-4 border-white dark:border-surface-dark shadow-sm" data-alt="Profile Picture of Budi Santoso" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBDVAAotbVm2NPsUQGbTM6xg501DIyYieEboKbu1YdpeE-9TmL_tYMrytou5coQHCmp8RWff9AlXOpboD3x1V-YAo1PvU9Oo1i7eDLZbGCZCV3UoGZ886HW6mLmbrpBSckiqFr-cYed5kMVMwjn2OQZk2wuGk1tHCgyJ2zPaRvyvu8CllM25qxAt9boZhJOEVtekgyWWc4fDkJ4rhs6kqOKNuxcD1IpPBE3Pgdd2V5F73XnDYic6-pdWc0YEQljLgG7oCVdm1_ZcRI");'></div>
+<div class="absolute bottom-0 right-0 h-6 w-6 rounded-full bg-green-500 border-2 border-white dark:border-surface-dark flex items-center justify-center" title="Active">
+<span class="material-symbols-outlined text-white text-[14px] font-bold">check</span>
+</div>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-3 mb-1">
+<h2 class="text-2xl font-bold text-slate-900 dark:text-white">Budi Santoso</h2>
+<span class="px-2.5 py-0.5 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 text-xs font-semibold border border-slate-200 dark:border-slate-700">NIK: 2023001</span>
+</div>
+<p class="text-slate-600 dark:text-slate-400 font-medium">Foreman Mining</p>
+<div class="flex items-center gap-4 mt-2 text-sm text-slate-500 dark:text-slate-500">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[18px]">location_on</span>
+                                            Site Taliabu
+                                        </div>
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[18px]">email</span>
+                                            budi.santoso@primasarana.com
+                                        </div>
+</div>
+</div>
+</div>
+<div class="flex gap-3 w-full md:w-auto">
+<button class="flex-1 md:flex-none items-center justify-center gap-2 px-4 py-2 bg-white dark:bg-surface-dark border border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-300 text-sm font-semibold rounded-lg hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors shadow-sm">
+<span class="material-symbols-outlined text-[20px]">edit</span>
+                                    Edit Data
+                                </button>
+<button class="flex-1 md:flex-none items-center justify-center gap-2 px-4 py-2 bg-primary text-white text-sm font-bold rounded-lg hover:bg-blue-600 transition-colors shadow-md shadow-blue-200 dark:shadow-none">
+<span class="material-symbols-outlined text-[20px]">history_edu</span>
+                                    Perbarui Kontrak
+                                </button>
+</div>
+</div>
+</div>
+<!-- Navigation Tabs -->
+<div class="border-b border-slate-200 dark:border-slate-700">
+<nav aria-label="Tabs" class="-mb-px flex gap-8">
+<a class="border-transparent text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200 hover:border-slate-300 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm transition-colors" href="#">
+                                Personal Info
+                            </a>
+<a aria-current="page" class="border-primary text-primary whitespace-nowrap py-4 px-1 border-b-2 font-bold text-sm transition-colors" href="#">
+                                Informasi HR
+                            </a>
+<a class="border-transparent text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200 hover:border-slate-300 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm transition-colors" href="#">
+                                Payroll
+                            </a>
+<a class="border-transparent text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200 hover:border-slate-300 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm transition-colors" href="#">
+                                Dokumen
+                            </a>
+<a class="border-transparent text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200 hover:border-slate-300 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm transition-colors" href="#">
+                                Aset
+                            </a>
+</nav>
+</div>
+<!-- Main Section Container -->
+<div class="flex flex-col gap-8 pb-10">
+<!-- SECTION 1: Status & Data Kontrak -->
+<section class="bg-white dark:bg-surface-dark rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm overflow-hidden">
+<div class="px-6 py-4 border-b border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/50 flex justify-between items-center">
+<h3 class="text-base font-bold text-slate-800 dark:text-white flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">verified_user</span>
+                                    Status &amp; Data Kontrak
+                                </h3>
+<span class="inline-flex items-center gap-1.5 rounded-full bg-green-50 dark:bg-green-900/30 px-3 py-1 text-xs font-semibold text-green-700 dark:text-green-400 ring-1 ring-inset ring-green-600/20">
+<span class="h-1.5 w-1.5 rounded-full bg-green-600 dark:bg-green-400 animate-pulse"></span>
+                                    Aktif
+                                </span>
+</div>
+<div class="p-6">
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+<div class="flex flex-col gap-1">
+<span class="text-xs font-medium text-slate-500 uppercase tracking-wide">Nomor SK / Kontrak</span>
+<p class="text-sm font-semibold text-slate-900 dark:text-white">SK-2024/HR/0012</p>
+</div>
+<div class="flex flex-col gap-1">
+<span class="text-xs font-medium text-slate-500 uppercase tracking-wide">Tipe Kontrak</span>
+<div class="flex items-center gap-2">
+<p class="text-sm font-semibold text-slate-900 dark:text-white">PKWT-1</p>
+<span class="text-[10px] bg-blue-50 text-blue-600 px-1.5 rounded border border-blue-100 dark:bg-blue-900/30 dark:text-blue-300 dark:border-blue-800">Fixed Term</span>
+</div>
+</div>
+<div class="flex flex-col gap-1">
+<span class="text-xs font-medium text-slate-500 uppercase tracking-wide">Tanggal Mulai</span>
+<p class="text-sm font-semibold text-slate-900 dark:text-white font-mono">01 Jan 2024</p>
+</div>
+<div class="flex flex-col gap-1">
+<span class="text-xs font-medium text-slate-500 uppercase tracking-wide">Tanggal Berakhir</span>
+<div class="flex items-center gap-2">
+<p class="text-sm font-semibold text-slate-900 dark:text-white font-mono">31 Des 2024</p>
+<span class="text-[10px] bg-slate-100 text-slate-500 px-1.5 rounded dark:bg-slate-800">365 Hari</span>
+</div>
+</div>
+</div>
+<div class="mt-6 pt-6 border-t border-slate-100 dark:border-slate-800 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+<div class="flex flex-col gap-1">
+<span class="text-xs font-medium text-slate-500 uppercase tracking-wide">Tanggal Bergabung</span>
+<p class="text-sm font-semibold text-slate-900 dark:text-white font-mono">01 Jan 2020</p>
+</div>
+<div class="flex flex-col gap-1">
+<span class="text-xs font-medium text-slate-500 uppercase tracking-wide">Masa Kerja Total</span>
+<p class="text-sm font-semibold text-slate-900 dark:text-white">4 Tahun, 2 Bulan</p>
+</div>
+<div class="flex flex-col gap-1">
+<span class="text-xs font-medium text-slate-500 uppercase tracking-wide">Status Karyawan</span>
+<p class="text-sm font-semibold text-slate-900 dark:text-white">Tetap (Percobaan)</p>
+</div>
+<div class="flex flex-col gap-1">
+<span class="text-xs font-medium text-slate-500 uppercase tracking-wide">Grade</span>
+<p class="text-sm font-semibold text-slate-900 dark:text-white">OP-4</p>
+</div>
+</div>
+</div>
+</section>
+<!-- SECTION 2: Pergerakan Karyawan -->
+<section class="bg-white dark:bg-surface-dark rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm overflow-hidden">
+<div class="px-6 py-4 border-b border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/50 flex justify-between items-center">
+<h3 class="text-base font-bold text-slate-800 dark:text-white flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">trending_up</span>
+                                    Pergerakan Karir &amp; Mutasi
+                                </h3>
+<button class="text-xs font-medium text-primary hover:text-blue-700 flex items-center gap-1">
+                                    Lihat Semua <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+</button>
+</div>
+<div class="p-0 overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-slate-50 dark:bg-slate-800/30 border-b border-slate-200 dark:border-slate-700">
+<th class="px-6 py-3 text-xs font-medium text-slate-500 uppercase tracking-wider">Tanggal Efektif</th>
+<th class="px-6 py-3 text-xs font-medium text-slate-500 uppercase tracking-wider">Tipe Pergerakan</th>
+<th class="px-6 py-3 text-xs font-medium text-slate-500 uppercase tracking-wider">Posisi / Lokasi</th>
+<th class="px-6 py-3 text-xs font-medium text-slate-500 uppercase tracking-wider">Nomor SK</th>
+<th class="px-6 py-3 text-xs font-medium text-slate-500 uppercase tracking-wider text-right">Aksi</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-100 dark:divide-slate-800">
+<!-- Row 1 -->
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+<td class="px-6 py-4 text-sm text-slate-900 dark:text-white font-mono whitespace-nowrap">01 Jan 2024</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<span class="inline-flex items-center gap-1 rounded-md bg-purple-50 px-2 py-1 text-xs font-medium text-purple-700 ring-1 ring-inset ring-purple-700/10 dark:bg-purple-900/20 dark:text-purple-300">
+                                                    Promosi
+                                                </span>
+</td>
+<td class="px-6 py-4 text-sm text-slate-700 dark:text-slate-300">
+<div class="flex flex-col">
+<span class="font-medium text-slate-900 dark:text-white">Foreman Mining</span>
+<span class="text-xs text-slate-500">Prev: Senior Operator</span>
+</div>
+</td>
+<td class="px-6 py-4 text-sm text-slate-500 whitespace-nowrap">SK-2024/PM/012</td>
+<td class="px-6 py-4 text-right">
+<button class="text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[20px]">visibility</span>
+</button>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+<td class="px-6 py-4 text-sm text-slate-900 dark:text-white font-mono whitespace-nowrap">15 Jun 2022</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<span class="inline-flex items-center gap-1 rounded-md bg-orange-50 px-2 py-1 text-xs font-medium text-orange-700 ring-1 ring-inset ring-orange-700/10 dark:bg-orange-900/20 dark:text-orange-300">
+                                                    Mutasi
+                                                </span>
+</td>
+<td class="px-6 py-4 text-sm text-slate-700 dark:text-slate-300">
+<div class="flex flex-col">
+<span class="font-medium text-slate-900 dark:text-white">Site Taliabu</span>
+<span class="text-xs text-slate-500">Prev: Site Morowali</span>
+</div>
+</td>
+<td class="px-6 py-4 text-sm text-slate-500 whitespace-nowrap">SK-2022/MT/089</td>
+<td class="px-6 py-4 text-right">
+<button class="text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[20px]">visibility</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<!-- SECTION 3: Costing & Assignment -->
+<section class="bg-white dark:bg-surface-dark rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm overflow-hidden">
+<div class="px-6 py-4 border-b border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/50">
+<h3 class="text-base font-bold text-slate-800 dark:text-white flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">account_balance_wallet</span>
+                                    Costing &amp; Penugasan
+                                </h3>
+</div>
+<div class="p-6">
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+<!-- Cost Center Card -->
+<div class="bg-slate-50 dark:bg-slate-800/30 rounded-lg p-4 border border-slate-100 dark:border-slate-700 flex flex-col gap-3">
+<div class="flex items-center gap-2 text-slate-500 dark:text-slate-400">
+<span class="material-symbols-outlined text-[20px]">domain</span>
+<span class="text-xs font-semibold uppercase">Cost Center</span>
+</div>
+<div>
+<p class="text-lg font-bold text-slate-900 dark:text-white">Production - 01</p>
+<p class="text-sm text-slate-500">CC Code: <span class="font-mono">PRD-TAL-001</span></p>
+</div>
+</div>
+<!-- Location Card -->
+<div class="bg-slate-50 dark:bg-slate-800/30 rounded-lg p-4 border border-slate-100 dark:border-slate-700 flex flex-col gap-3">
+<div class="flex items-center gap-2 text-slate-500 dark:text-slate-400">
+<span class="material-symbols-outlined text-[20px]">map</span>
+<span class="text-xs font-semibold uppercase">Lokasi Penugasan</span>
+</div>
+<div>
+<p class="text-lg font-bold text-slate-900 dark:text-white">Site Taliabu</p>
+<p class="text-sm text-slate-500">North Maluku Region</p>
+</div>
+</div>
+<!-- Payroll Cycle Card -->
+<div class="bg-slate-50 dark:bg-slate-800/30 rounded-lg p-4 border border-slate-100 dark:border-slate-700 flex flex-col gap-3">
+<div class="flex items-center gap-2 text-slate-500 dark:text-slate-400">
+<span class="material-symbols-outlined text-[20px]">calendar_month</span>
+<span class="text-xs font-semibold uppercase">Siklus Penggajian</span>
+</div>
+<div>
+<p class="text-lg font-bold text-slate-900 dark:text-white">Bulanan (Monthly)</p>
+<p class="text-sm text-slate-500">Cut-off: Tanggal 25</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<div class="flex justify-end pt-4 pb-12 text-slate-400 text-xs text-center">
+                            Last updated by Admin HR on 01 Sep 2024, 14:30 WIB
+                        </div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

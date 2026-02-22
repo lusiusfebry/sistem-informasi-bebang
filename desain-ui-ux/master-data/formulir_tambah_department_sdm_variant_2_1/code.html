@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Formulir Tambah Department SDM Variant 2</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1173d4",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101922",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 antialiased overflow-hidden">
+<div class="flex h-screen w-full">
+<!-- Sidebar -->
+<div class="hidden lg:flex w-[280px] flex-col border-r border-slate-200 bg-white dark:bg-slate-900 dark:border-slate-800">
+<div class="flex h-full flex-col justify-between p-4">
+<div class="flex flex-col gap-4">
+<div class="flex gap-3 px-2 py-4">
+<div class="bg-center bg-no-repeat bg-cover rounded-full h-10 w-10 bg-slate-200 relative overflow-hidden">
+<img alt="User Avatar" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCFiwVrFSTK48iZt-tTjsm0PqeHbln-2qU1H6q10nQaro7cftnAhoxvbKDMGoX75ngQ_KnYx8oiD8jmUZXoxv0mT1K4tYpH3U3rnVAgeOFKegTvFyoOGQvPdDiOwIitM4uMSS5cY_87h6g1SG44TG8glb8PP2A0kALOE1DOQQnA5wNoSmmcGy4g0m08ZJoDX6bUEciGM0Pllg1gCD91orDFY9LWCN-Fu3tKpfWyAzRMKAZx0fWIh3_VFzj4ZJHL0nI-1LJ7yY2Jg_s"/>
+</div>
+<div class="flex flex-col">
+<h1 class="text-slate-900 dark:text-white text-base font-bold leading-normal">BEBANG IS</h1>
+<p class="text-slate-500 dark:text-slate-400 text-sm font-normal leading-normal">HR Admin</p>
+</div>
+</div>
+<div class="flex flex-col gap-2">
+<div class="flex items-center gap-3 px-3 py-2 text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg cursor-pointer">
+<span class="material-symbols-outlined text-[24px]">dashboard</span>
+<p class="text-sm font-medium leading-normal">Dashboard</p>
+</div>
+<div class="flex items-center gap-3 px-3 py-2 text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg cursor-pointer">
+<span class="material-symbols-outlined text-[24px]">group</span>
+<p class="text-sm font-medium leading-normal">Karyawan</p>
+</div>
+<!-- Active State -->
+<div class="flex items-center gap-3 px-3 py-2 rounded-lg bg-primary/10 text-primary cursor-pointer">
+<span class="material-symbols-outlined text-[24px] fill-1">domain</span>
+<p class="text-sm font-medium leading-normal">Department</p>
+</div>
+<div class="flex items-center gap-3 px-3 py-2 text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg cursor-pointer">
+<span class="material-symbols-outlined text-[24px]">schedule</span>
+<p class="text-sm font-medium leading-normal">Absensi</p>
+</div>
+<div class="flex items-center gap-3 px-3 py-2 text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg cursor-pointer">
+<span class="material-symbols-outlined text-[24px]">settings</span>
+<p class="text-sm font-medium leading-normal">Pengaturan</p>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-3 px-3 py-2 text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg cursor-pointer mt-auto">
+<span class="material-symbols-outlined text-[24px]">logout</span>
+<p class="text-sm font-medium leading-normal">Logout</p>
+</div>
+</div>
+</div>
+<!-- Main Content Area -->
+<div class="flex-1 flex flex-col h-full relative overflow-y-auto bg-background-light dark:bg-background-dark">
+<!-- Header/Top Bar -->
+<div class="sticky top-0 z-10 flex w-full items-center justify-between bg-white dark:bg-slate-900 px-6 py-4 border-b border-slate-200 dark:border-slate-800">
+<h1 class="text-2xl font-bold tracking-tight text-slate-900 dark:text-white">Daftar Department</h1>
+<div class="flex items-center gap-4">
+<button class="flex items-center justify-center h-10 w-10 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="bg-primary hover:bg-primary/90 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-[20px]">add</span>
+                        Tambah Baru
+                    </button>
+</div>
+</div>
+<!-- Content: Table (Blurred Background) -->
+<div aria-hidden="true" class="p-6 opacity-30 pointer-events-none select-none blur-[1px] transition-all duration-300">
+<div class="overflow-hidden rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 shadow-sm">
+<div class="overflow-x-auto">
+<table class="w-full text-left text-sm text-slate-600 dark:text-slate-300">
+<thead class="bg-slate-50 dark:bg-slate-700/50 text-slate-900 dark:text-white font-semibold">
+<tr>
+<th class="px-6 py-4">No</th>
+<th class="px-6 py-4">Nama Department</th>
+<th class="px-6 py-4">Manager</th>
+<th class="px-6 py-4">Divisi</th>
+<th class="px-6 py-4">Status</th>
+<th class="px-6 py-4 text-right">Aksi</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-200 dark:divide-slate-700">
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-700/30 transition-colors">
+<td class="px-6 py-4 font-medium">1</td>
+<td class="px-6 py-4 text-slate-900 dark:text-white font-medium">Human Resources</td>
+<td class="px-6 py-4">Budi Santoso</td>
+<td class="px-6 py-4">General Affairs</td>
+<td class="px-6 py-4"><span class="inline-flex items-center rounded-full bg-emerald-50 px-2 py-1 text-xs font-medium text-emerald-700 ring-1 ring-inset ring-emerald-600/20">Active</span></td>
+<td class="px-6 py-4 text-right font-medium text-primary cursor-pointer">Edit</td>
+</tr>
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-700/30 transition-colors">
+<td class="px-6 py-4 font-medium">2</td>
+<td class="px-6 py-4 text-slate-900 dark:text-white font-medium">Information Technology</td>
+<td class="px-6 py-4">Andi Wijaya</td>
+<td class="px-6 py-4">Support</td>
+<td class="px-6 py-4"><span class="inline-flex items-center rounded-full bg-emerald-50 px-2 py-1 text-xs font-medium text-emerald-700 ring-1 ring-inset ring-emerald-600/20">Active</span></td>
+<td class="px-6 py-4 text-right font-medium text-primary cursor-pointer">Edit</td>
+</tr>
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-700/30 transition-colors">
+<td class="px-6 py-4 font-medium">3</td>
+<td class="px-6 py-4 text-slate-900 dark:text-white font-medium">Finance</td>
+<td class="px-6 py-4">Siti Aminah</td>
+<td class="px-6 py-4">Finance</td>
+<td class="px-6 py-4"><span class="inline-flex items-center rounded-full bg-emerald-50 px-2 py-1 text-xs font-medium text-emerald-700 ring-1 ring-inset ring-emerald-600/20">Active</span></td>
+<td class="px-6 py-4 text-right font-medium text-primary cursor-pointer">Edit</td>
+</tr>
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-700/30 transition-colors">
+<td class="px-6 py-4 font-medium">4</td>
+<td class="px-6 py-4 text-slate-900 dark:text-white font-medium">Operations</td>
+<td class="px-6 py-4">Rudi Hartono</td>
+<td class="px-6 py-4">Mining</td>
+<td class="px-6 py-4"><span class="inline-flex items-center rounded-full bg-emerald-50 px-2 py-1 text-xs font-medium text-emerald-700 ring-1 ring-inset ring-emerald-600/20">Active</span></td>
+<td class="px-6 py-4 text-right font-medium text-primary cursor-pointer">Edit</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<!-- Modal Overlay -->
+<div class="absolute inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-sm">
+<!-- Modal Container -->
+<div class="w-full max-w-lg overflow-hidden bg-white dark:bg-slate-900 rounded-xl shadow-2xl border border-slate-200 dark:border-slate-800 flex flex-col max-h-[90vh]">
+<!-- Modal Header -->
+<div class="px-6 py-4 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between bg-white dark:bg-slate-900">
+<div>
+<h2 class="text-xl font-bold text-slate-900 dark:text-white tracking-tight">Tambah Department Baru</h2>
+<p class="text-sm text-slate-500 dark:text-slate-400 mt-1">Isi formulir untuk menambahkan unit organisasi baru.</p>
+</div>
+<button class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition-colors rounded-lg p-1 hover:bg-slate-100 dark:hover:bg-slate-800">
+<span class="material-symbols-outlined">close</span>
+</button>
+</div>
+<!-- Modal Body (Scrollable) -->
+<div class="p-6 overflow-y-auto">
+<form action="#" class="space-y-5">
+<!-- Department Name Field -->
+<div class="space-y-1.5">
+<label class="block text-sm font-medium text-slate-700 dark:text-slate-300" for="dept-name">
+                                    Nama Department <span class="text-red-500">*</span>
+</label>
+<div class="relative">
+<div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+<span class="material-symbols-outlined text-slate-400 text-[20px]">apartment</span>
+</div>
+<input class="block w-full rounded-lg border-slate-300 pl-10 py-2.5 text-slate-900 placeholder:text-slate-400 focus:border-primary focus:ring-primary sm:text-sm dark:bg-slate-800 dark:border-slate-700 dark:text-white dark:placeholder:text-slate-500 transition-shadow duration-200" id="dept-name" name="dept-name" placeholder="Contoh: Human Resources" type="text"/>
+</div>
+</div>
+<!-- Division Field -->
+<div class="space-y-1.5">
+<label class="block text-sm font-medium text-slate-700 dark:text-slate-300" for="division">
+                                    Divisi <span class="text-red-500">*</span>
+</label>
+<div class="relative">
+<div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+<span class="material-symbols-outlined text-slate-400 text-[20px]">domain</span>
+</div>
+<select class="block w-full rounded-lg border-slate-300 pl-10 py-2.5 text-slate-900 focus:border-primary focus:ring-primary sm:text-sm dark:bg-slate-800 dark:border-slate-700 dark:text-white appearance-none cursor-pointer" id="division" name="division">
+<option class="text-slate-400" disabled="" selected="" value="">Pilih Divisi</option>
+<option value="ga">General Affairs</option>
+<option value="ops">Operations</option>
+<option value="fin">Finance</option>
+<option value="hr">Human Capital</option>
+</select>
+<div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
+<span class="material-symbols-outlined text-slate-400 text-[20px]">expand_more</span>
+</div>
+</div>
+</div>
+<!-- Manager Field -->
+<div class="space-y-1.5">
+<label class="block text-sm font-medium text-slate-700 dark:text-slate-300" for="manager">
+                                    Nama Manager
+                                </label>
+<div class="relative">
+<div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+<span class="material-symbols-outlined text-slate-400 text-[20px]">person</span>
+</div>
+<select class="block w-full rounded-lg border-slate-300 pl-10 py-2.5 text-slate-900 focus:border-primary focus:ring-primary sm:text-sm dark:bg-slate-800 dark:border-slate-700 dark:text-white appearance-none cursor-pointer" id="manager" name="manager">
+<option class="text-slate-400" disabled="" selected="" value="">Pilih Manager (Opsional)</option>
+<option value="budi">Budi Santoso</option>
+<option value="andi">Andi Wijaya</option>
+<option value="siti">Siti Aminah</option>
+</select>
+<div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
+<span class="material-symbols-outlined text-slate-400 text-[20px]">expand_more</span>
+</div>
+</div>
+</div>
+<!-- Status Toggle -->
+<div class="flex items-center justify-between pt-2">
+<div class="flex flex-col">
+<span class="text-sm font-medium text-slate-700 dark:text-slate-300">Status Department</span>
+<span class="text-xs text-slate-500 dark:text-slate-400">Aktifkan untuk menampilkan department ini di sistem</span>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox" value=""/>
+<div class="w-11 h-6 bg-slate-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary/20 dark:peer-focus:ring-primary/30 rounded-full peer dark:bg-slate-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-primary"></div>
+<span class="ml-3 text-sm font-medium text-slate-900 dark:text-slate-300 sr-only">Status</span>
+</label>
+</div>
+</form>
+</div>
+<!-- Modal Footer -->
+<div class="px-6 py-4 bg-slate-50 dark:bg-slate-800/50 border-t border-slate-100 dark:border-slate-800 flex items-center justify-end gap-3">
+<button class="px-4 py-2.5 rounded-lg border border-slate-300 bg-white text-slate-700 text-sm font-medium hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary dark:bg-slate-800 dark:border-slate-600 dark:text-slate-300 dark:hover:bg-slate-700 transition-colors" type="button">
+                            Kembali
+                        </button>
+<button class="px-4 py-2.5 rounded-lg bg-primary text-white text-sm font-medium hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary shadow-sm shadow-primary/30 transition-all" type="button">
+                            Simpan
+                        </button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</body></html>

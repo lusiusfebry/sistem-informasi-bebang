@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Master Data Divisi SDM - BEBANG System</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#1173d4",
+              "background-light": "#f6f7f8",
+              "background-dark": "#101922",
+            },
+            fontFamily: {
+              "display": ["Inter", "sans-serif"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 overflow-hidden">
+<div class="flex h-screen w-full overflow-hidden">
+<!-- Sidebar -->
+<aside class="w-72 bg-white dark:bg-[#1a2632] border-r border-slate-200 dark:border-slate-800 flex flex-col h-full shrink-0 overflow-y-auto">
+<!-- Brand -->
+<div class="p-6 pb-2">
+<div class="flex items-center gap-3 mb-6">
+<div class="bg-primary/10 flex items-center justify-center rounded-lg size-10 shrink-0">
+<span class="material-symbols-outlined text-primary text-2xl">diamond</span>
+</div>
+<div class="flex flex-col">
+<h1 class="text-slate-900 dark:text-white text-base font-bold leading-tight">BEBANG System</h1>
+<p class="text-slate-500 dark:text-slate-400 text-xs font-normal leading-normal">PT Prima Sarana Gemilang</p>
+</div>
+</div>
+<div class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2 px-1">Master Data</div>
+</div>
+<!-- Menu -->
+<nav class="flex-1 px-4 pb-6 flex flex-col gap-1">
+<!-- Active Item: Divisi -->
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary/10 text-primary" href="#">
+<span class="material-symbols-outlined text-xl">groups</span>
+<span class="text-sm font-medium leading-normal">Divisi</span>
+</a>
+<!-- Other Items -->
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined text-xl">domain</span>
+<span class="text-sm font-medium leading-normal">Department</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined text-xl">work</span>
+<span class="text-sm font-medium leading-normal">Posisi Jabatan</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined text-xl">military_tech</span>
+<span class="text-sm font-medium leading-normal">Kategori Pangkat</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined text-xl">sort</span>
+<span class="text-sm font-medium leading-normal">Golongan</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined text-xl">bar_chart</span>
+<span class="text-sm font-medium leading-normal">Sub Golongan</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined text-xl">handshake</span>
+<span class="text-sm font-medium leading-normal">Jenis Hubungan Kerja</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined text-xl">label</span>
+<span class="text-sm font-medium leading-normal">Tag</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined text-xl">location_on</span>
+<span class="text-sm font-medium leading-normal">Lokasi Kerja</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined text-xl">badge</span>
+<span class="text-sm font-medium leading-normal">Status Karyawan</span>
+</a>
+</nav>
+<!-- User Profile (Bottom Sidebar) -->
+<div class="mt-auto p-4 border-t border-slate-200 dark:border-slate-800">
+<div class="flex items-center gap-3">
+<div class="size-10 rounded-full bg-slate-200 bg-cover bg-center" data-alt="Portrait of a smiling user" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuA_mbnz1VkvVH555UZGUwoVoUjniuhzQcLnh6rlNn-KC-RT0BZ3eZimQxhAqeDAvcWDKb-5JK_lEgsL-ZdIQtb_fIJj3mcNvwCFNm7J9C7gqB8lYM9go5foj6cmXgQk-35f8-jHSCP_-m7pDBqGk1c4oGOt5yhf62H3vXKM9n3qjAMYEogJNTxollvHRDfX28Op5vKfKcOsz-v54FjLU3ygqeOE5DR19-Ce4p-nlxu4RbljDtYjNdiIV6YaRJBep3y5XyhZtST7uf8');"></div>
+<div class="flex flex-col overflow-hidden">
+<span class="text-sm font-semibold text-slate-900 dark:text-white truncate">Budi Santoso</span>
+<span class="text-xs text-slate-500 dark:text-slate-400 truncate">HR Admin</span>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 flex flex-col min-w-0 bg-background-light dark:bg-background-dark overflow-hidden">
+<!-- Top Header -->
+<header class="h-16 bg-white dark:bg-[#1a2632] border-b border-slate-200 dark:border-slate-800 flex items-center justify-between px-6 shrink-0">
+<div class="flex items-center gap-4">
+<!-- Breadcrumbs -->
+<nav aria-label="Breadcrumb" class="flex">
+<ol class="flex items-center space-x-2">
+<li>
+<a class="text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200" href="#">
+<span class="material-symbols-outlined text-xl align-middle">home</span>
+</a>
+</li>
+<li class="text-slate-300 dark:text-slate-600">/</li>
+<li>
+<a class="text-sm font-medium text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200" href="#">Master Data</a>
+</li>
+<li class="text-slate-300 dark:text-slate-600">/</li>
+<li>
+<span aria-current="page" class="text-sm font-medium text-primary">Divisi</span>
+</li>
+</ol>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<button class="text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-white relative">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-0 right-0 size-2 bg-red-500 rounded-full border-2 border-white dark:border-[#1a2632]"></span>
+</button>
+<button class="text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-white">
+<span class="material-symbols-outlined">settings</span>
+</button>
+</div>
+</header>
+<!-- Scrollable Content -->
+<div class="flex-1 overflow-auto p-8">
+<div class="max-w-[1200px] mx-auto w-full flex flex-col gap-6">
+<!-- Page Header & Actions -->
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+<div>
+<h2 class="text-2xl font-bold text-slate-900 dark:text-white tracking-tight">Master Data Divisi</h2>
+<p class="text-sm text-slate-500 dark:text-slate-400 mt-1">Manage division structures and their active status across the organization.</p>
+</div>
+<button class="bg-primary hover:bg-blue-600 text-white px-4 py-2.5 rounded-lg text-sm font-medium flex items-center gap-2 transition-colors shadow-sm">
+<span class="material-symbols-outlined text-xl">add</span>
+                            Tambah Divisi
+                        </button>
+</div>
+<!-- Search & Filters -->
+<div class="bg-white dark:bg-[#1a2632] rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm p-4">
+<div class="flex flex-col sm:flex-row gap-4">
+<div class="relative flex-1">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">search</span>
+<input class="w-full pl-10 pr-4 py-2 bg-slate-50 dark:bg-slate-800 border-transparent focus:bg-white dark:focus:bg-slate-900 focus:border-primary focus:ring-0 rounded-lg text-sm transition-all text-slate-900 dark:text-white placeholder:text-slate-400" placeholder="Cari nama divisi..." type="text"/>
+</div>
+<div class="flex gap-2">
+<button class="px-4 py-2 border border-slate-200 dark:border-slate-700 rounded-lg text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 flex items-center gap-2">
+<span class="material-symbols-outlined text-lg">filter_list</span>
+                                    Filter
+                                </button>
+<button class="px-4 py-2 border border-slate-200 dark:border-slate-700 rounded-lg text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 flex items-center gap-2">
+<span class="material-symbols-outlined text-lg">download</span>
+                                    Export
+                                </button>
+</div>
+</div>
+</div>
+<!-- Table Card -->
+<div class="bg-white dark:bg-[#1a2632] rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden flex flex-col">
+<div class="overflow-x-auto">
+<table class="w-full text-left text-sm text-slate-600 dark:text-slate-300">
+<thead class="bg-slate-50 dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700">
+<tr>
+<th class="px-6 py-4 font-semibold text-slate-900 dark:text-white w-16" scope="col">No</th>
+<th class="px-6 py-4 font-semibold text-slate-900 dark:text-white" scope="col">Nama Divisi</th>
+<th class="px-6 py-4 font-semibold text-slate-900 dark:text-white" scope="col">Keterangan</th>
+<th class="px-6 py-4 font-semibold text-slate-900 dark:text-white w-32" scope="col">Status</th>
+<th class="px-6 py-4 font-semibold text-slate-900 dark:text-white w-24 text-right" scope="col">Aksi</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-100 dark:divide-slate-700/50">
+<!-- Row 1 -->
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors group">
+<td class="px-6 py-4 font-medium text-slate-900 dark:text-white">1</td>
+<td class="px-6 py-4">
+<div class="font-medium text-slate-900 dark:text-white">Operations</div>
+<div class="text-xs text-slate-500 mt-0.5">OPS-001</div>
+</td>
+<td class="px-6 py-4 text-slate-500 dark:text-slate-400">Divisi Operasional Tambang dan Produksi</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-100 text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-400 border border-emerald-100 dark:border-emerald-800">
+                                                Aktif
+                                            </span>
+</td>
+<td class="px-6 py-4 text-right">
+<div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="text-slate-400 hover:text-primary transition-colors p-1 rounded hover:bg-primary/5">
+<span class="material-symbols-outlined text-lg">edit</span>
+</button>
+<button class="text-slate-400 hover:text-red-500 transition-colors p-1 rounded hover:bg-red-50">
+<span class="material-symbols-outlined text-lg">delete</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors group">
+<td class="px-6 py-4 font-medium text-slate-900 dark:text-white">2</td>
+<td class="px-6 py-4">
+<div class="font-medium text-slate-900 dark:text-white">Finance &amp; Accounting</div>
+<div class="text-xs text-slate-500 mt-0.5">FA-002</div>
+</td>
+<td class="px-6 py-4 text-slate-500 dark:text-slate-400">Keuangan, Akuntansi dan Pajak</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-100 text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-400 border border-emerald-100 dark:border-emerald-800">
+                                                Aktif
+                                            </span>
+</td>
+<td class="px-6 py-4 text-right">
+<div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="text-slate-400 hover:text-primary transition-colors p-1 rounded hover:bg-primary/5">
+<span class="material-symbols-outlined text-lg">edit</span>
+</button>
+<button class="text-slate-400 hover:text-red-500 transition-colors p-1 rounded hover:bg-red-50">
+<span class="material-symbols-outlined text-lg">delete</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors group">
+<td class="px-6 py-4 font-medium text-slate-900 dark:text-white">3</td>
+<td class="px-6 py-4">
+<div class="font-medium text-slate-900 dark:text-white">HRGA</div>
+<div class="text-xs text-slate-500 mt-0.5">HR-003</div>
+</td>
+<td class="px-6 py-4 text-slate-500 dark:text-slate-400">Human Resources &amp; General Affairs</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-100 text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-400 border border-emerald-100 dark:border-emerald-800">
+                                                Aktif
+                                            </span>
+</td>
+<td class="px-6 py-4 text-right">
+<div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="text-slate-400 hover:text-primary transition-colors p-1 rounded hover:bg-primary/5">
+<span class="material-symbols-outlined text-lg">edit</span>
+</button>
+<button class="text-slate-400 hover:text-red-500 transition-colors p-1 rounded hover:bg-red-50">
+<span class="material-symbols-outlined text-lg">delete</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors group">
+<td class="px-6 py-4 font-medium text-slate-900 dark:text-white">4</td>
+<td class="px-6 py-4">
+<div class="font-medium text-slate-900 dark:text-white">Plant</div>
+<div class="text-xs text-slate-500 mt-0.5">PLT-004</div>
+</td>
+<td class="px-6 py-4 text-slate-500 dark:text-slate-400">Maintenance Alat Berat (Inactive)</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-400 border border-slate-200 dark:border-slate-700">
+                                                Tidak Aktif
+                                            </span>
+</td>
+<td class="px-6 py-4 text-right">
+<div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="text-slate-400 hover:text-primary transition-colors p-1 rounded hover:bg-primary/5">
+<span class="material-symbols-outlined text-lg">edit</span>
+</button>
+<button class="text-slate-400 hover:text-red-500 transition-colors p-1 rounded hover:bg-red-50">
+<span class="material-symbols-outlined text-lg">delete</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 5 -->
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors group">
+<td class="px-6 py-4 font-medium text-slate-900 dark:text-white">5</td>
+<td class="px-6 py-4">
+<div class="font-medium text-slate-900 dark:text-white">Supply Chain Management</div>
+<div class="text-xs text-slate-500 mt-0.5">SCM-005</div>
+</td>
+<td class="px-6 py-4 text-slate-500 dark:text-slate-400">Logistic and Warehouse</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-100 text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-400 border border-emerald-100 dark:border-emerald-800">
+                                                Aktif
+                                            </span>
+</td>
+<td class="px-6 py-4 text-right">
+<div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="text-slate-400 hover:text-primary transition-colors p-1 rounded hover:bg-primary/5">
+<span class="material-symbols-outlined text-lg">edit</span>
+</button>
+<button class="text-slate-400 hover:text-red-500 transition-colors p-1 rounded hover:bg-red-50">
+<span class="material-symbols-outlined text-lg">delete</span>
+</button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination -->
+<div class="px-6 py-4 border-t border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-[#1a2632] flex items-center justify-between">
+<span class="text-sm text-slate-500 dark:text-slate-400">
+                                Showing <span class="font-medium text-slate-900 dark:text-white">1</span> to <span class="font-medium text-slate-900 dark:text-white">5</span> of <span class="font-medium text-slate-900 dark:text-white">24</span> results
+                            </span>
+<div class="flex items-center gap-2">
+<button class="px-3 py-1 text-sm border border-slate-300 dark:border-slate-700 rounded bg-white dark:bg-slate-800 text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700 disabled:opacity-50" disabled="">
+                                    Previous
+                                </button>
+<button class="px-3 py-1 text-sm border border-slate-300 dark:border-slate-700 rounded bg-white dark:bg-slate-800 text-slate-900 dark:text-white hover:bg-slate-50 dark:hover:bg-slate-700">
+                                    Next
+                                </button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

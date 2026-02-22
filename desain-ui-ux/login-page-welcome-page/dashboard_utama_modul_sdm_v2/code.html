@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Dashboard Utama Modul SDM V2</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1173d4",
+                        "secondary": "#f59e0b", // Orange accent mentioned in description
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101922",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom scrollbar for sidebar */
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+        .scrollbar-hide {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-display transition-colors duration-200">
+<div class="flex h-screen w-full overflow-hidden">
+<!-- Sidebar -->
+<aside class="w-72 bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 flex flex-col h-full shrink-0 z-20">
+<!-- Sidebar Header -->
+<div class="p-6 border-b border-slate-100 dark:border-slate-800">
+<div class="flex items-center gap-3">
+<div class="h-10 w-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-2xl">diamond</span>
+</div>
+<div class="flex flex-col">
+<h1 class="text-slate-900 dark:text-white text-base font-bold leading-none">BEBANG HR</h1>
+<p class="text-slate-500 dark:text-slate-400 text-xs font-medium mt-1">Site Taliabu</p>
+</div>
+</div>
+</div>
+<!-- Navigation -->
+<nav class="flex-1 overflow-y-auto p-4 flex flex-col gap-1 scrollbar-hide">
+<!-- Dashboard Link -->
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary text-white shadow-sm shadow-primary/30 transition-all group" href="#">
+<span class="material-symbols-outlined text-[20px]">dashboard</span>
+<span class="text-sm font-medium">Dashboard</span>
+</a>
+<!-- Section Label -->
+<div class="px-3 pt-6 pb-2">
+<p class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Master Data</p>
+</div>
+<!-- Master Data Links -->
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-primary transition-colors group" href="#">
+<span class="material-symbols-outlined text-[20px] group-hover:text-primary transition-colors">domain</span>
+<span class="text-sm font-medium">Divisi</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-primary transition-colors group" href="#">
+<span class="material-symbols-outlined text-[20px] group-hover:text-primary transition-colors">meeting_room</span>
+<span class="text-sm font-medium">Departemen</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-primary transition-colors group" href="#">
+<span class="material-symbols-outlined text-[20px] group-hover:text-primary transition-colors">grid_view</span>
+<span class="text-sm font-medium">Seksi</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-primary transition-colors group" href="#">
+<span class="material-symbols-outlined text-[20px] group-hover:text-primary transition-colors">badge</span>
+<span class="text-sm font-medium">Jabatan</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-primary transition-colors group" href="#">
+<span class="material-symbols-outlined text-[20px] group-hover:text-primary transition-colors">workspace_premium</span>
+<span class="text-sm font-medium">Golongan</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-primary transition-colors group" href="#">
+<span class="material-symbols-outlined text-[20px] group-hover:text-primary transition-colors">location_on</span>
+<span class="text-sm font-medium">Lokasi</span>
+</a>
+<!-- Section Label -->
+<div class="px-3 pt-6 pb-2">
+<p class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Manajemen</p>
+</div>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-primary transition-colors group" href="#">
+<span class="material-symbols-outlined text-[20px] group-hover:text-primary transition-colors">groups</span>
+<span class="text-sm font-medium">Karyawan</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-primary transition-colors group" href="#">
+<span class="material-symbols-outlined text-[20px] group-hover:text-primary transition-colors">description</span>
+<span class="text-sm font-medium">Laporan</span>
+</a>
+</nav>
+<!-- User Profile Footer -->
+<div class="p-4 border-t border-slate-100 dark:border-slate-800">
+<div class="flex items-center gap-3 px-2 py-2 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800 cursor-pointer transition-colors">
+<div class="h-9 w-9 rounded-full bg-slate-200 dark:bg-slate-700 bg-cover bg-center" data-alt="User profile picture of HR Admin" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuC8uRaQ2aXlDTFFjNQrmxzHTCwGARMWVqQPdX9tcCqjIHbsD38AbvIx5o7lCT4aEAy99fyenxKkHTdUVHjzVUeHUUtVXY0hUD2BDXpeLSBXPSDevk1vg7v5sNaedJ1EG6CQLSB8CqK5ai3CymHChGOmO3A8UEAt-BuFECImIL40WEUWHgXzqtkrkICdwdFXXvUXIu8rz-DgDRnpgm-OBlguXdHszq_hSyHoI3VX6qPGxP6jf2Ywy4zrocPM7yMgN49D_Z2dPfv-rJQ');"></div>
+<div class="flex flex-col flex-1 min-w-0">
+<p class="text-sm font-medium text-slate-900 dark:text-white truncate">Admin HR</p>
+<p class="text-xs text-slate-500 dark:text-slate-400 truncate">hr.admin@bebang.co.id</p>
+</div>
+<span class="material-symbols-outlined text-slate-400">settings</span>
+</div>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 h-full overflow-y-auto bg-background-light dark:bg-background-dark relative">
+<!-- Top Header (Mobile/Tablet visible mostly, but good for context) -->
+<header class="h-16 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between px-8 sticky top-0 z-10">
+<div class="flex items-center gap-4 text-slate-500">
+<span class="material-symbols-outlined">menu_open</span>
+<span class="text-sm font-medium text-slate-400">/</span>
+<span class="text-sm font-medium text-slate-900 dark:text-white">Dashboard Overview</span>
+</div>
+<div class="flex items-center gap-4">
+<button class="text-slate-500 hover:text-primary transition-colors relative">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-0 right-0 h-2 w-2 rounded-full bg-red-500 border-2 border-white dark:border-slate-900"></span>
+</button>
+<button class="text-slate-500 hover:text-primary transition-colors">
+<span class="material-symbols-outlined">help</span>
+</button>
+</div>
+</header>
+<div class="p-8 max-w-7xl mx-auto flex flex-col gap-8">
+<!-- Welcome Banner -->
+<div class="relative overflow-hidden rounded-xl bg-white dark:bg-slate-800 p-8 shadow-sm border border-slate-200 dark:border-slate-700">
+<div class="absolute top-0 right-0 w-64 h-full bg-gradient-to-l from-primary/10 to-transparent"></div>
+<div class="relative z-10 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+<div>
+<h2 class="text-3xl font-bold text-slate-900 dark:text-white tracking-tight mb-2">Selamat Datang, Admin HR</h2>
+<p class="text-slate-500 dark:text-slate-400 max-w-2xl">
+                                Berikut adalah ringkasan data SDM terkini untuk <span class="font-semibold text-primary">PT Prima Sarana Gemilang - Site Taliabu</span>.
+                            </p>
+</div>
+<div class="flex gap-3">
+<button class="flex items-center gap-2 px-4 py-2 bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-600 transition-colors">
+<span class="material-symbols-outlined text-[18px]">download</span>
+                                Unduh Laporan
+                            </button>
+<button class="flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-lg text-sm font-medium hover:bg-primary/90 transition-colors shadow-sm shadow-primary/30">
+<span class="material-symbols-outlined text-[18px]">add</span>
+                                Tambah Karyawan
+                            </button>
+</div>
+</div>
+</div>
+<!-- KPI Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+<!-- Card 1 -->
+<div class="bg-white dark:bg-slate-800 p-6 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 flex flex-col justify-between group hover:border-primary/50 transition-all cursor-default">
+<div class="flex justify-between items-start">
+<div>
+<p class="text-sm font-medium text-slate-500 dark:text-slate-400">Total Divisi</p>
+<h3 class="text-3xl font-bold text-slate-900 dark:text-white mt-2">12</h3>
+</div>
+<div class="h-10 w-10 rounded-lg bg-blue-50 dark:bg-blue-900/30 text-primary flex items-center justify-center">
+<span class="material-symbols-outlined">domain</span>
+</div>
+</div>
+<div class="mt-4 flex items-center gap-2 text-xs">
+<span class="text-emerald-600 dark:text-emerald-400 font-medium bg-emerald-50 dark:bg-emerald-900/30 px-2 py-0.5 rounded flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">trending_up</span> +2
+                            </span>
+<span class="text-slate-400">bulan ini</span>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="bg-white dark:bg-slate-800 p-6 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 flex flex-col justify-between group hover:border-primary/50 transition-all cursor-default">
+<div class="flex justify-between items-start">
+<div>
+<p class="text-sm font-medium text-slate-500 dark:text-slate-400">Total Jabatan</p>
+<h3 class="text-3xl font-bold text-slate-900 dark:text-white mt-2">45</h3>
+</div>
+<div class="h-10 w-10 rounded-lg bg-orange-50 dark:bg-orange-900/30 text-secondary flex items-center justify-center">
+<span class="material-symbols-outlined">badge</span>
+</div>
+</div>
+<div class="mt-4 flex items-center gap-2 text-xs">
+<span class="text-slate-500 dark:text-slate-400 font-medium bg-slate-100 dark:bg-slate-700 px-2 py-0.5 rounded flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">remove</span> 0
+                            </span>
+<span class="text-slate-400">bulan ini</span>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="bg-white dark:bg-slate-800 p-6 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 flex flex-col justify-between group hover:border-primary/50 transition-all cursor-default">
+<div class="flex justify-between items-start">
+<div>
+<p class="text-sm font-medium text-slate-500 dark:text-slate-400">Total Golongan</p>
+<h3 class="text-3xl font-bold text-slate-900 dark:text-white mt-2">8</h3>
+</div>
+<div class="h-10 w-10 rounded-lg bg-indigo-50 dark:bg-indigo-900/30 text-indigo-600 flex items-center justify-center">
+<span class="material-symbols-outlined">workspace_premium</span>
+</div>
+</div>
+<div class="mt-4 flex items-center gap-2 text-xs">
+<span class="text-emerald-600 dark:text-emerald-400 font-medium bg-emerald-50 dark:bg-emerald-900/30 px-2 py-0.5 rounded flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">trending_up</span> +1
+                            </span>
+<span class="text-slate-400">bulan ini</span>
+</div>
+</div>
+<!-- Card 4 -->
+<div class="bg-white dark:bg-slate-800 p-6 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 flex flex-col justify-between group hover:border-primary/50 transition-all cursor-default">
+<div class="flex justify-between items-start">
+<div>
+<p class="text-sm font-medium text-slate-500 dark:text-slate-400">Karyawan Aktif</p>
+<h3 class="text-3xl font-bold text-slate-900 dark:text-white mt-2">150</h3>
+</div>
+<div class="h-10 w-10 rounded-lg bg-emerald-50 dark:bg-emerald-900/30 text-emerald-600 flex items-center justify-center">
+<span class="material-symbols-outlined">groups</span>
+</div>
+</div>
+<div class="mt-4 flex items-center gap-2 text-xs">
+<span class="text-emerald-600 dark:text-emerald-400 font-medium bg-emerald-50 dark:bg-emerald-900/30 px-2 py-0.5 rounded flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">trending_up</span> +5
+                            </span>
+<span class="text-slate-400">bulan ini</span>
+</div>
+</div>
+</div>
+<!-- Charts Section -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+<!-- Trend Chart -->
+<div class="lg:col-span-2 bg-white dark:bg-slate-800 p-6 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700">
+<div class="flex items-center justify-between mb-6">
+<div>
+<h3 class="text-lg font-bold text-slate-900 dark:text-white">Pertumbuhan Karyawan</h3>
+<p class="text-sm text-slate-500 dark:text-slate-400">Analisis headcount 6 bulan terakhir</p>
+</div>
+<div class="flex items-center gap-2">
+<span class="inline-block w-3 h-3 rounded-full bg-primary"></span>
+<span class="text-xs text-slate-500">Total</span>
+</div>
+</div>
+<!-- Simple CSS Grid/Flex Chart Representation -->
+<div class="h-64 w-full flex items-end justify-between gap-2 md:gap-4 px-2">
+<!-- Y-Axis Labels -->
+<div class="absolute left-6 h-64 flex flex-col justify-between text-xs text-slate-400 pointer-events-none">
+<span>200</span>
+<span>150</span>
+<span>100</span>
+<span>50</span>
+<span>0</span>
+</div>
+<!-- Bar/Line Container (using simple bars for robustness without JS) -->
+<div class="flex-1 flex items-end justify-around h-full pl-8 pb-6 border-b border-l border-slate-200 dark:border-slate-700 relative">
+<!-- Background Grid Lines -->
+<div class="absolute inset-0 flex flex-col justify-between pointer-events-none pb-6 pl-0">
+<div class="w-full h-px bg-slate-100 dark:bg-slate-700/50"></div>
+<div class="w-full h-px bg-slate-100 dark:bg-slate-700/50"></div>
+<div class="w-full h-px bg-slate-100 dark:bg-slate-700/50"></div>
+<div class="w-full h-px bg-slate-100 dark:bg-slate-700/50"></div>
+</div>
+<!-- Bars -->
+<div class="w-8 md:w-12 bg-primary/20 hover:bg-primary/30 rounded-t-sm relative group cursor-pointer" style="height: 60%;">
+<div class="absolute -top-8 left-1/2 -translate-x-1/2 bg-slate-800 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">120</div>
+<div class="absolute bottom-[-24px] left-1/2 -translate-x-1/2 text-xs text-slate-500 font-medium">Jan</div>
+</div>
+<div class="w-8 md:w-12 bg-primary/30 hover:bg-primary/40 rounded-t-sm relative group cursor-pointer" style="height: 65%;">
+<div class="absolute -top-8 left-1/2 -translate-x-1/2 bg-slate-800 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">130</div>
+<div class="absolute bottom-[-24px] left-1/2 -translate-x-1/2 text-xs text-slate-500 font-medium">Feb</div>
+</div>
+<div class="w-8 md:w-12 bg-primary/40 hover:bg-primary/50 rounded-t-sm relative group cursor-pointer" style="height: 62%;">
+<div class="absolute -top-8 left-1/2 -translate-x-1/2 bg-slate-800 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">125</div>
+<div class="absolute bottom-[-24px] left-1/2 -translate-x-1/2 text-xs text-slate-500 font-medium">Mar</div>
+</div>
+<div class="w-8 md:w-12 bg-primary/60 hover:bg-primary/70 rounded-t-sm relative group cursor-pointer" style="height: 70%;">
+<div class="absolute -top-8 left-1/2 -translate-x-1/2 bg-slate-800 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">140</div>
+<div class="absolute bottom-[-24px] left-1/2 -translate-x-1/2 text-xs text-slate-500 font-medium">Apr</div>
+</div>
+<div class="w-8 md:w-12 bg-primary/80 hover:bg-primary/90 rounded-t-sm relative group cursor-pointer" style="height: 72%;">
+<div class="absolute -top-8 left-1/2 -translate-x-1/2 bg-slate-800 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">145</div>
+<div class="absolute bottom-[-24px] left-1/2 -translate-x-1/2 text-xs text-slate-500 font-medium">May</div>
+</div>
+<div class="w-8 md:w-12 bg-primary hover:bg-primary/90 rounded-t-sm relative group cursor-pointer" style="height: 75%;">
+<div class="absolute -top-8 left-1/2 -translate-x-1/2 bg-slate-800 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">150</div>
+<div class="absolute bottom-[-24px] left-1/2 -translate-x-1/2 text-xs text-slate-500 font-medium">Jun</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Donut Chart -->
+<div class="bg-white dark:bg-slate-800 p-6 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 flex flex-col">
+<h3 class="text-lg font-bold text-slate-900 dark:text-white mb-1">Distribusi Golongan</h3>
+<p class="text-sm text-slate-500 dark:text-slate-400 mb-6">Persentase berdasarkan level</p>
+<div class="flex-1 flex flex-col items-center justify-center relative">
+<!-- Pure CSS Donut Chart -->
+<div class="relative w-48 h-48 rounded-full" style="background: conic-gradient(#1173d4 0% 35%, #60a5fa 35% 60%, #f59e0b 60% 80%, #cbd5e1 80% 100%);">
+<div class="absolute inset-4 bg-white dark:bg-slate-800 rounded-full flex flex-col items-center justify-center z-10">
+<span class="text-3xl font-bold text-slate-900 dark:text-white">150</span>
+<span class="text-xs text-slate-400 font-medium uppercase tracking-wide">Total Staff</span>
+</div>
+</div>
+</div>
+<div class="mt-6 grid grid-cols-2 gap-3">
+<div class="flex items-center gap-2">
+<span class="w-3 h-3 rounded-full bg-primary"></span>
+<span class="text-xs font-medium text-slate-600 dark:text-slate-300">Gol. IV (35%)</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="w-3 h-3 rounded-full bg-blue-400"></span>
+<span class="text-xs font-medium text-slate-600 dark:text-slate-300">Gol. V (25%)</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="w-3 h-3 rounded-full bg-secondary"></span>
+<span class="text-xs font-medium text-slate-600 dark:text-slate-300">Gol. VI (20%)</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="w-3 h-3 rounded-full bg-slate-300"></span>
+<span class="text-xs font-medium text-slate-600 dark:text-slate-300">Lainnya (20%)</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Recent Activity / Master Data Update -->
+<div class="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 overflow-hidden">
+<div class="p-6 border-b border-slate-200 dark:border-slate-700 flex justify-between items-center">
+<div>
+<h3 class="text-lg font-bold text-slate-900 dark:text-white">Aktivitas Data Terbaru</h3>
+<p class="text-sm text-slate-500 dark:text-slate-400">Update master data terakhir</p>
+</div>
+<button class="text-primary text-sm font-medium hover:underline">Lihat Semua</button>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left text-sm text-slate-600 dark:text-slate-300">
+<thead class="bg-slate-50 dark:bg-slate-900/50 text-xs uppercase text-slate-500 font-semibold">
+<tr>
+<th class="px-6 py-4">Tipe Data</th>
+<th class="px-6 py-4">Deskripsi</th>
+<th class="px-6 py-4">Oleh</th>
+<th class="px-6 py-4">Waktu</th>
+<th class="px-6 py-4 text-right">Status</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-100 dark:divide-slate-700">
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+<td class="px-6 py-4 font-medium text-slate-900 dark:text-white">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-sm text-blue-500">badge</span>
+                                            Jabatan
+                                        </div>
+</td>
+<td class="px-6 py-4">Penambahan "Supervisor Logistik"</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded-full bg-slate-200 bg-cover" data-alt="Avatar of Sarah" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBl7QGpbXtPcgFEkS6BxCYVte89Moyn33XbyPpAr8WIMPRl4UJ9Jh8HTjkRh5UiZSh_hSnWKzTYu1CSFqAZfyn_mXOhh1Ic5T3S_Mm3fFFUWatdUV6HbjXt_J9Lj20EfJJGmNlKKLoaTbuXuOOEwWqzYn_8fndeFKdgV7dRIJLeYhBmjJO0BVddtdSl_abdfzesfw71OaTLyy9fTzdjIeE0i4XsRtDr2m7EL3UWyr-SCHdvGnkWA9JRUi8dvRopr2FYElJQKOMJ5Ps');"></div>
+<span>Sarah W.</span>
+</div>
+</td>
+<td class="px-6 py-4">2 jam yang lalu</td>
+<td class="px-6 py-4 text-right">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400">
+                                            Selesai
+                                        </span>
+</td>
+</tr>
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+<td class="px-6 py-4 font-medium text-slate-900 dark:text-white">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-sm text-purple-500">groups</span>
+                                            Karyawan
+                                        </div>
+</td>
+<td class="px-6 py-4">Update Lokasi: Budi Santoso</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded-full bg-slate-200 bg-cover" data-alt="Avatar of Admin" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuB9j-e_5W4Rj_yqil0D1-S_5rajE5ew3lMYFXdGq23zC7oqn0yFjNESuPlgPuyNBr2R1072X9mmBLwImkSbYNdbMMAMbDw5JhQq6WzT7BXiJb0LOQBp5XEr52weB9E5GZsEqPZxE3l8EZ-FncU8JgFdXBefP6UZ3KpCJgXvAzAZq61p7uPL6xzbWPjxUbS9jZzLWlHX-5jtoBlHWGNC_zncXy8BHBofpiHOpPaSeqGbJYjrr50abvyGxhDxFLzPLAf_46jttUSNuic');"></div>
+<span>Admin HR</span>
+</div>
+</td>
+<td class="px-6 py-4">4 jam yang lalu</td>
+<td class="px-6 py-4 text-right">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400">
+                                            Selesai
+                                        </span>
+</td>
+</tr>
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+<td class="px-6 py-4 font-medium text-slate-900 dark:text-white">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-sm text-orange-500">domain</span>
+                                            Divisi
+                                        </div>
+</td>
+<td class="px-6 py-4">Perubahan Nama: Engineering</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded-full bg-slate-200 bg-cover" data-alt="Avatar of Joko" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuC9B8NSVa8Y0c04akYQ3v3JmNoSiLFjp-U2OQWdo5Vs1G0xsBMy3etyiDpaIpsM4_jLoKSu93cfSCc-sNAIyophJXJvR9VVOktrLGIzFPWUVpU211aVoxXl7VIhZwzIzEOZHSPUejv3cGzjwS42vOkZuzSptjN9w3ZouG5QfWAU-aDrRBjIA2gOqGi_G8nRVx1GAq71XUCcc5Ww2Ks85_PqRqunkZ68NxwRYg6ZWfou4WHn3_91v7Tz2pAPOTvmmjlf72vgcDq3yZw');"></div>
+<span>Joko P.</span>
+</div>
+</td>
+<td class="px-6 py-4">1 hari yang lalu</td>
+<td class="px-6 py-4 text-right">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400">
+                                            Review
+                                        </span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Footer -->
+<div class="mt-8 border-t border-slate-200 dark:border-slate-800 pt-6 pb-2 text-center text-xs text-slate-400">
+                    © 2024 PT Prima Sarana Gemilang. BEBANG HR System v2.0
+                </div>
+</div>
+</main>
+</div>
+</body></html>

@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="id"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>BEBANG Welcome Dashboard Variant 1</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1173d4",
+                        "secondary": "#2563eb",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101922",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "2xl": "1rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+</head>
+<body class="font-display bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 antialiased min-h-screen flex flex-col">
+<header class="bg-white dark:bg-[#15202b] border-b border-slate-200 dark:border-slate-800 sticky top-0 z-50">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-20">
+<div class="flex items-center gap-3">
+<div class="flex h-10 w-10 items-center justify-center rounded-lg bg-primary text-white shadow-md shadow-primary/20">
+<span class="material-symbols-outlined text-2xl">diamond</span>
+</div>
+<div>
+<h1 class="text-base font-bold leading-none text-slate-900 dark:text-white">PT Prima Sarana Gemilang</h1>
+<p class="text-xs font-medium text-slate-500 dark:text-slate-400 mt-1">Site Taliabu</p>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="hidden md:block text-right">
+<p class="text-sm font-semibold text-slate-900 dark:text-white">Selamat Datang,</p>
+<p class="text-sm text-primary font-bold">Budi Santoso!</p>
+</div>
+<div class="h-10 w-10 rounded-full bg-slate-200 dark:bg-slate-700 flex items-center justify-center overflow-hidden border-2 border-slate-100 dark:border-slate-600">
+<span class="material-symbols-outlined text-slate-500 dark:text-slate-400">person</span>
+</div>
+</div>
+</div>
+</div>
+</header>
+<main class="flex-grow relative">
+<div class="absolute inset-0 overflow-hidden pointer-events-none z-0">
+<div class="absolute top-0 left-0 w-full h-96 bg-gradient-to-b from-primary/5 to-transparent"></div>
+<div class="absolute -top-24 -right-24 w-96 h-96 bg-blue-100 dark:bg-blue-900/20 rounded-full blur-3xl opacity-50"></div>
+<div class="absolute top-1/2 -left-24 w-72 h-72 bg-slate-200 dark:bg-slate-800/40 rounded-full blur-3xl opacity-50"></div>
+</div>
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 relative z-10">
+<div class="text-center max-w-3xl mx-auto mb-16">
+<span class="inline-flex items-center px-3 py-1 rounded-full bg-blue-50 dark:bg-blue-900/30 text-primary text-xs font-semibold mb-4 border border-blue-100 dark:border-blue-800">
+                    Sistem Informasi Terintegrasi
+                </span>
+<h2 class="text-3xl md:text-5xl font-extrabold text-slate-900 dark:text-white mb-2 tracking-tight">
+                    Selamat Datang, <span class="text-primary">Budi Santoso!</span>
+</h2>
+<h3 class="text-xl md:text-2xl font-bold text-slate-700 dark:text-slate-200 mb-6">
+                    Sistem Informasi BEBANG Site Taliabu
+                </h3>
+<p class="text-lg text-slate-600 dark:text-slate-400 leading-relaxed max-w-2xl mx-auto">
+                    Pusat kendali operasional untuk pengelolaan sumber daya manusia, inventaris, dan fasilitas mess dalam satu platform terpadu.
+                </p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<div class="group relative bg-white dark:bg-[#1a2634] rounded-2xl shadow-sm hover:shadow-xl hover:shadow-primary/10 border border-slate-200 dark:border-slate-700 transition-all duration-300 overflow-hidden flex flex-col h-full hover:-translate-y-1">
+<div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-400 to-primary"></div>
+<div class="p-8 flex-grow">
+<div class="w-14 h-14 rounded-xl bg-blue-50 dark:bg-blue-900/20 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+<span class="material-symbols-outlined text-primary text-3xl">groups</span>
+</div>
+<h3 class="text-xl font-bold text-slate-900 dark:text-white mb-3 group-hover:text-primary transition-colors">
+                            Module Sumber Daya Manusia
+                        </h3>
+<p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed mb-6">
+                            Kelola data karyawan, absensi, cuti, penggajian, dan administrasi personil lainnya secara efisien dan akurat.
+                        </p>
+</div>
+<div class="px-8 pb-8 mt-auto">
+<button class="w-full flex items-center justify-center gap-2 bg-slate-50 dark:bg-slate-800 hover:bg-primary text-slate-700 dark:text-slate-300 hover:text-white font-medium py-3 px-4 rounded-lg transition-all duration-200 border border-slate-200 dark:border-slate-700 hover:border-primary group-hover:bg-primary group-hover:text-white">
+<span>Buka Modul</span>
+<span class="material-symbols-outlined text-lg">arrow_forward</span>
+</button>
+</div>
+</div>
+<div class="group relative bg-white dark:bg-[#1a2634] rounded-2xl shadow-sm hover:shadow-xl hover:shadow-orange-500/10 border border-slate-200 dark:border-slate-700 transition-all duration-300 overflow-hidden flex flex-col h-full hover:-translate-y-1">
+<div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-orange-400 to-amber-500"></div>
+<div class="p-8 flex-grow">
+<div class="w-14 h-14 rounded-xl bg-orange-50 dark:bg-orange-900/20 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+<span class="material-symbols-outlined text-orange-600 dark:text-orange-400 text-3xl">inventory_2</span>
+</div>
+<h3 class="text-xl font-bold text-slate-900 dark:text-white mb-3 group-hover:text-orange-600 transition-colors">
+                            Module Inventory
+                        </h3>
+<p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed mb-6">
+                            Monitor stok barang, pelacakan aset, manajemen gudang, dan permintaan barang operasional tambang.
+                        </p>
+</div>
+<div class="px-8 pb-8 mt-auto">
+<button class="w-full flex items-center justify-center gap-2 bg-slate-50 dark:bg-slate-800 hover:bg-orange-600 text-slate-700 dark:text-slate-300 hover:text-white font-medium py-3 px-4 rounded-lg transition-all duration-200 border border-slate-200 dark:border-slate-700 hover:border-orange-600 group-hover:bg-orange-600 group-hover:text-white">
+<span>Buka Modul</span>
+<span class="material-symbols-outlined text-lg">arrow_forward</span>
+</button>
+</div>
+</div>
+<div class="group relative bg-white dark:bg-[#1a2634] rounded-2xl shadow-sm hover:shadow-xl hover:shadow-emerald-500/10 border border-slate-200 dark:border-slate-700 transition-all duration-300 overflow-hidden flex flex-col h-full hover:-translate-y-1">
+<div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-emerald-400 to-teal-500"></div>
+<div class="p-8 flex-grow">
+<div class="w-14 h-14 rounded-xl bg-emerald-50 dark:bg-emerald-900/20 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+<span class="material-symbols-outlined text-emerald-600 dark:text-emerald-400 text-3xl">apartment</span>
+</div>
+<h3 class="text-xl font-bold text-slate-900 dark:text-white mb-3 group-hover:text-emerald-600 transition-colors">
+                            Module Manajemen Mess
+                        </h3>
+<p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed mb-6">
+                            Pengaturan hunian karyawan, jadwal pembersihan, maintenance fasilitas mess, dan laporan okupansi.
+                        </p>
+</div>
+<div class="px-8 pb-8 mt-auto">
+<button class="w-full flex items-center justify-center gap-2 bg-slate-50 dark:bg-slate-800 hover:bg-emerald-600 text-slate-700 dark:text-slate-300 hover:text-white font-medium py-3 px-4 rounded-lg transition-all duration-200 border border-slate-200 dark:border-slate-700 hover:border-emerald-600 group-hover:bg-emerald-600 group-hover:text-white">
+<span>Buka Modul</span>
+<span class="material-symbols-outlined text-lg">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+<div class="mt-16 grid grid-cols-1 md:grid-cols-4 gap-6 opacity-80">
+<div class="p-4 rounded-lg bg-white/50 dark:bg-white/5 border border-slate-100 dark:border-slate-800 backdrop-blur-sm">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-slate-400">calendar_today</span>
+<div>
+<p class="text-xs text-slate-500 dark:text-slate-400 uppercase tracking-wider font-semibold">Tanggal</p>
+<p class="text-sm font-medium text-slate-900 dark:text-slate-200" id="current-date">Senin, 12 Feb 2024</p>
+</div>
+</div>
+</div>
+<div class="p-4 rounded-lg bg-white/50 dark:bg-white/5 border border-slate-100 dark:border-slate-800 backdrop-blur-sm">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-slate-400">schedule</span>
+<div>
+<p class="text-xs text-slate-500 dark:text-slate-400 uppercase tracking-wider font-semibold">Shift</p>
+<p class="text-sm font-medium text-slate-900 dark:text-slate-200">Shift Pagi (06:00 - 18:00)</p>
+</div>
+</div>
+</div>
+<div class="p-4 rounded-lg bg-white/50 dark:bg-white/5 border border-slate-100 dark:border-slate-800 backdrop-blur-sm">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-slate-400">dns</span>
+<div>
+<p class="text-xs text-slate-500 dark:text-slate-400 uppercase tracking-wider font-semibold">Status Sistem</p>
+<div class="flex items-center gap-2">
+<span class="h-2 w-2 rounded-full bg-green-500"></span>
+<p class="text-sm font-medium text-slate-900 dark:text-slate-200">Online Normal</p>
+</div>
+</div>
+</div>
+</div>
+<div class="p-4 rounded-lg bg-white/50 dark:bg-white/5 border border-slate-100 dark:border-slate-800 backdrop-blur-sm">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-slate-400">cloud</span>
+<div>
+<p class="text-xs text-slate-500 dark:text-slate-400 uppercase tracking-wider font-semibold">Cuaca Site</p>
+<p class="text-sm font-medium text-slate-900 dark:text-slate-200">Cerah Berawan, 32°C</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<footer class="bg-white dark:bg-[#15202b] border-t border-slate-200 dark:border-slate-800 py-6">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-4">
+<p class="text-sm text-slate-500 dark:text-slate-400">
+                © 2024 PT Prima Sarana Gemilang. All rights reserved.
+            </p>
+<div class="flex gap-6">
+<a class="text-sm text-slate-500 hover:text-primary dark:text-slate-400 dark:hover:text-primary transition-colors" href="#">Bantuan</a>
+<a class="text-sm text-slate-500 hover:text-primary dark:text-slate-400 dark:hover:text-primary transition-colors" href="#">Kebijakan Privasi</a>
+</div>
+</div>
+</footer>
+<script>
+        // Simple script to set current date
+        const dateElement = document.getElementById('current-date');
+        const options = { weekday: 'long', year: 'numeric', month: 'short', day: 'numeric' };
+        if(dateElement) {
+            dateElement.textContent = new Date().toLocaleDateString('id-ID', options);
+        }
+    </script>
+
+</body></html>

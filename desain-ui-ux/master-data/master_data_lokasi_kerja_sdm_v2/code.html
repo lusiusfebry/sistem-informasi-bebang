@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Master Data Lokasi Kerja SDM V2</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1173d4",
+                        "primary-50": "#eff6ff",
+                        "primary-100": "#dbeafe",
+                        "primary-200": "#bfdbfe",
+                        "primary-300": "#93c5fd",
+                        "primary-400": "#60a5fa",
+                        "primary-500": "#3b82f6",
+                        "primary-600": "#2563eb",
+                        "primary-700": "#1d4ed8",
+                        "primary-800": "#1e40af",
+                        "primary-900": "#1e3a8a",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101922",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-[#111418] font-display antialiased overflow-hidden">
+<div class="relative flex h-screen w-full flex-row overflow-hidden">
+<!-- Sidebar -->
+<div class="w-72 flex-none border-r border-[#dbe0e6] bg-white dark:bg-[#1e2732] flex flex-col h-full overflow-y-auto">
+<div class="p-4 flex flex-col gap-4">
+<div class="flex gap-3 items-center px-2 py-2">
+<div class="bg-center bg-no-repeat bg-cover rounded-full size-10 shrink-0 bg-primary/10" data-alt="Company Logo" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCnXNHiMyL8z3j6hiqKZohCVf2S5op_32i5TwM7mDz0HFlRyqYChOuM3vsxYiNlwsqSsn2Za1Gz3dXk0yVEs9LRopuCNQYWbmR-y3q6n2YUiTQxV50Hcw69Crbjbvo0XWbpuH0nH8Kq9MR2_UeUlPIIdp3kFdt9U5ruwsq4kAzVKWaYS_Es9B79heA1mvuiTWY4qy9o75vSZVt_zOENs6QoT0aGD54nOsR6XVki1Zd45nwL4JW6Vo_VQo_Pw-bhmjIiuiyiEEqDrDc");'></div>
+<div class="flex flex-col">
+<h1 class="text-[#111418] dark:text-white text-base font-bold leading-normal">HR Admin</h1>
+<p class="text-[#617589] dark:text-slate-400 text-xs font-normal leading-normal">PT Prima Sarana Gemilang</p>
+</div>
+</div>
+<div class="flex flex-col gap-1 mt-2">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#617589] dark:text-slate-400 hover:bg-background-light dark:hover:bg-slate-800 transition-colors group" href="#">
+<span class="material-symbols-outlined text-[24px] text-current">dashboard</span>
+<p class="text-sm font-medium leading-normal">Dashboard</p>
+</a>
+<div class="pt-2 pb-1 px-3 text-xs font-semibold text-[#617589] dark:text-slate-500 uppercase tracking-wider">Master Data</div>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#617589] dark:text-slate-400 hover:bg-background-light dark:hover:bg-slate-800 transition-colors group" href="#">
+<span class="material-symbols-outlined text-[24px] text-current">groups</span>
+<p class="text-sm font-medium leading-normal">Master Karyawan</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#617589] dark:text-slate-400 hover:bg-background-light dark:hover:bg-slate-800 transition-colors group" href="#">
+<span class="material-symbols-outlined text-[24px] text-current">badge</span>
+<p class="text-sm font-medium leading-normal">Master Jabatan</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#617589] dark:text-slate-400 hover:bg-background-light dark:hover:bg-slate-800 transition-colors group" href="#">
+<span class="material-symbols-outlined text-[24px] text-current">apartment</span>
+<p class="text-sm font-medium leading-normal">Master Divisi</p>
+</a>
+<!-- Active Item -->
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary/10 text-primary dark:text-primary-400" href="#">
+<span class="material-symbols-outlined text-[24px] text-current fill-1">location_on</span>
+<p class="text-sm font-semibold leading-normal">Master Lokasi Kerja</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#617589] dark:text-slate-400 hover:bg-background-light dark:hover:bg-slate-800 transition-colors group" href="#">
+<span class="material-symbols-outlined text-[24px] text-current">calendar_month</span>
+<p class="text-sm font-medium leading-normal">Master Jadwal</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#617589] dark:text-slate-400 hover:bg-background-light dark:hover:bg-slate-800 transition-colors group" href="#">
+<span class="material-symbols-outlined text-[24px] text-current">coffee</span>
+<p class="text-sm font-medium leading-normal">Master Cuti</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#617589] dark:text-slate-400 hover:bg-background-light dark:hover:bg-slate-800 transition-colors group" href="#">
+<span class="material-symbols-outlined text-[24px] text-current">description</span>
+<p class="text-sm font-medium leading-normal">Master Izin</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#617589] dark:text-slate-400 hover:bg-background-light dark:hover:bg-slate-800 transition-colors group" href="#">
+<span class="material-symbols-outlined text-[24px] text-current">schedule</span>
+<p class="text-sm font-medium leading-normal">Master Lembur</p>
+</a>
+<div class="pt-2 pb-1 px-3 text-xs font-semibold text-[#617589] dark:text-slate-500 uppercase tracking-wider">System</div>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#617589] dark:text-slate-400 hover:bg-background-light dark:hover:bg-slate-800 transition-colors group" href="#">
+<span class="material-symbols-outlined text-[24px] text-current">settings</span>
+<p class="text-sm font-medium leading-normal">Settings</p>
+</a>
+</div>
+</div>
+<div class="mt-auto p-4 border-t border-[#dbe0e6] dark:border-slate-700">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-slate-200 flex items-center justify-center text-slate-600 font-bold text-xs">AD</div>
+<div class="flex flex-col">
+<span class="text-sm font-medium text-[#111418] dark:text-white">Admin User</span>
+<span class="text-xs text-[#617589] dark:text-slate-400">admin@prima.co.id</span>
+</div>
+<button class="ml-auto text-[#617589] hover:text-red-500 transition-colors">
+<span class="material-symbols-outlined text-[20px]">logout</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Main Content -->
+<main class="flex-1 flex flex-col min-w-0 bg-background-light dark:bg-background-dark h-full overflow-hidden">
+<!-- Header -->
+<header class="h-16 flex items-center justify-between px-6 bg-white dark:bg-[#1e2732] border-b border-[#dbe0e6] dark:border-slate-700 shrink-0">
+<div class="flex items-center gap-2 text-sm">
+<a class="text-[#617589] dark:text-slate-400 hover:text-primary transition-colors" href="#">Home</a>
+<span class="text-[#617589] dark:text-slate-500">/</span>
+<a class="text-[#617589] dark:text-slate-400 hover:text-primary transition-colors" href="#">Master Data</a>
+<span class="text-[#617589] dark:text-slate-500">/</span>
+<span class="font-medium text-[#111418] dark:text-white">Lokasi Kerja</span>
+</div>
+<div class="flex items-center gap-4">
+<button class="relative p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-700 text-[#617589] dark:text-slate-400 transition-colors">
+<span class="material-symbols-outlined text-[24px]">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 rounded-full bg-red-500 border-2 border-white dark:border-[#1e2732]"></span>
+</button>
+</div>
+</header>
+<!-- Scrollable Content -->
+<div class="flex-1 overflow-y-auto p-6">
+<div class="mx-auto max-w-[1200px] flex flex-col gap-6">
+<!-- Page Header & Actions -->
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+<div class="flex flex-col gap-1">
+<h1 class="text-[#111418] dark:text-white text-3xl font-bold tracking-tight">Master Data Lokasi Kerja</h1>
+<p class="text-[#617589] dark:text-slate-400 text-sm">Manage all work locations and site offices for PT Prima Sarana Gemilang.</p>
+</div>
+<div class="flex items-center gap-3">
+<button class="flex items-center gap-2 h-10 px-4 bg-primary hover:bg-primary-600 text-white text-sm font-semibold rounded-lg transition-colors shadow-sm">
+<span class="material-symbols-outlined text-[20px]">add</span>
+<span>Add New Location</span>
+</button>
+</div>
+</div>
+<!-- Filter & Search Bar -->
+<div class="bg-white dark:bg-[#1e2732] p-4 rounded-xl border border-[#dbe0e6] dark:border-slate-700 shadow-sm flex flex-col sm:flex-row gap-4 items-center justify-between">
+<div class="relative w-full sm:max-w-md">
+<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+<span class="material-symbols-outlined text-[#617589] text-[20px]">search</span>
+</div>
+<input class="block w-full pl-10 pr-3 py-2.5 border border-[#dbe0e6] dark:border-slate-600 rounded-lg leading-5 bg-[#f0f2f4] dark:bg-slate-800 text-[#111418] dark:text-slate-200 placeholder-[#617589] focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary sm:text-sm" placeholder="Search by location name or code..." type="text"/>
+</div>
+<div class="flex items-center gap-3 w-full sm:w-auto">
+<button class="flex-1 sm:flex-none flex items-center justify-center gap-2 h-10 px-4 border border-[#dbe0e6] dark:border-slate-600 bg-white dark:bg-[#1e2732] text-[#111418] dark:text-slate-200 text-sm font-medium rounded-lg hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors">
+<span class="material-symbols-outlined text-[20px]">filter_list</span>
+                                Filter
+                            </button>
+<button class="flex-1 sm:flex-none flex items-center justify-center gap-2 h-10 px-4 border border-[#dbe0e6] dark:border-slate-600 bg-white dark:bg-[#1e2732] text-[#111418] dark:text-slate-200 text-sm font-medium rounded-lg hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors">
+<span class="material-symbols-outlined text-[20px]">download</span>
+                                Export
+                            </button>
+</div>
+</div>
+<!-- Data Table -->
+<div class="bg-white dark:bg-[#1e2732] rounded-xl border border-[#dbe0e6] dark:border-slate-700 shadow-sm overflow-hidden">
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-slate-50 dark:bg-slate-800 border-b border-[#dbe0e6] dark:border-slate-700">
+<th class="px-6 py-4 text-xs font-semibold text-[#617589] dark:text-slate-400 uppercase tracking-wider w-[120px]">Location ID</th>
+<th class="px-6 py-4 text-xs font-semibold text-[#617589] dark:text-slate-400 uppercase tracking-wider w-[240px]">Location Name</th>
+<th class="px-6 py-4 text-xs font-semibold text-[#617589] dark:text-slate-400 uppercase tracking-wider">Address</th>
+<th class="px-6 py-4 text-xs font-semibold text-[#617589] dark:text-slate-400 uppercase tracking-wider w-[120px]">Code</th>
+<th class="px-6 py-4 text-xs font-semibold text-[#617589] dark:text-slate-400 uppercase tracking-wider w-[120px]">Status</th>
+<th class="px-6 py-4 text-xs font-semibold text-[#617589] dark:text-slate-400 uppercase tracking-wider w-[100px] text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-[#dbe0e6] dark:divide-slate-700">
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors group">
+<td class="px-6 py-4 text-sm font-medium text-[#111418] dark:text-slate-200">LOC-001</td>
+<td class="px-6 py-4">
+<div class="flex flex-col">
+<span class="text-sm font-semibold text-[#111418] dark:text-slate-200">Site Taliabu Main Office</span>
+<span class="text-xs text-[#617589] dark:text-slate-400">Main HQ</span>
+</div>
+</td>
+<td class="px-6 py-4 text-sm text-[#617589] dark:text-slate-300">
+                                            Jl. Pertambangan No. 1, Taliabu Base Camp, Maluku Utara
+                                        </td>
+<td class="px-6 py-4 text-sm text-[#111418] dark:text-slate-200">
+<span class="inline-flex items-center px-2 py-1 rounded text-xs font-medium bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300">
+                                                HO-001
+                                            </span>
+</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-emerald-100 text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                                                Active
+                                            </span>
+</td>
+<td class="px-6 py-4 text-right">
+<div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-1.5 rounded-md hover:bg-slate-100 dark:hover:bg-slate-700 text-[#617589] dark:text-slate-400 hover:text-primary dark:hover:text-primary transition-colors" title="Edit">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+</button>
+<button class="p-1.5 rounded-md hover:bg-red-50 dark:hover:bg-red-900/20 text-[#617589] dark:text-slate-400 hover:text-red-600 dark:hover:text-red-400 transition-colors" title="Delete">
+<span class="material-symbols-outlined text-[18px]">delete</span>
+</button>
+</div>
+</td>
+</tr>
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors group">
+<td class="px-6 py-4 text-sm font-medium text-[#111418] dark:text-slate-200">LOC-002</td>
+<td class="px-6 py-4">
+<div class="flex flex-col">
+<span class="text-sm font-semibold text-[#111418] dark:text-slate-200">Workshop Area B</span>
+<span class="text-xs text-[#617589] dark:text-slate-400">Maintenance</span>
+</div>
+</td>
+<td class="px-6 py-4 text-sm text-[#617589] dark:text-slate-300">
+                                            Jl. Hauling Km 5, Near Checkpoint 3, Taliabu Site
+                                        </td>
+<td class="px-6 py-4 text-sm text-[#111418] dark:text-slate-200">
+<span class="inline-flex items-center px-2 py-1 rounded text-xs font-medium bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300">
+                                                WS-002
+                                            </span>
+</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-emerald-100 text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                                                Active
+                                            </span>
+</td>
+<td class="px-6 py-4 text-right">
+<div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-1.5 rounded-md hover:bg-slate-100 dark:hover:bg-slate-700 text-[#617589] dark:text-slate-400 hover:text-primary dark:hover:text-primary transition-colors" title="Edit">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+</button>
+<button class="p-1.5 rounded-md hover:bg-red-50 dark:hover:bg-red-900/20 text-[#617589] dark:text-slate-400 hover:text-red-600 dark:hover:text-red-400 transition-colors" title="Delete">
+<span class="material-symbols-outlined text-[18px]">delete</span>
+</button>
+</div>
+</td>
+</tr>
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors group">
+<td class="px-6 py-4 text-sm font-medium text-[#111418] dark:text-slate-200">LOC-003</td>
+<td class="px-6 py-4">
+<div class="flex flex-col">
+<span class="text-sm font-semibold text-[#111418] dark:text-slate-200">Warehouse Port</span>
+<span class="text-xs text-[#617589] dark:text-slate-400">Logistics</span>
+</div>
+</td>
+<td class="px-6 py-4 text-sm text-[#617589] dark:text-slate-300">
+                                            Pelabuhan Jetty 2, Logistic Zone, Taliabu
+                                        </td>
+<td class="px-6 py-4 text-sm text-[#111418] dark:text-slate-200">
+<span class="inline-flex items-center px-2 py-1 rounded text-xs font-medium bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300">
+                                                WH-003
+                                            </span>
+</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-400 border border-slate-200 dark:border-slate-700">
+<span class="w-1.5 h-1.5 rounded-full bg-slate-400"></span>
+                                                Inactive
+                                            </span>
+</td>
+<td class="px-6 py-4 text-right">
+<div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-1.5 rounded-md hover:bg-slate-100 dark:hover:bg-slate-700 text-[#617589] dark:text-slate-400 hover:text-primary dark:hover:text-primary transition-colors" title="Edit">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+</button>
+<button class="p-1.5 rounded-md hover:bg-red-50 dark:hover:bg-red-900/20 text-[#617589] dark:text-slate-400 hover:text-red-600 dark:hover:text-red-400 transition-colors" title="Delete">
+<span class="material-symbols-outlined text-[18px]">delete</span>
+</button>
+</div>
+</td>
+</tr>
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors group">
+<td class="px-6 py-4 text-sm font-medium text-[#111418] dark:text-slate-200">LOC-004</td>
+<td class="px-6 py-4">
+<div class="flex flex-col">
+<span class="text-sm font-semibold text-[#111418] dark:text-slate-200">Staff Dormitory A</span>
+<span class="text-xs text-[#617589] dark:text-slate-400">Accommodation</span>
+</div>
+</td>
+<td class="px-6 py-4 text-sm text-[#617589] dark:text-slate-300">
+                                            Komplek Perumahan Staff, Block A, Residential Area
+                                        </td>
+<td class="px-6 py-4 text-sm text-[#111418] dark:text-slate-200">
+<span class="inline-flex items-center px-2 py-1 rounded text-xs font-medium bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300">
+                                                DM-004
+                                            </span>
+</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-emerald-100 text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                                                Active
+                                            </span>
+</td>
+<td class="px-6 py-4 text-right">
+<div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-1.5 rounded-md hover:bg-slate-100 dark:hover:bg-slate-700 text-[#617589] dark:text-slate-400 hover:text-primary dark:hover:text-primary transition-colors" title="Edit">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+</button>
+<button class="p-1.5 rounded-md hover:bg-red-50 dark:hover:bg-red-900/20 text-[#617589] dark:text-slate-400 hover:text-red-600 dark:hover:text-red-400 transition-colors" title="Delete">
+<span class="material-symbols-outlined text-[18px]">delete</span>
+</button>
+</div>
+</td>
+</tr>
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors group">
+<td class="px-6 py-4 text-sm font-medium text-[#111418] dark:text-slate-200">LOC-005</td>
+<td class="px-6 py-4">
+<div class="flex flex-col">
+<span class="text-sm font-semibold text-[#111418] dark:text-slate-200">Security Post 1</span>
+<span class="text-xs text-[#617589] dark:text-slate-400">Security</span>
+</div>
+</td>
+<td class="px-6 py-4 text-sm text-[#617589] dark:text-slate-300">
+                                            Main Entrance Gate, Pos 1, Taliabu Site
+                                        </td>
+<td class="px-6 py-4 text-sm text-[#111418] dark:text-slate-200">
+<span class="inline-flex items-center px-2 py-1 rounded text-xs font-medium bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300">
+                                                SEC-001
+                                            </span>
+</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-emerald-100 text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                                                Active
+                                            </span>
+</td>
+<td class="px-6 py-4 text-right">
+<div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-1.5 rounded-md hover:bg-slate-100 dark:hover:bg-slate-700 text-[#617589] dark:text-slate-400 hover:text-primary dark:hover:text-primary transition-colors" title="Edit">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+</button>
+<button class="p-1.5 rounded-md hover:bg-red-50 dark:hover:bg-red-900/20 text-[#617589] dark:text-slate-400 hover:text-red-600 dark:hover:text-red-400 transition-colors" title="Delete">
+<span class="material-symbols-outlined text-[18px]">delete</span>
+</button>
+</div>
+</td>
+</tr>
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors group">
+<td class="px-6 py-4 text-sm font-medium text-[#111418] dark:text-slate-200">LOC-006</td>
+<td class="px-6 py-4">
+<div class="flex flex-col">
+<span class="text-sm font-semibold text-[#111418] dark:text-slate-200">Medical Clinic</span>
+<span class="text-xs text-[#617589] dark:text-slate-400">Health &amp; Safety</span>
+</div>
+</td>
+<td class="px-6 py-4 text-sm text-[#617589] dark:text-slate-300">
+                                            Central Site Area, Building C
+                                        </td>
+<td class="px-6 py-4 text-sm text-[#111418] dark:text-slate-200">
+<span class="inline-flex items-center px-2 py-1 rounded text-xs font-medium bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300">
+                                                MED-006
+                                            </span>
+</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-emerald-100 text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                                                Active
+                                            </span>
+</td>
+<td class="px-6 py-4 text-right">
+<div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-1.5 rounded-md hover:bg-slate-100 dark:hover:bg-slate-700 text-[#617589] dark:text-slate-400 hover:text-primary dark:hover:text-primary transition-colors" title="Edit">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+</button>
+<button class="p-1.5 rounded-md hover:bg-red-50 dark:hover:bg-red-900/20 text-[#617589] dark:text-slate-400 hover:text-red-600 dark:hover:text-red-400 transition-colors" title="Delete">
+<span class="material-symbols-outlined text-[18px]">delete</span>
+</button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination -->
+<div class="px-6 py-4 border-t border-[#dbe0e6] dark:border-slate-700 flex items-center justify-between bg-white dark:bg-[#1e2732]">
+<p class="text-sm text-[#617589] dark:text-slate-400">
+                                Showing <span class="font-medium text-[#111418] dark:text-white">1</span> to <span class="font-medium text-[#111418] dark:text-white">6</span> of <span class="font-medium text-[#111418] dark:text-white">50</span> results
+                            </p>
+<div class="flex items-center gap-2">
+<button class="px-3 py-1.5 rounded-lg border border-[#dbe0e6] dark:border-slate-600 text-sm font-medium text-[#617589] dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700 disabled:opacity-50 disabled:cursor-not-allowed">Previous</button>
+<button class="px-3 py-1.5 rounded-lg border border-[#dbe0e6] dark:border-slate-600 text-sm font-medium text-[#617589] dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700">Next</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

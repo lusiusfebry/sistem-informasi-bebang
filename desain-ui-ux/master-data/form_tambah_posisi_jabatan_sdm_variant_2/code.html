@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Form Tambah Posisi Jabatan SDM Variant 2</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1173d4",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101922",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 antialiased">
+<div class="flex min-h-screen w-full">
+<!-- Sidebar -->
+<div class="relative flex-none w-72 flex-col bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 hidden lg:flex">
+<div class="flex flex-col h-full">
+<!-- User Profile Section -->
+<div class="p-6 border-b border-slate-100 dark:border-slate-800">
+<div class="flex items-center gap-3">
+<div class="bg-center bg-no-repeat bg-cover rounded-full size-12 shrink-0 bg-slate-200" data-alt="User profile picture" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAwP3sC5lVRtB7tUJeAdOpXIVUDIydOVouS60QF3mrAZjzY8KOUsy2N2YTfScpzoM2546GlelWc42EHDucnBcXvLeStUkX7Da9TneyDOzZuAlBoSRo5bOw5s5iK1sJhiISh6-b8tqbexQgC_H6I7kIwEc9PUQ0T02Y7HPgf5zeSqvhTmour_CGPN29HCLWzJU3OIDxPjy1WwCxwYTAEyAsN6IEqIuLsY9CH3l8oAGyffA-8ORNSEQnl_WVswex2kG0zXdn5N59V31A");'></div>
+<div class="flex flex-col overflow-hidden">
+<h1 class="text-slate-900 dark:text-white text-base font-semibold truncate">Admin HR</h1>
+<p class="text-slate-500 dark:text-slate-400 text-xs font-normal truncate">PT Prima Sarana Gemilang</p>
+</div>
+</div>
+</div>
+<!-- Navigation Links -->
+<div class="flex-1 overflow-y-auto py-4 px-3 space-y-1">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors group" href="#">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-primary transition-colors">home</span>
+<span class="text-sm font-medium">Dashboard</span>
+</a>
+<!-- Active Link (SDM) -->
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary/10 text-primary dark:text-blue-400 transition-colors" href="#">
+<span class="material-symbols-outlined fill-1">group</span>
+<span class="text-sm font-semibold">SDM</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors group" href="#">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-primary transition-colors">account_balance</span>
+<span class="text-sm font-medium">Keuangan</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors group" href="#">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-primary transition-colors">inventory_2</span>
+<span class="text-sm font-medium">Logistik</span>
+</a>
+<div class="pt-4 mt-4 border-t border-slate-100 dark:border-slate-800">
+<p class="px-3 text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Sistem</p>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors group" href="#">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-primary transition-colors">settings</span>
+<span class="text-sm font-medium">Pengaturan</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors group" href="#">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-primary transition-colors">help</span>
+<span class="text-sm font-medium">Bantuan</span>
+</a>
+</div>
+</div>
+<!-- Footer -->
+<div class="p-4 border-t border-slate-100 dark:border-slate-800">
+<p class="text-xs text-center text-slate-400">© 2024 BEBANG System</p>
+</div>
+</div>
+</div>
+<!-- Main Content -->
+<div class="flex-1 flex flex-col min-h-0 overflow-hidden">
+<!-- Header Mobile (only visible on small screens) -->
+<div class="lg:hidden flex items-center justify-between p-4 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800">
+<div class="flex items-center gap-2">
+<button class="text-slate-500 hover:text-slate-700">
+<span class="material-symbols-outlined">menu</span>
+</button>
+<span class="font-bold text-lg text-slate-900 dark:text-white">BEBANG</span>
+</div>
+<div class="size-8 rounded-full bg-slate-200" data-alt="User profile picture mobile" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuADgWiAPVbSP8-53_ksWO5p1_rlGjCXQMHJ-BD7F-8wHmbYQuMJLBkGGlkRfd9XafONAfvIy2PxFQtOsbs2UOngRtT7z_o-A43H8NFSoeKfzk5ttxAh6sEYP6OKoG9Mp2vfrm0K7xrHuwBz7Fnk-jNLNtiDcHLKtulSO0jcmSq3g7EqkiEWnRmP5uD9v3YP5wY8r97IfPSvg9TQdABC_5h2IX_sXoNmbn1XKY42S9pvfgtoi9sMRhvCY7dLT-G6U1_gP1jJpzeaGmM");'></div>
+</div>
+<main class="flex-1 overflow-y-auto bg-slate-50/50 dark:bg-black/20 p-4 md:p-8">
+<div class="max-w-5xl mx-auto space-y-6">
+<!-- Breadcrumbs & Title -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+<div class="space-y-1">
+<nav class="flex items-center text-sm text-slate-500 dark:text-slate-400">
+<a class="hover:text-primary transition-colors" href="#">Beranda</a>
+<span class="mx-2 text-slate-300">/</span>
+<a class="hover:text-primary transition-colors" href="#">SDM</a>
+<span class="mx-2 text-slate-300">/</span>
+<span class="text-slate-900 dark:text-slate-200 font-medium">Tambah Posisi</span>
+</nav>
+<h1 class="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white tracking-tight">Tambah Posisi Jabatan</h1>
+<p class="text-slate-500 dark:text-slate-400 text-sm md:text-base">Buat posisi jabatan baru untuk departemen di Site Taliabu.</p>
+</div>
+<div class="flex gap-3">
+<button class="px-4 py-2 text-sm font-medium text-slate-700 dark:text-slate-200 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-200 transition-colors">
+                                Batal
+                            </button>
+<button class="px-4 py-2 text-sm font-medium text-white bg-primary rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary shadow-sm shadow-blue-500/30 transition-all flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">save</span>
+                                Simpan Posisi
+                            </button>
+</div>
+</div>
+<!-- Main Form Card -->
+<div class="bg-white dark:bg-slate-900 rounded-xl shadow-sm border border-slate-200 dark:border-slate-800 overflow-hidden">
+<div class="border-b border-slate-100 dark:border-slate-800 px-6 py-4 bg-slate-50/50 dark:bg-slate-800/50 flex items-center justify-between">
+<h2 class="text-base font-semibold text-slate-900 dark:text-white flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">badge</span>
+                                Informasi Jabatan
+                            </h2>
+<span class="text-xs font-medium px-2.5 py-1 rounded-full bg-blue-50 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300 border border-blue-100 dark:border-blue-800">
+                                Variant 2
+                            </span>
+</div>
+<div class="p-6 md:p-8 space-y-8">
+<!-- Section 1: Core Details -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+<!-- Nama Jabatan -->
+<div class="space-y-2">
+<label class="block text-sm font-medium text-slate-700 dark:text-slate-300" for="job_title">
+                                        Nama Jabatan <span class="text-red-500">*</span>
+</label>
+<div class="relative">
+<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
+<span class="material-symbols-outlined text-[20px]">work</span>
+</div>
+<input class="block w-full pl-10 rounded-lg border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 text-slate-900 dark:text-white shadow-sm focus:border-primary focus:ring-primary sm:text-sm h-11 transition-shadow" id="job_title" placeholder="Contoh: Senior Geologist" type="text"/>
+</div>
+<p class="text-xs text-slate-500 dark:text-slate-400">Nama resmi jabatan sesuai struktur organisasi.</p>
+</div>
+<!-- Kode Jabatan -->
+<div class="space-y-2">
+<label class="block text-sm font-medium text-slate-700 dark:text-slate-300" for="job_code">
+                                        Kode Jabatan <span class="text-red-500">*</span>
+</label>
+<div class="relative">
+<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
+<span class="material-symbols-outlined text-[20px]">tag</span>
+</div>
+<input class="block w-full pl-10 rounded-lg border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 text-slate-900 dark:text-white shadow-sm focus:border-primary focus:ring-primary sm:text-sm h-11 uppercase transition-shadow" id="job_code" placeholder="Contoh: GEO-SR-01" type="text"/>
+</div>
+<p class="text-xs text-slate-500 dark:text-slate-400">Kode unik untuk identifikasi sistem (Wajib unik).</p>
+</div>
+</div>
+<hr class="border-slate-100 dark:border-slate-800"/>
+<!-- Section 2: Department & Structure -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+<!-- Departemen Dropdown -->
+<div class="space-y-2">
+<label class="block text-sm font-medium text-slate-700 dark:text-slate-300" for="department">
+                                        Departemen <span class="text-red-500">*</span>
+</label>
+<div class="relative">
+<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
+<span class="material-symbols-outlined text-[20px]">domain</span>
+</div>
+<select class="block w-full pl-10 pr-10 rounded-lg border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 text-slate-900 dark:text-white shadow-sm focus:border-primary focus:ring-primary sm:text-sm h-11 appearance-none transition-shadow" id="department">
+<option disabled="" selected="" value="">Pilih Department</option>
+<option value="eng">Engineering</option>
+<option value="hr">Human Resources</option>
+<option value="fin">Finance &amp; Accounting</option>
+<option value="ops">Operations</option>
+<option value="log">Logistics</option>
+</select>
+<div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none text-slate-400">
+<span class="material-symbols-outlined text-[20px]">expand_more</span>
+</div>
+</div>
+</div>
+<!-- Atasan Langsung Dropdown -->
+<div class="space-y-2">
+<label class="block text-sm font-medium text-slate-700 dark:text-slate-300" for="supervisor">
+                                        Atasan Langsung
+                                    </label>
+<div class="relative">
+<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
+<span class="material-symbols-outlined text-[20px]">person</span>
+</div>
+<select class="block w-full pl-10 pr-10 rounded-lg border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 text-slate-900 dark:text-white shadow-sm focus:border-primary focus:ring-primary sm:text-sm h-11 appearance-none transition-shadow" id="supervisor">
+<option disabled="" selected="" value="">Pilih Atasan Langsung</option>
+<option value="mgr1">Manager HR</option>
+<option value="mgr2">Head of Engineering</option>
+<option value="vp1">VP Operations</option>
+</select>
+<div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none text-slate-400">
+<span class="material-symbols-outlined text-[20px]">expand_more</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Section 3: Description -->
+<div class="space-y-2">
+<label class="block text-sm font-medium text-slate-700 dark:text-slate-300" for="description">
+                                    Deskripsi Tugas
+                                </label>
+<div class="relative">
+<textarea class="block w-full rounded-lg border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 text-slate-900 dark:text-white shadow-sm focus:border-primary focus:ring-primary sm:text-sm p-3 transition-shadow resize-none" id="description" placeholder="Jelaskan tanggung jawab utama dan tugas harian posisi ini..." rows="4"></textarea>
+</div>
+</div>
+<hr class="border-slate-100 dark:border-slate-800"/>
+<!-- Section 4: Settings / Toggle -->
+<div class="flex items-center justify-between bg-slate-50 dark:bg-slate-800/50 p-4 rounded-lg border border-slate-100 dark:border-slate-800">
+<div class="flex flex-col">
+<span class="text-sm font-medium text-slate-900 dark:text-white">Status Aktif</span>
+<span class="text-xs text-slate-500 dark:text-slate-400">Posisi ini dapat dipilih saat perekrutan jika aktif.</span>
+</div>
+<label class="inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox" value=""/>
+<div class="relative w-11 h-6 bg-slate-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-primary/50 dark:peer-focus:ring-primary/40 rounded-full peer dark:bg-slate-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-primary"></div>
+</label>
+</div>
+</div>
+</div>
+<!-- Form Actions Mobile Sticky (Optional) -->
+<div class="md:hidden sticky bottom-4 z-10">
+<button class="w-full px-4 py-3 text-sm font-bold text-white bg-primary rounded-xl shadow-lg shadow-blue-500/40 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-all flex justify-center items-center gap-2">
+<span class="material-symbols-outlined text-[20px]">save</span>
+                             Simpan Posisi Jabatan
+                        </button>
+</div>
+</div>
+</main>
+</div>
+</div>
+</body></html>

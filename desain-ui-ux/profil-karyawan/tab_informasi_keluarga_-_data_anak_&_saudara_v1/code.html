@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Informasi Keluarga - BEBANG HRIS</title>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1173d4",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101922",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 antialiased overflow-hidden">
+<div class="flex h-screen w-full flex-col overflow-hidden">
+<!-- Header -->
+<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-slate-200 dark:border-slate-800 bg-white dark:bg-[#111a22] px-6 py-3 z-10 shrink-0">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-3 text-slate-900 dark:text-white">
+<div class="size-8 text-primary">
+<svg fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path d="M44 11.2727C44 14.0109 39.8386 16.3957 33.69 17.6364C39.8386 18.877 44 21.2618 44 24C44 26.7382 39.8386 29.123 33.69 30.3636C39.8386 31.6043 44 33.9891 44 36.7273C44 40.7439 35.0457 44 24 44C12.9543 44 4 40.7439 4 36.7273C4 33.9891 8.16144 31.6043 14.31 30.3636C8.16144 29.123 4 26.7382 4 24C4 21.2618 8.16144 18.877 14.31 17.6364C8.16144 16.3957 4 14.0109 4 11.2727C4 7.25611 12.9543 4 24 4C35.0457 4 44 7.25611 44 11.2727Z" fill="currentColor"></path>
+</svg>
+</div>
+<h2 class="text-lg font-bold leading-tight tracking-[-0.015em]">BEBANG HRIS</h2>
+</div>
+<!-- Search Bar -->
+<div class="hidden md:flex flex-col min-w-64 h-10">
+<div class="flex w-full flex-1 items-stretch rounded-lg h-full bg-slate-100 dark:bg-slate-800">
+<div class="text-slate-500 flex items-center justify-center pl-4 pr-2">
+<span class="material-symbols-outlined text-[20px]">search</span>
+</div>
+<input class="w-full bg-transparent border-none text-sm text-slate-900 dark:text-white focus:ring-0 placeholder:text-slate-500" placeholder="Search employee..."/>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="relative p-2 text-slate-500 hover:text-primary transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-1.5 right-1.5 size-2 bg-red-500 rounded-full border border-white dark:border-[#111a22]"></span>
+</button>
+<div class="h-8 w-[1px] bg-slate-200 dark:bg-slate-700 mx-2"></div>
+<div class="flex items-center gap-3">
+<div class="text-right hidden sm:block">
+<p class="text-sm font-semibold text-slate-900 dark:text-white">Admin HR</p>
+<p class="text-xs text-slate-500">PT Prima Sarana Gemilang</p>
+</div>
+<div class="size-9 rounded-full bg-slate-200 bg-center bg-cover border border-slate-200 dark:border-slate-700" data-alt="User profile picture" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDdV52p0OAnTxTAOl7uYMvxt4cumb8Uro_AMQvBO8HZt0KOCUbgcgZVXewDaIs-G3VIjYnyo5Z6_2pbAHf9fj71XSjnItL07AnEMquzhpttdLilM0II-EMSU0oxJv-eUwMqTzXlvQSDED_t1SoVk0JV1mUB3S1HsA5DZz8tK1pn0OfFO6GKDSimF8cNr8ar0JO_VaOdNOjXtfrQXSLdE2DYPlNRW0ywEFGEADiSbeFySfBc0iBCxI9dj5LN2YUL5JMyRCkJeype1pQ");'></div>
+</div>
+</div>
+</header>
+<div class="flex flex-1 overflow-hidden">
+<!-- Sidebar -->
+<aside class="w-64 flex flex-col bg-white dark:bg-[#111a22] border-r border-slate-200 dark:border-slate-800 overflow-y-auto shrink-0 hidden lg:flex">
+<div class="p-4 border-b border-slate-100 dark:border-slate-800">
+<div class="flex gap-3 items-center mb-4">
+<div class="size-12 rounded-full bg-cover bg-center border-2 border-primary/20" data-alt="Employee profile picture" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAXeocSYTDzw9Ra-yae-16_RmeG3SbfzrjOUr4IeUgl-18kZCz4JLbz1a32Hb0C_fspXQ1VhPnji-al4adWMdv-ZAmI1o79PK0CfngT1HTsa0GGjcJ0L8OjNc-2L6sYFf1vCX_2JchXG4iaLOG9gmgvpkBPjuVipndnHCB-od0V2sLkwi4_HVc771aMTMWijkQb9BM5Q0drQA0bQQrzpW7KUxx3mV0k4aW5rmT8f_tZ1r3ovETc1eOlzuTe75dVVl8AD_gWVaNHbGY");'></div>
+<div class="flex flex-col overflow-hidden">
+<h1 class="text-slate-900 dark:text-white text-sm font-bold truncate">Budi Santoso</h1>
+<p class="text-slate-500 text-xs truncate">NIK: 2023001</p>
+<p class="text-primary text-xs font-medium mt-0.5">Mining Engineer</p>
+</div>
+</div>
+</div>
+<div class="flex flex-col py-2 px-3 gap-1">
+<div class="text-xs font-bold text-slate-400 uppercase tracking-wider px-3 py-2 mt-2">Master Data</div>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px]">person</span>
+<span class="text-sm font-medium">Data Pribadi</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px]">location_on</span>
+<span class="text-sm font-medium">Alamat &amp; Kontak</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-primary/10 text-primary dark:text-primary" href="#">
+<span class="material-symbols-outlined text-[20px] fill-current">group</span>
+<span class="text-sm font-medium">Informasi Keluarga</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px]">school</span>
+<span class="text-sm font-medium">Pendidikan</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px]">work</span>
+<span class="text-sm font-medium">Pengalaman Kerja</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px]">menu_book</span>
+<span class="text-sm font-medium">Pelatihan</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px]">workspace_premium</span>
+<span class="text-sm font-medium">Sertifikasi</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px]">payments</span>
+<span class="text-sm font-medium">Payroll</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px]">schedule</span>
+<span class="text-sm font-medium">Absensi</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px]">description</span>
+<span class="text-sm font-medium">Dokumen</span>
+</a>
+</div>
+<div class="mt-auto p-4 border-t border-slate-100 dark:border-slate-800">
+<button class="flex w-full items-center justify-center gap-2 rounded-lg bg-slate-100 dark:bg-slate-800 py-2.5 text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors">
+<span class="material-symbols-outlined text-[18px]">logout</span>
+                        Logout
+                    </button>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 overflow-y-auto bg-background-light dark:bg-background-dark p-6 md:p-8">
+<div class="mx-auto max-w-5xl">
+<!-- Breadcrumbs & Header -->
+<div class="mb-8">
+<nav aria-label="Breadcrumb" class="flex mb-4">
+<ol class="inline-flex items-center space-x-1 md:space-x-3">
+<li class="inline-flex items-center">
+<a class="inline-flex items-center text-sm font-medium text-slate-500 hover:text-primary dark:text-slate-400 dark:hover:text-white" href="#">
+                                        Home
+                                    </a>
+</li>
+<li>
+<div class="flex items-center">
+<span class="material-symbols-outlined text-slate-400 text-lg">chevron_right</span>
+<a class="ml-1 text-sm font-medium text-slate-500 hover:text-primary dark:text-slate-400 dark:hover:text-white md:ml-2" href="#">Master Data</a>
+</div>
+</li>
+<li aria-current="page">
+<div class="flex items-center">
+<span class="material-symbols-outlined text-slate-400 text-lg">chevron_right</span>
+<span class="ml-1 text-sm font-medium text-slate-900 dark:text-white md:ml-2">Informasi Keluarga</span>
+</div>
+</li>
+</ol>
+</nav>
+<div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+<div>
+<h1 class="text-3xl font-black tracking-tight text-slate-900 dark:text-white">Informasi Keluarga</h1>
+<p class="mt-1 text-slate-500 dark:text-slate-400">Kelola data pasangan, anak, dan saudara kandung untuk keperluan administrasi.</p>
+</div>
+<div class="flex gap-3">
+<button class="rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-4 py-2.5 text-sm font-semibold text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors shadow-sm">
+                                    Batal
+                                </button>
+<button class="rounded-lg bg-primary px-4 py-2.5 text-sm font-bold text-white shadow-sm hover:bg-primary/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary transition-all">
+                                    Simpan Perubahan
+                                </button>
+</div>
+</div>
+</div>
+<!-- Summary Card: Pasangan & Anak -->
+<section class="mb-8 rounded-xl bg-white dark:bg-[#111a22] p-6 shadow-sm border border-slate-200 dark:border-slate-800">
+<div class="flex items-center gap-3 mb-6">
+<div class="p-2 bg-primary/10 rounded-lg text-primary">
+<span class="material-symbols-outlined">family_restroom</span>
+</div>
+<h2 class="text-xl font-bold text-slate-900 dark:text-white">Ringkasan Keluarga Inti</h2>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+<div class="space-y-1.5">
+<label class="text-xs font-semibold uppercase tracking-wider text-slate-500">Status Pernikahan</label>
+<div class="relative">
+<select class="w-full rounded-lg border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-white text-sm focus:border-primary focus:ring-primary shadow-sm py-2.5 pl-3 pr-10">
+<option selected="" value="Menikah">Menikah</option>
+<option value="Belum Menikah">Belum Menikah</option>
+<option value="Janda/Duda">Janda/Duda</option>
+</select>
+</div>
+</div>
+<div class="space-y-1.5">
+<label class="text-xs font-semibold uppercase tracking-wider text-slate-500">Jumlah Anak</label>
+<div class="relative">
+<input class="w-full rounded-lg border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-white text-sm focus:border-primary focus:ring-primary shadow-sm py-2.5 px-3" type="number" value="2"/>
+</div>
+</div>
+<div class="space-y-1.5">
+<label class="text-xs font-semibold uppercase tracking-wider text-slate-500">Nama Pasangan</label>
+<div class="relative">
+<input class="w-full rounded-lg border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-white text-sm focus:border-primary focus:ring-primary shadow-sm py-2.5 px-3" type="text" value="Siti Nurhaliza"/>
+</div>
+</div>
+<div class="space-y-1.5">
+<label class="text-xs font-semibold uppercase tracking-wider text-slate-500">Pekerjaan Pasangan</label>
+<div class="relative">
+<input class="w-full rounded-lg border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-white text-sm focus:border-primary focus:ring-primary shadow-sm py-2.5 px-3" type="text" value="Guru Swasta"/>
+</div>
+</div>
+</div>
+</section>
+<!-- Dynamic List: Identitas Anak -->
+<section class="mb-8 rounded-xl bg-white dark:bg-[#111a22] shadow-sm border border-slate-200 dark:border-slate-800 overflow-hidden">
+<div class="p-6 border-b border-slate-100 dark:border-slate-800 flex justify-between items-center bg-slate-50/50 dark:bg-white/5">
+<div class="flex items-center gap-3">
+<div class="p-2 bg-blue-100 dark:bg-blue-900/30 rounded-lg text-blue-600 dark:text-blue-400">
+<span class="material-symbols-outlined">child_care</span>
+</div>
+<h2 class="text-xl font-bold text-slate-900 dark:text-white">Identitas Anak</h2>
+</div>
+<button class="flex items-center gap-2 text-sm font-semibold text-primary hover:text-primary/80 transition-colors">
+<span class="material-symbols-outlined text-[20px]">add_circle</span>
+                                Tambah Anak
+                            </button>
+</div>
+<div class="p-6 space-y-6">
+<!-- Child Item 1 -->
+<div class="bg-slate-50 dark:bg-slate-900/50 rounded-lg p-5 border border-slate-200 dark:border-slate-700 relative group">
+<button class="absolute top-4 right-4 text-slate-400 hover:text-red-500 transition-colors p-1 rounded-md hover:bg-red-50 dark:hover:bg-red-900/20">
+<span class="material-symbols-outlined text-[20px]">delete</span>
+</button>
+<h3 class="text-sm font-bold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
+<span class="flex items-center justify-center size-6 bg-slate-200 dark:bg-slate-700 rounded-full text-xs">1</span>
+                                    Anak Pertama
+                                </h3>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+<div class="space-y-1">
+<label class="text-xs font-medium text-slate-500">Nama Lengkap</label>
+<input class="w-full rounded-md border-slate-300 dark:border-slate-600 bg-white dark:bg-[#111a22] text-slate-900 dark:text-white text-sm focus:border-primary focus:ring-primary shadow-sm py-2 px-3" type="text" value="Budi Junior"/>
+</div>
+<div class="space-y-1">
+<label class="text-xs font-medium text-slate-500">Jenis Kelamin</label>
+<select class="w-full rounded-md border-slate-300 dark:border-slate-600 bg-white dark:bg-[#111a22] text-slate-900 dark:text-white text-sm focus:border-primary focus:ring-primary shadow-sm py-2 px-3">
+<option selected="" value="Laki-laki">Laki-laki</option>
+<option value="Perempuan">Perempuan</option>
+</select>
+</div>
+<div class="space-y-1">
+<label class="text-xs font-medium text-slate-500">Tanggal Lahir</label>
+<input class="w-full rounded-md border-slate-300 dark:border-slate-600 bg-white dark:bg-[#111a22] text-slate-900 dark:text-white text-sm focus:border-primary focus:ring-primary shadow-sm py-2 px-3" type="date" value="2015-01-12"/>
+</div>
+<div class="space-y-1">
+<label class="text-xs font-medium text-slate-500">Catatan</label>
+<input class="w-full rounded-md border-slate-300 dark:border-slate-600 bg-white dark:bg-[#111a22] text-slate-900 dark:text-white text-sm focus:border-primary focus:ring-primary shadow-sm py-2 px-3" placeholder="Keterangan tambahan" type="text" value="Anak Kandung"/>
+</div>
+</div>
+</div>
+<!-- Child Item 2 -->
+<div class="bg-slate-50 dark:bg-slate-900/50 rounded-lg p-5 border border-slate-200 dark:border-slate-700 relative group">
+<button class="absolute top-4 right-4 text-slate-400 hover:text-red-500 transition-colors p-1 rounded-md hover:bg-red-50 dark:hover:bg-red-900/20">
+<span class="material-symbols-outlined text-[20px]">delete</span>
+</button>
+<h3 class="text-sm font-bold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
+<span class="flex items-center justify-center size-6 bg-slate-200 dark:bg-slate-700 rounded-full text-xs">2</span>
+                                    Anak Kedua
+                                </h3>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+<div class="space-y-1">
+<label class="text-xs font-medium text-slate-500">Nama Lengkap</label>
+<input class="w-full rounded-md border-slate-300 dark:border-slate-600 bg-white dark:bg-[#111a22] text-slate-900 dark:text-white text-sm focus:border-primary focus:ring-primary shadow-sm py-2 px-3" type="text" value="Siti Aminah"/>
+</div>
+<div class="space-y-1">
+<label class="text-xs font-medium text-slate-500">Jenis Kelamin</label>
+<select class="w-full rounded-md border-slate-300 dark:border-slate-600 bg-white dark:bg-[#111a22] text-slate-900 dark:text-white text-sm focus:border-primary focus:ring-primary shadow-sm py-2 px-3">
+<option value="Laki-laki">Laki-laki</option>
+<option selected="" value="Perempuan">Perempuan</option>
+</select>
+</div>
+<div class="space-y-1">
+<label class="text-xs font-medium text-slate-500">Tanggal Lahir</label>
+<input class="w-full rounded-md border-slate-300 dark:border-slate-600 bg-white dark:bg-[#111a22] text-slate-900 dark:text-white text-sm focus:border-primary focus:ring-primary shadow-sm py-2 px-3" type="date" value="2018-03-05"/>
+</div>
+<div class="space-y-1">
+<label class="text-xs font-medium text-slate-500">Catatan</label>
+<input class="w-full rounded-md border-slate-300 dark:border-slate-600 bg-white dark:bg-[#111a22] text-slate-900 dark:text-white text-sm focus:border-primary focus:ring-primary shadow-sm py-2 px-3" placeholder="Keterangan tambahan" type="text"/>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Siblings Section -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+<!-- Left Col: Summary & Parents -->
+<div class="lg:col-span-1 space-y-8">
+<!-- Summary Card: Saudara Kandung -->
+<section class="rounded-xl bg-white dark:bg-[#111a22] p-6 shadow-sm border border-slate-200 dark:border-slate-800 h-fit">
+<div class="flex items-center gap-3 mb-6">
+<div class="p-2 bg-orange-100 dark:bg-orange-900/30 rounded-lg text-orange-600 dark:text-orange-400">
+<span class="material-symbols-outlined">diversity_3</span>
+</div>
+<h2 class="text-lg font-bold text-slate-900 dark:text-white">Saudara Kandung</h2>
+</div>
+<div class="space-y-4">
+<div class="space-y-1.5">
+<label class="text-xs font-semibold uppercase tracking-wider text-slate-500">Anak Ke-</label>
+<input class="w-full rounded-lg border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-white text-sm focus:border-primary focus:ring-primary shadow-sm py-2.5 px-3" type="number" value="2"/>
+</div>
+<div class="space-y-1.5">
+<label class="text-xs font-semibold uppercase tracking-wider text-slate-500">Jumlah Saudara</label>
+<input class="w-full rounded-lg border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-white text-sm focus:border-primary focus:ring-primary shadow-sm py-2.5 px-3" type="number" value="3"/>
+<p class="text-xs text-slate-400 mt-1">Termasuk diri sendiri</p>
+</div>
+</div>
+</section>
+<!-- Parents Card -->
+<section class="rounded-xl bg-white dark:bg-[#111a22] p-6 shadow-sm border border-slate-200 dark:border-slate-800">
+<div class="flex items-center gap-3 mb-6">
+<div class="p-2 bg-green-100 dark:bg-green-900/30 rounded-lg text-green-600 dark:text-green-400">
+<span class="material-symbols-outlined">elderly</span>
+</div>
+<h2 class="text-lg font-bold text-slate-900 dark:text-white">Orang Tua</h2>
+</div>
+<div class="space-y-4">
+<div class="space-y-1.5">
+<label class="text-xs font-semibold uppercase tracking-wider text-slate-500">Nama Ayah</label>
+<input class="w-full rounded-lg border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-white text-sm focus:border-primary focus:ring-primary shadow-sm py-2.5 px-3" type="text" value="Suparman"/>
+</div>
+<div class="space-y-1.5">
+<label class="text-xs font-semibold uppercase tracking-wider text-slate-500">Nama Ibu</label>
+<input class="w-full rounded-lg border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-white text-sm focus:border-primary focus:ring-primary shadow-sm py-2.5 px-3" type="text" value="Suryani"/>
+</div>
+<div class="border-t border-slate-100 dark:border-slate-800 my-4 pt-4">
+<h3 class="text-sm font-bold text-slate-900 dark:text-white mb-3">Mertua</h3>
+<div class="space-y-4">
+<div class="space-y-1.5">
+<label class="text-xs font-semibold uppercase tracking-wider text-slate-500">Nama Ayah Mertua</label>
+<input class="w-full rounded-lg border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-white text-sm focus:border-primary focus:ring-primary shadow-sm py-2.5 px-3" type="text"/>
+</div>
+<div class="space-y-1.5">
+<label class="text-xs font-semibold uppercase tracking-wider text-slate-500">Nama Ibu Mertua</label>
+<input class="w-full rounded-lg border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-white text-sm focus:border-primary focus:ring-primary shadow-sm py-2.5 px-3" type="text"/>
+</div>
+</div>
+</div>
+</div>
+</section>
+</div>
+<!-- Right Col: Siblings Detail List -->
+<div class="lg:col-span-2">
+<section class="rounded-xl bg-white dark:bg-[#111a22] shadow-sm border border-slate-200 dark:border-slate-800 overflow-hidden h-full flex flex-col">
+<div class="p-6 border-b border-slate-100 dark:border-slate-800 flex justify-between items-center bg-slate-50/50 dark:bg-white/5">
+<div class="flex items-center gap-3">
+<h2 class="text-lg font-bold text-slate-900 dark:text-white">Identitas Saudara Kandung</h2>
+</div>
+<button class="flex items-center gap-2 text-sm font-semibold text-primary hover:text-primary/80 transition-colors">
+<span class="material-symbols-outlined text-[18px]">add</span>
+                                        Tambah
+                                    </button>
+</div>
+<div class="flex-1 p-6 space-y-4">
+<!-- Sibling Item 1 -->
+<div class="bg-white dark:bg-slate-900 rounded-lg p-4 border border-slate-200 dark:border-slate-700 relative shadow-sm hover:shadow-md transition-shadow">
+<div class="flex justify-between items-start mb-3">
+<div class="flex items-center gap-2">
+<div class="bg-primary/10 text-primary p-1.5 rounded-md">
+<span class="material-symbols-outlined text-[18px]">person</span>
+</div>
+<span class="text-xs font-bold uppercase text-slate-500 tracking-wider">Kakak Pertama</span>
+</div>
+<button class="text-slate-400 hover:text-red-500 transition-colors">
+<span class="material-symbols-outlined text-[18px]">close</span>
+</button>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+<div class="space-y-1">
+<label class="text-xs font-medium text-slate-500">Nama</label>
+<input class="w-full rounded-md border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-[#111a22] text-slate-900 dark:text-white text-sm focus:border-primary focus:ring-primary shadow-sm py-2 px-3" type="text" value="Rudi Hartono"/>
+</div>
+<div class="space-y-1">
+<label class="text-xs font-medium text-slate-500">Jenis Kelamin</label>
+<select class="w-full rounded-md border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-[#111a22] text-slate-900 dark:text-white text-sm focus:border-primary focus:ring-primary shadow-sm py-2 px-3">
+<option selected="" value="Laki-laki">Laki-laki</option>
+<option value="Perempuan">Perempuan</option>
+</select>
+</div>
+</div>
+</div>
+<!-- Sibling Item 2 -->
+<div class="bg-white dark:bg-slate-900 rounded-lg p-4 border border-slate-200 dark:border-slate-700 relative shadow-sm hover:shadow-md transition-shadow">
+<div class="flex justify-between items-start mb-3">
+<div class="flex items-center gap-2">
+<div class="bg-pink-100 dark:bg-pink-900/30 text-pink-600 dark:text-pink-400 p-1.5 rounded-md">
+<span class="material-symbols-outlined text-[18px]">person_3</span>
+</div>
+<span class="text-xs font-bold uppercase text-slate-500 tracking-wider">Adik Pertama</span>
+</div>
+<button class="text-slate-400 hover:text-red-500 transition-colors">
+<span class="material-symbols-outlined text-[18px]">close</span>
+</button>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+<div class="space-y-1">
+<label class="text-xs font-medium text-slate-500">Nama</label>
+<input class="w-full rounded-md border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-[#111a22] text-slate-900 dark:text-white text-sm focus:border-primary focus:ring-primary shadow-sm py-2 px-3" type="text" value="Dewi Sartika"/>
+</div>
+<div class="space-y-1">
+<label class="text-xs font-medium text-slate-500">Jenis Kelamin</label>
+<select class="w-full rounded-md border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-[#111a22] text-slate-900 dark:text-white text-sm focus:border-primary focus:ring-primary shadow-sm py-2 px-3">
+<option value="Laki-laki">Laki-laki</option>
+<option selected="" value="Perempuan">Perempuan</option>
+</select>
+</div>
+</div>
+</div>
+<!-- Empty State Placeholder for next sibling -->
+<div class="border-2 border-dashed border-slate-200 dark:border-slate-700 rounded-lg p-6 flex flex-col items-center justify-center text-center hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors cursor-pointer group">
+<div class="bg-slate-100 dark:bg-slate-800 p-2 rounded-full mb-2 group-hover:bg-primary/10 transition-colors">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-primary">add</span>
+</div>
+<p class="text-sm font-medium text-slate-500 dark:text-slate-400">Tambah data saudara lainnya</p>
+</div>
+</div>
+</section>
+</div>
+</div>
+<!-- Footer Action Mobile (Hidden on Desktop usually, but good for UX) -->
+<div class="md:hidden mt-8 flex flex-col gap-3">
+<button class="rounded-lg bg-primary w-full py-3 text-sm font-bold text-white shadow-sm">Simpan Perubahan</button>
+<button class="rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 w-full py-3 text-sm font-semibold text-slate-700 dark:text-slate-200">Batal</button>
+</div>
+<div class="h-12"></div> <!-- Spacer -->
+</div>
+</main>
+</div>
+</div>
+</body></html>

@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Profil Karyawan - Variasi 2 (Modern Industrial)</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1173d4",
+                        "accent": "#f97316", // Corporate Orange
+                        "background-light": "#f0f2f5",
+                        "background-dark": "#101922",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    backgroundImage: {
+                        'industrial-pattern': "url('https://images.unsplash.com/photo-1518655048521-f130df041f66?q=80&w=2070&auto=format&fit=crop')",
+                    }
+                },
+            },
+        }
+    </script>
+<style type="text/tailwindcss">
+        .glass-panel {
+            @apply bg-white/70 dark:bg-slate-900/60 backdrop-blur-md border border-white/20 dark:border-slate-700 shadow-xl;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 antialiased selection:bg-accent/20">
+<div class="flex min-h-screen w-full flex-row overflow-hidden">
+<aside class="w-20 bg-white dark:bg-[#1A2632] border-r border-slate-200 dark:border-slate-800 flex flex-col shrink-0 transition-all duration-300 z-30">
+<div class="h-20 flex items-center justify-center border-b border-slate-100 dark:border-slate-800">
+<div class="size-10 rounded-lg bg-gradient-to-br from-primary to-blue-600 flex items-center justify-center text-white shrink-0 shadow-sm" title="BEBANG SDM">
+<span class="material-symbols-outlined text-[24px]">dataset</span>
+</div>
+</div>
+<nav class="flex-1 overflow-y-auto py-6 flex flex-col gap-2 items-center custom-scrollbar">
+<a class="flex items-center justify-center size-10 rounded-lg text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-primary transition-colors group relative" href="#" title="Dashboard">
+<span class="material-symbols-outlined text-[24px]">dashboard</span>
+</a>
+<a class="flex items-center justify-center size-10 rounded-lg text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-primary transition-colors group relative" href="#" title="Data Center">
+<span class="material-symbols-outlined text-[24px]">folder_open</span>
+</a>
+<a class="flex items-center justify-center size-10 rounded-lg bg-primary/10 text-primary transition-colors group relative" href="#" title="Karyawan">
+<span class="material-symbols-outlined text-[24px] fill-1">group</span>
+</a>
+<a class="flex items-center justify-center size-10 rounded-lg text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-primary transition-colors group relative" href="#" title="Kontrak">
+<span class="material-symbols-outlined text-[24px]">contract</span>
+</a>
+<a class="flex items-center justify-center size-10 rounded-lg text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-primary transition-colors group relative" href="#" title="Laporan">
+<span class="material-symbols-outlined text-[24px]">analytics</span>
+</a>
+</nav>
+<div class="p-4 border-t border-slate-100 dark:border-slate-800 flex justify-center">
+<div class="size-10 rounded-full bg-slate-200 bg-center bg-cover cursor-pointer hover:ring-2 hover:ring-primary hover:ring-offset-2 transition-all" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDOyjivnvVb5yy797Z-1tL2Pwvqd20jmoXZRK10dWfZInNB0-FAnewGbVac5MW9ynmSJmHTQtU9we9YPqF8o83i2WDoqNpNqtAGYLuzyD9HO9TlcjZLRYZAa1L6rrS1A6vDQpkH7sH7p6K6Xd1pfL1RL1uCh1EMzxqZkyDZChjeM-kvObdYTBuLI2YQR-YsBoaXMTM5IFX0Pf4d5f5YC750pS6iOHrRofnJWEPgozm8p3bkrkMKK5UEtswM17kyEDE5eK-EwQtqNqY');" title="Aditya Pratama"></div>
+</div>
+</aside>
+<main class="flex-1 flex flex-col h-screen overflow-hidden relative bg-slate-50 dark:bg-slate-900">
+<div class="absolute inset-0 z-0 opacity-5 pointer-events-none bg-industrial-pattern bg-cover bg-center"></div>
+<header class="h-16 bg-white/80 dark:bg-[#1A2632]/80 backdrop-blur-sm border-b border-slate-200 dark:border-slate-800 flex items-center justify-between px-6 shrink-0 z-20">
+<div class="flex items-center gap-4">
+<button class="text-slate-500 hover:text-primary">
+<span class="material-symbols-outlined">arrow_back</span>
+</button>
+<nav class="flex items-center gap-2 text-xs text-slate-500">
+<a class="hover:text-primary transition-colors" href="#">Manajemen Karyawan</a>
+<span class="material-symbols-outlined text-[10px]">chevron_right</span>
+<a class="hover:text-primary transition-colors" href="#">Direktori</a>
+<span class="material-symbols-outlined text-[10px]">chevron_right</span>
+<span class="text-slate-900 dark:text-white font-medium">Profil Detail</span>
+</nav>
+</div>
+<div class="flex items-center gap-3">
+<span class="px-3 py-1 bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-300 rounded-full text-xs font-semibold border border-green-200 dark:border-green-800">Status: Aktif</span>
+<button class="p-2 text-slate-400 hover:text-accent transition-colors relative" title="Notifikasi">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-2 right-2 size-2 bg-accent rounded-full border-2 border-white dark:border-[#1A2632]"></span>
+</button>
+</div>
+</header>
+<div class="flex-1 overflow-y-auto p-4 md:p-8 custom-scrollbar relative z-10">
+<div class="max-w-7xl mx-auto space-y-6">
+<div class="glass-panel rounded-2xl p-6 md:p-8 relative overflow-hidden group">
+<div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary via-blue-400 to-accent"></div>
+<div class="flex flex-col md:flex-row gap-8 items-start md:items-center relative z-10">
+<div class="relative shrink-0">
+<div class="size-32 md:size-40 rounded-full p-1 bg-white dark:bg-slate-800 shadow-lg ring-1 ring-slate-200 dark:ring-slate-700">
+<div class="w-full h-full rounded-full bg-slate-200 bg-center bg-cover" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAQPMxtPmv2nKV0ls6PsqofJvY27l1JqyNb9nRYHqfOh0zNKbWfjsrYx9jFte3XUz0pH9Jhd6n8rhrNEuzS5E2qjA3QouiAVA27Q4VHEfHNJ-k9ncdhj1ibEJ3YksDmxpnELyD64GI4qemx4H6Y8zrBIETnV-I_SjqZ3OCRVIzf5_PZOnA8bz1wZdTfUpxSBJvcT7md6X8K2hEGkM7IMk8cD_AVm8VejHiTAS9diM8If3Y3343kOyUkogxvFrXFv3E5WKScezLhrms');"></div>
+</div>
+<button class="absolute bottom-2 right-2 size-10 bg-accent text-white rounded-full flex items-center justify-center shadow-lg hover:bg-orange-600 transition-colors border-2 border-white dark:border-slate-800">
+<span class="material-symbols-outlined text-[20px]">photo_camera</span>
+</button>
+</div>
+<div class="flex-1 min-w-0">
+<h1 class="text-3xl font-bold text-slate-900 dark:text-white mb-1 tracking-tight">Budi Santoso</h1>
+<p class="text-lg text-slate-500 dark:text-slate-400 font-medium mb-4">Operator Excavator - Mining Operation</p>
+<div class="flex flex-wrap gap-3 mb-6">
+<span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 text-sm font-medium border border-slate-200 dark:border-slate-700">
+<span class="material-symbols-outlined text-[18px] text-accent">badge</span>
+                                        NIK: 2023001
+                                    </span>
+<span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 text-sm font-medium border border-slate-200 dark:border-slate-700">
+<span class="material-symbols-outlined text-[18px] text-accent">apartment</span>
+                                        Divisi Operasional
+                                    </span>
+<span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 text-sm font-medium border border-slate-200 dark:border-slate-700">
+<span class="material-symbols-outlined text-[18px] text-accent">location_on</span>
+                                        Site Taliabu
+                                    </span>
+</div>
+<div class="flex gap-3">
+<button class="px-4 py-2 bg-primary hover:bg-blue-700 text-white text-sm font-medium rounded-lg shadow-sm hover:shadow transition-all flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+                                        Edit Profil
+                                    </button>
+<button class="px-4 py-2 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700 text-sm font-medium rounded-lg shadow-sm transition-all flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">print</span>
+                                        Cetak ID Card
+                                    </button>
+</div>
+</div>
+<div class="hidden md:flex flex-col items-center gap-2 p-4 bg-white dark:bg-slate-800 rounded-xl shadow-inner border border-slate-100 dark:border-slate-700">
+<span class="material-symbols-outlined text-[80px] text-slate-800 dark:text-white">qr_code_2</span>
+<span class="text-[10px] font-mono text-slate-400 uppercase tracking-widest">Scan Me</span>
+</div>
+</div>
+</div>
+<div class="flex flex-col md:flex-row gap-6">
+<div class="w-full md:w-64 shrink-0">
+<div class="bg-white dark:bg-[#1A2632] rounded-xl shadow-sm border border-slate-200 dark:border-slate-800 overflow-hidden sticky top-6">
+<div class="p-4 border-b border-slate-100 dark:border-slate-700">
+<h3 class="font-semibold text-slate-900 dark:text-white">Menu Profil</h3>
+</div>
+<nav class="flex flex-col p-2 space-y-1">
+<a class="flex items-center gap-3 px-3 py-3 rounded-lg bg-orange-50 dark:bg-orange-900/10 text-accent font-medium border-l-4 border-accent transition-all" href="#">
+<span class="material-symbols-outlined text-[20px]">person</span>
+                                        Informasi Pribadi
+                                    </a>
+<a class="flex items-center gap-3 px-3 py-3 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white transition-all" href="#">
+<span class="material-symbols-outlined text-[20px]">work</span>
+                                        Data Pekerjaan
+                                    </a>
+<a class="flex items-center gap-3 px-3 py-3 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white transition-all" href="#">
+<span class="material-symbols-outlined text-[20px]">school</span>
+                                        Pendidikan &amp; Skill
+                                    </a>
+<a class="flex items-center gap-3 px-3 py-3 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white transition-all" href="#">
+<span class="material-symbols-outlined text-[20px]">family_restroom</span>
+                                        Data Keluarga
+                                    </a>
+<a class="flex items-center gap-3 px-3 py-3 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white transition-all" href="#">
+<span class="material-symbols-outlined text-[20px]">folder_shared</span>
+                                        Dokumen
+                                    </a>
+<a class="flex items-center gap-3 px-3 py-3 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white transition-all" href="#">
+<span class="material-symbols-outlined text-[20px]">history</span>
+                                        Riwayat Karir
+                                    </a>
+</nav>
+</div>
+</div>
+<div class="flex-1">
+<div class="bg-white dark:bg-[#1A2632] rounded-xl shadow-sm border border-slate-200 dark:border-slate-800">
+<div class="px-6 py-5 border-b border-slate-100 dark:border-slate-700 flex justify-between items-center">
+<h3 class="font-bold text-lg text-slate-900 dark:text-white flex items-center gap-2">
+<span class="material-symbols-outlined text-accent">person</span>
+                                        Informasi Pribadi
+                                    </h3>
+<span class="text-xs text-slate-400">Terakhir diperbarui: 12 Jan 2024</span>
+</div>
+<div class="p-6 md:p-8">
+<form>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6">
+<div class="space-y-1">
+<label class="text-sm font-medium text-slate-500 dark:text-slate-400">Nama Lengkap</label>
+<div class="p-2.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50 text-slate-900 dark:text-white text-sm shadow-sm">
+                                                    Budi Santoso
+                                                </div>
+</div>
+<div class="space-y-1">
+<label class="text-sm font-medium text-slate-500 dark:text-slate-400">Nama Panggilan</label>
+<div class="p-2.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50 text-slate-900 dark:text-white text-sm shadow-sm">
+                                                    Budi
+                                                </div>
+</div>
+<div class="space-y-1">
+<label class="text-sm font-medium text-slate-500 dark:text-slate-400">Nomor Induk Kependudukan (NIK KTP)</label>
+<div class="p-2.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50 text-slate-900 dark:text-white text-sm shadow-sm font-mono">
+                                                    3301123456780001
+                                                </div>
+</div>
+<div class="space-y-1">
+<label class="text-sm font-medium text-slate-500 dark:text-slate-400">Tempat, Tanggal Lahir</label>
+<div class="flex gap-2">
+<div class="flex-1 p-2.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50 text-slate-900 dark:text-white text-sm shadow-sm">
+                                                        Surabaya
+                                                    </div>
+<div class="flex-1 p-2.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50 text-slate-900 dark:text-white text-sm shadow-sm">
+                                                        15 Mei 1990
+                                                    </div>
+</div>
+</div>
+<div class="space-y-1">
+<label class="text-sm font-medium text-slate-500 dark:text-slate-400">Jenis Kelamin</label>
+<div class="p-2.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50 text-slate-900 dark:text-white text-sm shadow-sm">
+                                                    Laki-laki
+                                                </div>
+</div>
+<div class="space-y-1">
+<label class="text-sm font-medium text-slate-500 dark:text-slate-400">Agama</label>
+<div class="p-2.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50 text-slate-900 dark:text-white text-sm shadow-sm">
+                                                    Islam
+                                                </div>
+</div>
+<div class="space-y-1">
+<label class="text-sm font-medium text-slate-500 dark:text-slate-400">Status Perkawinan</label>
+<div class="p-2.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50 text-slate-900 dark:text-white text-sm shadow-sm">
+                                                    Menikah
+                                                </div>
+</div>
+<div class="space-y-1">
+<label class="text-sm font-medium text-slate-500 dark:text-slate-400">Golongan Darah</label>
+<div class="p-2.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50 text-slate-900 dark:text-white text-sm shadow-sm">
+                                                    O
+                                                </div>
+</div>
+<div class="col-span-1 md:col-span-2 space-y-1">
+<label class="text-sm font-medium text-slate-500 dark:text-slate-400">Alamat Lengkap (Sesuai KTP)</label>
+<div class="p-2.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50 text-slate-900 dark:text-white text-sm shadow-sm h-24">
+                                                    Jl. Merdeka No. 45, RT 02/RW 05, Kelurahan Taliabu Barat, Kecamatan Taliabu Barat, Kabupaten Pulau Taliabu, Maluku Utara
+                                                </div>
+</div>
+<div class="space-y-1">
+<label class="text-sm font-medium text-slate-500 dark:text-slate-400">Nomor Telepon / WA</label>
+<div class="p-2.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50 text-slate-900 dark:text-white text-sm shadow-sm">
+                                                    0812-3456-7890
+                                                </div>
+</div>
+<div class="space-y-1">
+<label class="text-sm font-medium text-slate-500 dark:text-slate-400">Email Pribadi</label>
+<div class="p-2.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50 text-slate-900 dark:text-white text-sm shadow-sm">
+                                                    budi.santoso@gmail.com
+                                                </div>
+</div>
+</div>
+</form>
+</div>
+</div>
+<div class="mt-6 bg-white dark:bg-[#1A2632] rounded-xl shadow-sm border border-slate-200 dark:border-slate-800">
+<div class="px-6 py-5 border-b border-slate-100 dark:border-slate-700">
+<h3 class="font-bold text-lg text-slate-900 dark:text-white flex items-center gap-2">
+<span class="material-symbols-outlined text-accent">contact_phone</span>
+                                        Kontak Darurat
+                                    </h3>
+</div>
+<div class="p-6 md:p-8">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6">
+<div class="space-y-1">
+<label class="text-sm font-medium text-slate-500 dark:text-slate-400">Nama Kontak</label>
+<div class="p-2.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50 text-slate-900 dark:text-white text-sm shadow-sm">
+                                                Siti Aminah (Istri)
+                                            </div>
+</div>
+<div class="space-y-1">
+<label class="text-sm font-medium text-slate-500 dark:text-slate-400">Nomor Telepon</label>
+<div class="p-2.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50 text-slate-900 dark:text-white text-sm shadow-sm">
+                                                0813-9876-5432
+                                            </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+
+</body></html>

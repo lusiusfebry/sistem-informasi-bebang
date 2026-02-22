@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Form Tambah Posisi Jabatan SDM</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1173d4",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101922",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "2xl": "1rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Custom scrollbar for sidebar */
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+        .scrollbar-hide {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen flex overflow-hidden">
+<!-- Sidebar -->
+<aside class="w-[280px] bg-white dark:bg-[#1A2632] border-r border-slate-200 dark:border-slate-700 flex flex-col h-screen shrink-0 transition-all duration-300">
+<!-- Sidebar Header -->
+<div class="p-6 pb-2">
+<div class="flex items-center gap-3 mb-6">
+<div class="bg-primary/10 flex items-center justify-center rounded-lg size-10 shrink-0">
+<span class="material-symbols-outlined text-primary text-2xl">diamond</span>
+</div>
+<div class="flex flex-col overflow-hidden">
+<h1 class="text-slate-900 dark:text-white text-base font-bold leading-tight truncate">BEBANG IS</h1>
+<p class="text-slate-500 dark:text-slate-400 text-xs font-medium truncate">HR Module - Site Taliabu</p>
+</div>
+</div>
+<div class="text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-wider mb-2 pl-3">Master Data</div>
+</div>
+<!-- Navigation Menu -->
+<nav class="flex-1 overflow-y-auto px-4 space-y-1 scrollbar-hide">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors group" href="#">
+<span class="material-symbols-outlined text-[20px] text-slate-400 group-hover:text-primary transition-colors">analytics</span>
+<span class="text-sm font-medium">Divisi</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors group" href="#">
+<span class="material-symbols-outlined text-[20px] text-slate-400 group-hover:text-primary transition-colors">apartment</span>
+<span class="text-sm font-medium">Department</span>
+</a>
+<!-- Active Item -->
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary/10 text-primary dark:text-blue-400 group" href="#">
+<span class="material-symbols-outlined text-[20px] fill-1">work</span>
+<span class="text-sm font-semibold">Posisi Jabatan</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors group" href="#">
+<span class="material-symbols-outlined text-[20px] text-slate-400 group-hover:text-primary transition-colors">badge</span>
+<span class="text-sm font-medium">Kategori Pangkat</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors group" href="#">
+<span class="material-symbols-outlined text-[20px] text-slate-400 group-hover:text-primary transition-colors">stars</span>
+<span class="text-sm font-medium">Golongan</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors group" href="#">
+<span class="material-symbols-outlined text-[20px] text-slate-400 group-hover:text-primary transition-colors">groups</span>
+<span class="text-sm font-medium">Sub Golongan</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors group" href="#">
+<span class="material-symbols-outlined text-[20px] text-slate-400 group-hover:text-primary transition-colors">handshake</span>
+<span class="text-sm font-medium">Jenis Hubungan Kerja</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors group" href="#">
+<span class="material-symbols-outlined text-[20px] text-slate-400 group-hover:text-primary transition-colors">sell</span>
+<span class="text-sm font-medium">Tag</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors group" href="#">
+<span class="material-symbols-outlined text-[20px] text-slate-400 group-hover:text-primary transition-colors">location_on</span>
+<span class="text-sm font-medium">Lokasi Kerja</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors group" href="#">
+<span class="material-symbols-outlined text-[20px] text-slate-400 group-hover:text-primary transition-colors">verified_user</span>
+<span class="text-sm font-medium">Status Karyawan</span>
+</a>
+</nav>
+<!-- Sidebar Footer -->
+<div class="p-4 border-t border-slate-200 dark:border-slate-700">
+<button class="flex w-full items-center justify-center gap-2 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 px-4 py-2.5 text-sm font-medium transition-colors">
+<span class="material-symbols-outlined text-[20px]">logout</span>
+<span>Logout</span>
+</button>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 flex flex-col min-w-0 bg-background-light dark:bg-background-dark overflow-hidden">
+<!-- Header / Breadcrumbs -->
+<header class="bg-white dark:bg-[#1A2632] border-b border-slate-200 dark:border-slate-700 px-8 py-5 shrink-0">
+<div class="max-w-5xl mx-auto w-full">
+<div class="flex items-center gap-2 text-sm text-slate-500 dark:text-slate-400 mb-2">
+<a class="hover:text-primary transition-colors" href="#">Dashboard</a>
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+<a class="hover:text-primary transition-colors" href="#">Master Data</a>
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+<a class="hover:text-primary transition-colors" href="#">Posisi Jabatan</a>
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+<span class="text-slate-900 dark:text-white font-medium">Tambah</span>
+</div>
+<div class="flex items-center justify-between">
+<div>
+<h1 class="text-2xl font-bold text-slate-900 dark:text-white tracking-tight">Tambah Posisi Jabatan</h1>
+<p class="text-slate-500 dark:text-slate-400 text-sm mt-1">Isi formulir di bawah untuk menambahkan posisi jabatan baru ke dalam sistem.</p>
+</div>
+</div>
+</div>
+</header>
+<!-- Scrollable Form Area -->
+<div class="flex-1 overflow-y-auto p-8">
+<div class="max-w-5xl mx-auto w-full">
+<form class="bg-white dark:bg-[#1A2632] rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm overflow-hidden">
+<!-- Form Header -->
+<div class="bg-slate-50 dark:bg-slate-800/50 px-8 py-4 border-b border-slate-200 dark:border-slate-700 flex items-center gap-3">
+<span class="material-symbols-outlined text-primary">edit_document</span>
+<h3 class="text-base font-semibold text-slate-900 dark:text-white">Informasi Posisi</h3>
+</div>
+<div class="p-8 space-y-8">
+<!-- Row 1: Nama Posisi & Department -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<!-- Nama Posisi Jabatan -->
+<div class="space-y-2">
+<label class="block text-sm font-medium text-slate-700 dark:text-slate-300" for="position_name">
+                                    Nama Posisi Jabatan <span class="text-red-500">*</span>
+</label>
+<div class="relative">
+<input class="block w-full rounded-lg border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm focus:border-primary focus:ring-primary sm:text-sm py-2.5 px-3" id="position_name" placeholder="Contoh: Senior HR Specialist" type="text"/>
+</div>
+<p class="text-xs text-slate-500 dark:text-slate-400">Masukkan nama lengkap posisi jabatan sesuai standar perusahaan.</p>
+</div>
+<!-- Department -->
+<div class="space-y-2">
+<label class="block text-sm font-medium text-slate-700 dark:text-slate-300" for="department">
+                                    Departemen <span class="text-red-500">*</span>
+</label>
+<div class="relative">
+<select class="block w-full rounded-lg border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm focus:border-primary focus:ring-primary sm:text-sm py-2.5 px-3 appearance-none" id="department">
+<option disabled="" selected="" value="">Pilih Departemen</option>
+<option value="eng">Engineering</option>
+<option value="hr">Human Resources</option>
+<option value="ops">Operations</option>
+<option value="fin">Finance</option>
+<option value="mkt">Marketing</option>
+</select>
+<div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-slate-500">
+<span class="material-symbols-outlined text-[20px]">expand_more</span>
+</div>
+</div>
+<p class="text-xs text-slate-500 dark:text-slate-400">Pilih departemen di mana posisi ini bernaung.</p>
+</div>
+</div>
+<!-- Row 2: Keterangan -->
+<div class="space-y-2">
+<label class="block text-sm font-medium text-slate-700 dark:text-slate-300" for="description">
+                                Keterangan <span class="text-slate-400 font-normal">(Opsional)</span>
+</label>
+<textarea class="block w-full rounded-lg border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm focus:border-primary focus:ring-primary sm:text-sm py-2.5 px-3 resize-none" id="description" placeholder="Tambahkan deskripsi tugas, kualifikasi, atau catatan tambahan untuk posisi ini..." rows="4"></textarea>
+</div>
+<!-- Row 3: Status Toggle -->
+<div class="flex items-center justify-between p-4 bg-slate-50 dark:bg-slate-800/50 rounded-lg border border-slate-200 dark:border-slate-700">
+<div class="flex flex-col">
+<span class="text-sm font-medium text-slate-900 dark:text-white">Status Aktif</span>
+<span class="text-xs text-slate-500 dark:text-slate-400">Posisi jabatan ini dapat digunakan jika status aktif.</span>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox" value=""/>
+<div class="w-11 h-6 bg-slate-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary/30 dark:peer-focus:ring-primary/20 rounded-full peer dark:bg-slate-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-slate-600 peer-checked:bg-primary"></div>
+</label>
+</div>
+</div>
+<!-- Form Footer / Actions -->
+<div class="bg-slate-50 dark:bg-slate-800/50 px-8 py-5 border-t border-slate-200 dark:border-slate-700 flex items-center justify-end gap-3">
+<button class="px-5 py-2.5 rounded-lg text-sm font-medium text-slate-700 dark:text-slate-200 bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 hover:bg-slate-50 dark:hover:bg-slate-600 focus:ring-4 focus:ring-slate-100 dark:focus:ring-slate-700 transition-all" type="button">
+                            Batal
+                        </button>
+<button class="px-5 py-2.5 rounded-lg text-sm font-bold text-white bg-primary hover:bg-blue-600 focus:ring-4 focus:ring-primary/30 transition-all shadow-sm flex items-center gap-2" type="submit">
+<span class="material-symbols-outlined text-[18px]">save</span>
+                            Simpan Posisi
+                        </button>
+</div>
+</form>
+<!-- Footer Info -->
+<div class="mt-8 flex items-center justify-between text-xs text-slate-400 dark:text-slate-500 border-t border-slate-200 dark:border-slate-700 pt-4">
+<p>© 2024 PT Prima Sarana Gemilang. All rights reserved.</p>
+<p>Site Taliabu • HR System v2.1</p>
+</div>
+</div>
+</div>
+</main>
+</body></html>
