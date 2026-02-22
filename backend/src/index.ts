@@ -3,6 +3,8 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import authRouter from './routes/auth';
 import masterRouter from './routes/master/index';
+import path from 'path';
+import karyawanRouter from './routes/karyawan';
 
 dotenv.config();
 
@@ -25,6 +27,9 @@ app.use(express.json());
 
 app.use('/api/auth', authRouter);
 app.use('/api/master', masterRouter);
+app.use('/api/karyawan', karyawanRouter);
+
+app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 
 app.get('/api/health', (_req, res) => {
     res.json({

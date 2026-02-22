@@ -313,10 +313,12 @@ model karyawan_keluarga {
   nama_ayah_mertua               String?
   tanggal_lahir_ayah_mertua      DateTime?
   pendidikan_terakhir_ayah_mertua String?
+  pekerjaan_ayah_mertua          String?
   keterangan_ayah_mertua         String?
   nama_ibu_mertua                String?
   tanggal_lahir_ibu_mertua       DateTime?
   pendidikan_terakhir_ibu_mertua String?
+  pekerjaan_ibu_mertua           String?
   keterangan_ibu_mertua          String?
 }
 
