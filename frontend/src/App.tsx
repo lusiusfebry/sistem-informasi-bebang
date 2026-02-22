@@ -5,6 +5,8 @@ import HRLayout from './layouts/HRLayout'
 import HRDashboard from './pages/hr/HRDashboard'
 import ProtectedRoute from './components/ProtectedRoute'
 import ComingSoon from './components/ComingSoon'
+import { DirectoriKaryawan } from './pages/karyawan/DirectoriKaryawan'
+import { ProfilKaryawan } from './pages/karyawan/ProfilKaryawan'
 
 // Master Data Pages
 import DivisiPage from './pages/hr/master/DivisiPage'
@@ -39,7 +41,9 @@ function App() {
           <Route path="master/status-karyawan" element={<StatusKaryawanPage />} />
           <Route path="master/lokasi-kerja" element={<LokasiKerjaPage />} />
           <Route path="master/tag" element={<TagPage />} />
-          <Route path="karyawan/*" element={<ComingSoon />} />
+          <Route path="karyawan" element={<DirectoriKaryawan />} />
+          <Route path="karyawan/:id" element={<ProfilKaryawan />} />
+          <Route path="karyawan/tambah" element={<ComingSoon />} />
         </Route>
       </Route>
     </Routes>

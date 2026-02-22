@@ -126,9 +126,9 @@ export default function SubGolonganPage() {
                 data={data}
                 isLoading={isLoading}
                 search={search}
-                onSearchChange={setSearch}
+                onSearchChange={(s) => { setSearch(s); setPage(1); }}
                 statusFilter={statusFilter}
-                onStatusFilterChange={setStatusFilter}
+                onStatusFilterChange={(s) => { setStatusFilter(s); setPage(1); }}
                 onAdd={() => {
                     setEditItem(null);
                     reset({ nama: '', keterangan: '', status: 'Aktif' });
@@ -157,6 +157,17 @@ export default function SubGolonganPage() {
                 title={editItem ? 'Edit Sub Golongan' : 'Tambah Sub Golongan'}
             >
                 <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+                    <div className="grid grid-cols-2 gap-4">
+                        <div className="space-y-2">
+                            <Label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">ID Sistem</Label>
+                            <Input value={editItem?.id || '-'} readOnly className="h-12 rounded-xl font-bold bg-muted/50 cursor-not-allowed" />
+                        </div>
+                        <div className="space-y-2">
+                            <Label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Kode Unik</Label>
+                            <Input value={editItem?.code || 'Otomatis'} readOnly className="h-12 rounded-xl font-bold bg-muted/50 cursor-not-allowed" />
+                        </div>
+                    </div>
+
                     <div className="space-y-2">
                         <Label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Nama Sub Golongan</Label>
                         <Input {...register('nama')} placeholder="Contoh: Sub A, Sub B" className="h-12 rounded-xl font-bold" />
