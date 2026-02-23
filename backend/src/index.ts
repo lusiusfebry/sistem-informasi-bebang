@@ -5,6 +5,8 @@ import authRouter from './routes/auth';
 import masterRouter from './routes/master/index';
 import path from 'path';
 import karyawanRouter from './routes/karyawan';
+import userRouter from './routes/userRoutes';
+import messRoutes from './routes/messRoutes';
 
 dotenv.config();
 
@@ -28,6 +30,8 @@ app.use(express.json());
 app.use('/api/auth', authRouter);
 app.use('/api/master', masterRouter);
 app.use('/api/karyawan', karyawanRouter);
+app.use('/api/users', userRouter);
+app.use('/api/mess', messRoutes);
 
 app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 

@@ -1,3 +1,5 @@
+import { z } from 'zod';
+
 export interface KaryawanListItem {
     id: number;
     nama_lengkap: string;
@@ -140,3 +142,88 @@ export interface FilterKaryawan {
     page: number;
     limit: number;
 }
+
+// Zod Schemas for Validation
+export const karyawanHeadSchema = z.object({
+    nama_lengkap: z.string().min(3, 'Nama lengkap minimal 3 karakter'),
+    nomor_induk_karyawan: z.string().min(5, 'NIK minimal 5 karakter'),
+    email_perusahaan: z.string().email('Format email tidak valid').optional().nullable(),
+    nomor_handphone: z.string().min(10, 'Nomor HP minimal 10 digit').optional().nullable(),
+    divisi_id: z.string().min(1, 'Divisi wajib dipilih'),
+    department_id: z.string().min(1, 'Departemen wajib dipilih'),
+    posisi_jabatan_id: z.string().min(1, 'Jabatan wajib dipilih'),
+    status_karyawan_id: z.string().min(1, 'Status wajib dipilih'),
+    lokasi_kerja_id: z.string().min(1, 'Lokasi kerja wajib dipilih'),
+    manager_id: z.string().optional().nullable(),
+    atasan_langsung_id: z.string().optional().nullable(),
+});
+
+export const karyawanPersonalSchema = z.object({
+    jenis_kelamin: z.string().optional().nullable(),
+    tempat_lahir: z.string().optional().nullable(),
+    tanggal_lahir: z.string().optional().nullable(),
+    email_pribadi: z.string().email('Format email tidak valid').optional().nullable(),
+    agama: z.string().optional().nullable(),
+    golongan_darah: z.string().optional().nullable(),
+    nomor_kartu_keluarga: z.string().optional().nullable(),
+    nomor_ktp: z.string().optional().nullable(),
+    nomor_npwp: z.string().optional().nullable(),
+    nomor_bpjs: z.string().optional().nullable(),
+    status_pajak: z.string().optional().nullable(),
+    alamat_domisili: z.string().optional().nullable(),
+    kota_domisili: z.string().optional().nullable(),
+    provinsi_domisili: z.string().optional().nullable(),
+    alamat_ktp: z.string().optional().nullable(),
+    kota_ktp: z.string().optional().nullable(),
+    provinsi_ktp: z.string().optional().nullable(),
+    status_pernikahan: z.string().optional().nullable(),
+    nama_rekening: z.string().optional().nullable(),
+    nomor_rekening: z.string().optional().nullable(),
+    nama_bank: z.string().optional().nullable(),
+});
+
+export const karyawanHRSchema = z.object({
+    tanggal_masuk_group: z.string().optional().nullable(),
+    tanggal_masuk: z.string().optional().nullable(),
+    tanggal_permanent: z.string().optional().nullable(),
+    tanggal_kontrak: z.string().optional().nullable(),
+    tanggal_akhir_kontrak: z.string().optional().nullable(),
+    jenis_hubungan_kerja_id: z.string().optional().nullable(),
+    kategori_pangkat_id: z.string().optional().nullable(),
+    golongan_id: z.string().optional().nullable(),
+    sub_golongan_id: z.string().optional().nullable(),
+    tingkat_pendidikan: z.string().optional().nullable(),
+    nama_sekolah: z.string().optional().nullable(),
+    bidang_studi: z.string().optional().nullable(),
+    emergency_nama_1: z.string().optional().nullable(),
+    emergency_nomor_1: z.string().optional().nullable(),
+    emergency_hubungan_1: z.string().optional().nullable(),
+    emergency_nama_2: z.string().optional().nullable(),
+    emergency_nomor_2: z.string().optional().nullable(),
+    emergency_hubungan_2: z.string().optional().nullable(),
+});
+
+export const karyawanAnakSchema = z.object({
+    nama_anak: z.string().min(1, 'Nama anak wajib diisi'),
+    jenis_kelamin: z.string().optional().nullable(),
+    tanggal_lahir: z.string().optional().nullable(),
+});
+
+export const karyawanSaudaraSchema = z.object({
+    nama_saudara: z.string().min(1, 'Nama saudara wajib diisi'),
+    jenis_kelamin: z.string().optional().nullable(),
+    tanggal_lahir: z.string().optional().nullable(),
+    pendidikan_terakhir: z.string().optional().nullable(),
+    pekerjaan: z.string().optional().nullable(),
+});
+
+export const karyawanSchema = z.object({
+    head: karyawanHeadSchema,
+    personal: karyawanPersonalSchema.optional(),
+    hr: karyawanHRSchema.optional(),
+    anak: z.array(karyawanAnakSchema).optional(),
+    saudara: z.array(karyawanSaudaraSchema).optional(),
+    tag_ids: z.array(z.number()).optional(),
+});
+
+export type KaryawanFormData = z.infer<typeof karyawanSchema>;

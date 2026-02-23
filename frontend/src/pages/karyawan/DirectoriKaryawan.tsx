@@ -28,6 +28,7 @@ import {
     SelectValue,
 } from '@/components/ui/select';
 import { ModalCetakIDCard } from '@/components/ModalCetakIDCard';
+import { ModalImportKaryawan } from '@/components/ModalImportKaryawan';
 import type { KaryawanListItem } from '@/types/karyawan';
 import api from '@/lib/api';
 import { toast } from 'sonner';
@@ -71,6 +72,7 @@ export const DirectoriKaryawan = () => {
     // Selection States
     const [selectedIds, setSelectedIds] = useState<Set<number>>(new Set());
     const [showCetakModal, setShowCetakModal] = useState(false);
+    const [showImportModal, setShowImportModal] = useState(false);
 
     // Initial Fetch (Master Data)
     useEffect(() => {
@@ -204,13 +206,13 @@ export const DirectoriKaryawan = () => {
                     </Button>
                     <Button
                         variant="outline"
-                        onClick={() => toast.info('Fitur Import segera tersedia')}
+                        onClick={() => setShowImportModal(true)}
                         className="h-12 rounded-xl px-6 font-black uppercase tracking-widest border-slate-200"
                     >
                         Impor Data
                     </Button>
                     <Button
-                        onClick={() => toast.info('Dikerjakan pada fase berikutnya')}
+                        onClick={() => navigate('/hr/karyawan/tambah')}
                         className="h-12 rounded-xl px-6 font-black uppercase tracking-widest bg-primary hover:shadow-lg hover:shadow-primary/25 transition-all"
                     >
                         <UserPlus className="w-5 h-5 mr-2" />
@@ -490,6 +492,13 @@ export const DirectoriKaryawan = () => {
                     </Button>
                 </div>
             </div>
+
+            {/* Modal Import */}
+            <ModalImportKaryawan
+                open={showImportModal}
+                onClose={() => setShowImportModal(false)}
+                onSuccess={fetchData}
+            />
 
             {/* Modal Cetak */}
             <ModalCetakIDCard

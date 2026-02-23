@@ -18,7 +18,9 @@ import {
     Menu,
     Bell,
     HelpCircle,
-    ChevronRight
+    ChevronRight,
+    UserCog,
+    Home
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
@@ -39,6 +41,8 @@ const navItems = [
     { label: 'Tag', icon: Tag, path: '/hr/master/tag' },
     { type: 'section', label: 'MANAJEMEN' },
     { label: 'Karyawan', icon: Users, path: '/hr/karyawan' },
+    { label: 'Manajemen User', icon: UserCog, path: '/hr/users', adminOnly: true },
+    { label: 'Manajemen Mess', icon: Home, path: '/hr/mess' },
 ];
 
 const pathMap: Record<string, string> = {
@@ -55,7 +59,9 @@ const pathMap: Record<string, string> = {
     'lokasi-kerja': 'Lokasi Kerja',
     'tag': 'Tag',
     'karyawan': 'Data Karyawan',
-    'tambah': 'Tambah Karyawan'
+    'tambah': 'Tambah Karyawan',
+    'users': 'Manajemen User',
+    'mess': 'Manajemen Mess'
 };
 
 export default function HRLayout() {
@@ -114,6 +120,13 @@ export default function HRLayout() {
                             );
                         }
                         const Icon = item.icon!;
+
+                        // Role-based filtering
+                        const adminOnly = 'adminOnly' in item && (item as { adminOnly?: boolean }).adminOnly;
+                        if (adminOnly && user?.role !== 'admin') {
+                            return null;
+                        }
+
                         return (
                             <NavLink
                                 key={idx}

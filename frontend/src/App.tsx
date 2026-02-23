@@ -4,9 +4,9 @@ import WelcomePage from './pages/WelcomePage'
 import HRLayout from './layouts/HRLayout'
 import HRDashboard from './pages/hr/HRDashboard'
 import ProtectedRoute from './components/ProtectedRoute'
-import ComingSoon from './components/ComingSoon'
 import { DirectoriKaryawan } from './pages/karyawan/DirectoriKaryawan'
 import { ProfilKaryawan } from './pages/karyawan/ProfilKaryawan'
+import { FormKaryawan } from './pages/karyawan/FormKaryawan'
 
 // Master Data Pages
 import DivisiPage from './pages/hr/master/DivisiPage'
@@ -19,6 +19,8 @@ import JenisHubunganKerjaPage from './pages/hr/master/JenisHubunganKerjaPage'
 import StatusKaryawanPage from './pages/hr/master/StatusKaryawanPage'
 import LokasiKerjaPage from './pages/hr/master/LokasiKerjaPage'
 import TagPage from './pages/hr/master/TagPage'
+import UserManagementPage from './pages/hr/UserManagementPage'
+import MessManagementPage from './pages/hr/MessManagementPage'
 
 function App() {
   return (
@@ -41,9 +43,12 @@ function App() {
           <Route path="master/status-karyawan" element={<StatusKaryawanPage />} />
           <Route path="master/lokasi-kerja" element={<LokasiKerjaPage />} />
           <Route path="master/tag" element={<TagPage />} />
+          <Route path="users" element={<UserManagementPage />} />
+          <Route path="mess" element={<MessManagementPage />} />
           <Route path="karyawan" element={<DirectoriKaryawan />} />
+          <Route path="karyawan/tambah" element={<FormKaryawan mode="add" />} />
           <Route path="karyawan/:id" element={<ProfilKaryawan />} />
-          <Route path="karyawan/tambah" element={<ComingSoon />} />
+          <Route path="karyawan/:id/edit" element={<FormKaryawan mode="edit" />} />
         </Route>
       </Route>
     </Routes>

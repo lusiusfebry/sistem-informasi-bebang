@@ -77,7 +77,7 @@ export const ProfilKaryawan = () => {
         }
     };
 
-    const InfoRow = ({ label, value, icon: Icon }: { label: string; value: string | React.ReactNode; icon?: any }) => (
+    const InfoRow = ({ label, value, icon: Icon }: { label: string; value: string | React.ReactNode; icon?: React.ElementType }) => (
         <div className="flex flex-col space-y-1">
             <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 flex items-center gap-1">
                 {Icon && <Icon className="w-3 h-3" />}
@@ -111,7 +111,7 @@ export const ProfilKaryawan = () => {
                     </Button>
                     <Button
                         className="h-10 rounded-xl px-6 font-black uppercase tracking-widest bg-primary hover:shadow-lg hover:shadow-primary/25 transition-all"
-                        onClick={() => toast.info('Fase Edit Karyawan berikutnya')}
+                        onClick={() => navigate(`/hr/karyawan/${empId}/edit`)}
                     >
                         <Edit3 className="w-4 h-4 mr-2" />
                         Edit Profil
@@ -391,10 +391,10 @@ export const ProfilKaryawan = () => {
                                             <div className="relative">
                                                 <h4 className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-300 border-b border-slate-200 pb-3 mb-6">KONTAK DARURAT 0{num}</h4>
                                                 <div className="space-y-5">
-                                                    <InfoRow label="Nama Lengkap" value={(data.hr as any)?.[`emergency_nama_${num}`]} />
+                                                    <InfoRow label="Nama Lengkap" value={num === 1 ? data.hr?.emergency_nama_1 : data.hr?.emergency_nama_2} />
                                                     <div className="grid grid-cols-2 gap-4">
-                                                        <InfoRow label="Nomor Telepon" value={(data.hr as any)?.[`emergency_nomor_${num}`]} icon={Phone} />
-                                                        <InfoRow label="Hubungan" value={(data.hr as any)?.[`emergency_hubungan_${num}`]} />
+                                                        <InfoRow label="Nomor Telepon" value={num === 1 ? data.hr?.emergency_nomor_1 : data.hr?.emergency_nomor_2} icon={Phone} />
+                                                        <InfoRow label="Hubungan" value={num === 1 ? data.hr?.emergency_hubungan_1 : data.hr?.emergency_hubungan_2} />
                                                     </div>
                                                 </div>
                                             </div>

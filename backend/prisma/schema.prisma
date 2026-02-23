@@ -153,6 +153,8 @@ model karyawan {
   status_karyawan      status_karyawan?   @relation(fields: [status_karyawan_id], references: [id])
   lokasi_kerja_id      Int?
   lokasi_kerja         lokasi_kerja?      @relation(fields: [lokasi_kerja_id], references: [id])
+  mess_room_id         Int?
+  mess_room            mess_room?         @relation(fields: [mess_room_id], references: [id])
   created_at           DateTime           @default(now())
   updated_at           DateTime           @updatedAt
 
@@ -356,4 +358,29 @@ model users {
   role        String    @default("user")
   created_at  DateTime  @default(now())
   updated_at  DateTime  @updatedAt
+}
+
+model mess {
+  id          Int         @id @default(autoincrement())
+  code        String      @unique
+  nama        String
+  lokasi      String?
+  keterangan  String?
+  status      String      @default("Aktif")
+  created_at  DateTime    @default(now())
+  updated_at  DateTime    @updatedAt
+  rooms       mess_room[]
+}
+
+model mess_room {
+  id          Int        @id @default(autoincrement())
+  mess_id     Int
+  mess        mess       @relation(fields: [mess_id], references: [id], onDelete: Cascade)
+  nomor_kamar String
+  kapasitas   Int        @default(1)
+  fasilitas   String?
+  status      String     @default("Tersedia")
+  created_at  DateTime   @default(now())
+  updated_at  DateTime   @updatedAt
+  penghuni    karyawan[]
 }

@@ -24,7 +24,7 @@ export const authMiddleware = (req: Request, res: Response, next: NextFunction) 
 
     try {
         const decoded = jwt.verify(token, JWT_SECRET) as JwtPayload;
-        req.user = decoded;
+        (req as any).user = decoded; // force sync
         next();
     } catch {
         return res.status(401).json({ message: 'Token tidak valid atau sudah kadaluarsa' });

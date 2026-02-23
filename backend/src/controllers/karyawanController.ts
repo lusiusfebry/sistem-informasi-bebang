@@ -306,25 +306,28 @@ export const getQrCode = async (req: Request, res: Response) => {
 
 export const exportExcel = async (req: Request, res: Response) => {
     try {
-        const { search, divisi_id, department_id, status_karyawan_id, lokasi_kerja_id } = req.query;
+        const { search, divisi_id, department_id, status_karyawan_id, lokasi_kerja_id, template } = req.query;
 
-        const where: any = {};
-        if (search) {
-            where.OR = [
-                { nama_lengkap: { contains: String(search), mode: 'insensitive' } },
-                { nomor_induk_karyawan: { contains: String(search), mode: 'insensitive' } }
-            ];
+        let data: any[] = [];
+        if (template !== 'true') {
+            const where: any = {};
+            if (search) {
+                where.OR = [
+                    { nama_lengkap: { contains: String(search), mode: 'insensitive' } },
+                    { nomor_induk_karyawan: { contains: String(search), mode: 'insensitive' } }
+                ];
+            }
+            if (divisi_id) where.divisi_id = Number(divisi_id);
+            if (department_id) where.department_id = Number(department_id);
+            if (status_karyawan_id) where.status_karyawan_id = Number(status_karyawan_id);
+            if (lokasi_kerja_id) where.lokasi_kerja_id = Number(lokasi_kerja_id);
+
+            data = await prisma.karyawan.findMany({
+                where,
+                include: includeFull,
+                orderBy: { nama_lengkap: 'asc' }
+            });
         }
-        if (divisi_id) where.divisi_id = Number(divisi_id);
-        if (department_id) where.department_id = Number(department_id);
-        if (status_karyawan_id) where.status_karyawan_id = Number(status_karyawan_id);
-        if (lokasi_kerja_id) where.lokasi_kerja_id = Number(lokasi_kerja_id);
-
-        const data = await prisma.karyawan.findMany({
-            where,
-            include: includeFull,
-            orderBy: { nama_lengkap: 'asc' }
-        });
 
         const workbook = new ExcelJS.Workbook();
         const sheet = workbook.addWorksheet('Data Karyawan');
@@ -430,6 +433,7 @@ export const importExcel = async (req: Request, res: Response) => {
                 delete (mappedHead as any).manager_nik;
                 delete (mappedHead as any).atasan_nik;
                 delete (mappedHead as any).posisi_jabatan_nama;
+                delete (mappedHead as any).foto_karyawan; // Do not import photos from excel for now
 
                 const mappedHr = {
                     ...parsed.hr,

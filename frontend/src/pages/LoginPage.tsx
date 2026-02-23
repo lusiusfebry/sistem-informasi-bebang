@@ -30,7 +30,9 @@ import {
 } from '@/components/ui/form';
 
 const loginSchema = z.object({
-    nik: z.string().regex(/^\d{2}-\d{5}$/, 'Format NIK tidak valid (contoh: 21-00123)'),
+    nik: z.string().refine(v => v === 'admin' || /^\d{2}-\d{5}$/.test(v), {
+        message: 'Format NIK tidak valid (contoh: 21-00123)'
+    }),
     password: z.string().min(1, 'Kata sandi wajib diisi'),
     rememberMe: z.boolean().default(false).optional(),
 });
