@@ -27,7 +27,9 @@ const includeFull = {
     anak: { orderBy: { urutan: 'asc' as const } },
     saudara: { orderBy: { urutan: 'asc' as const } },
     manager: true,
-    atasan_langsung: true
+    atasan_langsung: true,
+    mess_room: { include: { mess: true } },
+    dokumen: { orderBy: { created_at: 'desc' as const } }
 };
 
 export const getAll = async (req: Request, res: Response) => {
@@ -520,5 +522,98 @@ export const importExcel = async (req: Request, res: Response) => {
     } catch (error) {
         console.error(error);
         return res.status(500).json({ message: 'Terjadi kesalahan saat impor data' });
+    }
+};
+
+export const uploadDokumen = async (req: Request, res: Response) => {
+    try {
+        const { id } = req.params;
+        const { nama_dokumen } = req.body;
+
+        if (!req.file) return res.status(400).json({ message: 'Tidak ada file yang diunggah' });
+        if (!nama_dokumen) return res.status(400).json({ message: 'Nama dokumen wajib diisi' });
+
+        const karyawan = await prisma.karyawan.findUnique({ where: { id: Number(id) } });
+        if (!karyawan) return res.status(404).json({ message: 'Data tidak ditemukan' });
+
+        const dokumen = await prisma.karyawan_dokumen.create({
+            data: {
+                karyawan_id: Number(id),
+                nama_dokumen,
+                file_path: req.file.path,
+                file_type: req.file.mimetype,
+                file_size: req.file.size
+            }
+        });
+
+        return res.status(201).json(dokumen);
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ message: 'Terjadi kesalahan saat mengunggah dokumen' });
+    }
+};
+
+export const deleteDokumen = async (req: Request, res: Response) => {
+    try {
+        const { docId } = req.params;
+
+        const dokumen = await prisma.karyawan_dokumen.findUnique({ where: { id: Number(docId) } });
+        if (!dokumen) return res.status(404).json({ message: 'Dokumen tidak ditemukan' });
+
+        // Hapus file fisik
+        const filePath = path.resolve(dokumen.file_path);
+        if (fs.existsSync(filePath)) fs.unlinkSync(filePath);
+
+        await prisma.karyawan_dokumen.delete({ where: { id: Number(docId) } });
+
+        return res.json({ message: 'Dokumen berhasil dihapus' });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ message: 'Terjadi kesalahan saat menghapus dokumen' });
+    }
+};
+
+export const getDashboardStats = async (req: Request, res: Response) => {
+    try {
+        const totalKaryawan = await prisma.karyawan.count();
+        const activeKaryawan = await prisma.karyawan.count({
+            where: { status_karyawan: { status: 'Aktif' } }
+        });
+
+        // Stats per Divisi
+        const karyawanPerDivisi = await prisma.divisi.findMany({
+            select: {
+                nama: true,
+                _count: {
+                    select: { karyawan: true }
+                }
+            }
+        });
+
+        // Recent Joined
+        const recentKaryawan = await prisma.karyawan.findMany({
+            take: 5,
+            orderBy: { created_at: 'desc' },
+            select: {
+                id: true,
+                nama_lengkap: true,
+                nomor_induk_karyawan: true,
+                created_at: true,
+                posisi_jabatan: { select: { nama: true } }
+            }
+        });
+
+        return res.json({
+            totalKaryawan,
+            activeKaryawan,
+            karyawanPerDivisi: karyawanPerDivisi.map(d => ({
+                nama: d.nama,
+                jumlah: d._count.karyawan
+            })),
+            recentKaryawan
+        });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ message: 'Terjadi kesalahan saat mengambil statistik dashboard' });
     }
 };

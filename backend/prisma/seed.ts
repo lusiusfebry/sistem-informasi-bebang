@@ -105,6 +105,18 @@ async function main() {
     });
 
     // SEED ADMIN USER
+    const hashedAdminPassword = await bcrypt.hash("admin", 10);
+    await prisma.users.upsert({
+        where: { nik: "admin" },
+        update: { password: hashedAdminPassword },
+        create: {
+            nama: "Administrator",
+            nik: "admin",
+            password: hashedAdminPassword,
+            role: "admin",
+        },
+    });
+
     const hashedPassword = await bcrypt.hash("admin123", 10);
     await prisma.users.upsert({
         where: { nik: "00-00001" },

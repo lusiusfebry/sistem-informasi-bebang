@@ -113,6 +113,7 @@ export const DirectoriKaryawan = () => {
 
             const response = await api.get('/karyawan', { params });
             setData(response.data.data);
+            setSelectedIds(new Set()); // Reset selection when data changes
             setTotal(response.data.total);
             setTotalPages(response.data.totalPages);
         } catch (error) {
@@ -242,7 +243,7 @@ export const DirectoriKaryawan = () => {
                         <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 group-focus-within:text-primary transition-colors" />
                         <Input
                             value={search}
-                            onChange={(e) => { setSearch(e.target.value); setPage(1); }}
+                            onChange={(e: React.ChangeEvent<HTMLInputElement>) => { setSearch(e.target.value); setPage(1); }}
                             placeholder="Cari NIK atau Nama..."
                             className="pl-12 h-12 rounded-xl border-slate-200 focus:border-primary focus:ring-primary font-medium"
                         />
@@ -372,7 +373,7 @@ export const DirectoriKaryawan = () => {
                                 <Avatar className="w-24 h-24 border-4 border-white shadow-xl group-hover:scale-105 transition-transform duration-300">
                                     <AvatarImage src={it.foto_karyawan || ''} className="object-cover" />
                                     <AvatarFallback className="text-2xl font-black bg-primary/10 text-primary uppercase">
-                                        {it.nama_lengkap.split(' ').map(n => n[0]).join('').substring(0, 2)}
+                                        {it.nama_lengkap.split(' ').map((n: string) => n[0]).join('').substring(0, 2)}
                                     </AvatarFallback>
                                 </Avatar>
 
@@ -406,7 +407,7 @@ export const DirectoriKaryawan = () => {
                                     >
                                         {it.status_karyawan.nama}
                                     </Badge>
-                                    {it.tags.slice(0, 1).map((t, idx) => (
+                                    {it.tags.slice(0, 1).map((t: { tag: { nama: string; warna: string } }, idx: number) => (
                                         <Badge
                                             key={idx}
                                             variant="secondary"

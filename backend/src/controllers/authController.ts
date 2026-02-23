@@ -12,10 +12,10 @@ export const login = async (req: Request, res: Response) => {
         return res.status(400).json({ message: 'NIK dan password wajib diisi' });
     }
 
-    // 2. Validasi Format NIK (xx-xxxxx)
-    const nikRegex = /^\d{2}-\d{5}$/;
+    // 2. Validasi Format NIK (xx-xxxxx atau admin)
+    const nikRegex = /^(\d{2}-\d{5}|admin)$/;
     if (!nikRegex.test(nik)) {
-        return res.status(400).json({ message: 'Format NIK tidak valid (contoh: 01-00001)' });
+        return res.status(400).json({ message: 'Format NIK tidak valid (contoh: 01-00001 atau admin)' });
     }
 
     if (!isJwtSecretValid) {

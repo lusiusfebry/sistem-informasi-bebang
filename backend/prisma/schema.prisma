@@ -7,8 +7,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-// --- MASTER DATA MODELS ---
-
 model divisi {
   id          Int          @id @default(autoincrement())
   code        String       @unique
@@ -22,25 +20,24 @@ model divisi {
 }
 
 model department {
-  id              Int              @id @default(autoincrement())
-  divisi_id       Int
-  divisi          divisi           @relation(fields: [divisi_id], references: [id])
-  code            String           @unique
-  nama            String
-  keterangan      String?
-  status          String           @default("Aktif")
-  manager_id      Int?
-  manager         karyawan?        @relation("DepartmentManager", fields: [manager_id], references: [id])
-  created_at      DateTime         @default(now())
-  updated_at      DateTime         @updatedAt
-  posisi_jabatan  posisi_jabatan[]
-  karyawan        karyawan[]       @relation("KaryawanDepartment")
+  id             Int              @id @default(autoincrement())
+  divisi_id      Int
+  code           String           @unique
+  nama           String
+  keterangan     String?
+  status         String           @default("Aktif")
+  manager_id     Int?
+  created_at     DateTime         @default(now())
+  updated_at     DateTime         @updatedAt
+  divisi         divisi           @relation(fields: [divisi_id], references: [id])
+  manager        karyawan?        @relation("DepartmentManager", fields: [manager_id], references: [id])
+  karyawan       karyawan[]       @relation("KaryawanDepartment")
+  posisi_jabatan posisi_jabatan[]
 }
 
 model posisi_jabatan {
   id            Int        @id @default(autoincrement())
   department_id Int
-  department    department @relation(fields: [department_id], references: [id])
   code          String     @unique
   nama          String
   keterangan    String?
@@ -48,6 +45,7 @@ model posisi_jabatan {
   created_at    DateTime   @default(now())
   updated_at    DateTime   @updatedAt
   karyawan      karyawan[]
+  department    department @relation(fields: [department_id], references: [id])
 }
 
 model kategori_pangkat {
@@ -95,15 +93,15 @@ model jenis_hubungan_kerja {
 }
 
 model tag {
-  id          Int            @id @default(autoincrement())
-  code        String         @unique
-  nama        String
-  warna       String
-  keterangan  String?
-  status      String         @default("Aktif")
-  created_at  DateTime       @default(now())
-  updated_at  DateTime       @updatedAt
-  karyawan    karyawan_tag[]
+  id         Int            @id @default(autoincrement())
+  code       String         @unique
+  nama       String
+  warna      String
+  keterangan String?
+  status     String         @default("Aktif")
+  created_at DateTime       @default(now())
+  updated_at DateTime       @updatedAt
+  karyawan   karyawan_tag[]
 }
 
 model lokasi_kerja {
@@ -120,17 +118,15 @@ model lokasi_kerja {
 }
 
 model status_karyawan {
-  id          Int        @id @default(autoincrement())
-  code        String     @unique
-  nama        String
-  keterangan  String?
-  status      String     @default("Aktif")
-  created_at  DateTime   @default(now())
-  updated_at  DateTime   @updatedAt
-  karyawan    karyawan[]
+  id         Int        @id @default(autoincrement())
+  code       String     @unique
+  nama       String
+  keterangan String?
+  status     String     @default("Aktif")
+  created_at DateTime   @default(now())
+  updated_at DateTime   @updatedAt
+  karyawan   karyawan[]
 }
-
-// --- CORE KARYAWAN MODEL ---
 
 model karyawan {
   id                   Int                @id @default(autoincrement())
@@ -138,37 +134,36 @@ model karyawan {
   nama_lengkap         String
   nomor_induk_karyawan String             @unique
   divisi_id            Int?
-  divisi               divisi?            @relation(fields: [divisi_id], references: [id])
   department_id        Int?
-  department           department?        @relation("KaryawanDepartment", fields: [department_id], references: [id])
   manager_id           Int?
-  manager              karyawan?          @relation("KaryawanManager", fields: [manager_id], references: [id])
   atasan_langsung_id   Int?
-  atasan_langsung      karyawan?          @relation("KaryawanAtasan", fields: [atasan_langsung_id], references: [id])
   posisi_jabatan_id    Int?
-  posisi_jabatan       posisi_jabatan?    @relation(fields: [posisi_jabatan_id], references: [id])
   email_perusahaan     String?
   nomor_handphone      String?
   status_karyawan_id   Int?
-  status_karyawan      status_karyawan?   @relation(fields: [status_karyawan_id], references: [id])
   lokasi_kerja_id      Int?
-  lokasi_kerja         lokasi_kerja?      @relation(fields: [lokasi_kerja_id], references: [id])
-  mess_room_id         Int?
-  mess_room            mess_room?         @relation(fields: [mess_room_id], references: [id])
   created_at           DateTime           @default(now())
   updated_at           DateTime           @updatedAt
-
-  // Reverse Relations
-  managed_by         karyawan[]          @relation("KaryawanManager")
-  bawahan            karyawan[]          @relation("KaryawanAtasan")
-  tags               karyawan_tag[]
-  managed_departments department[]       @relation("DepartmentManager")
-  personal           karyawan_personal?
-  hr                 karyawan_hr?
-  keluarga           karyawan_keluarga?
-  anak               karyawan_anak[]
-  saudara            karyawan_saudara[]
-  users              users[]
+  mess_room_id         Int?
+  managed_departments  department[]       @relation("DepartmentManager")
+  atasan_langsung      karyawan?          @relation("KaryawanAtasan", fields: [atasan_langsung_id], references: [id])
+  bawahan              karyawan[]         @relation("KaryawanAtasan")
+  department           department?        @relation("KaryawanDepartment", fields: [department_id], references: [id])
+  divisi               divisi?            @relation(fields: [divisi_id], references: [id])
+  lokasi_kerja         lokasi_kerja?      @relation(fields: [lokasi_kerja_id], references: [id])
+  manager              karyawan?          @relation("KaryawanManager", fields: [manager_id], references: [id])
+  managed_by           karyawan[]         @relation("KaryawanManager")
+  mess_room            mess_room?         @relation(fields: [mess_room_id], references: [id])
+  posisi_jabatan       posisi_jabatan?    @relation(fields: [posisi_jabatan_id], references: [id])
+  status_karyawan      status_karyawan?   @relation(fields: [status_karyawan_id], references: [id])
+  anak                 karyawan_anak[]
+  dokumen              karyawan_dokumen[]
+  hr                   karyawan_hr?
+  keluarga             karyawan_keluarga?
+  personal             karyawan_personal?
+  saudara              karyawan_saudara[]
+  tags                 karyawan_tag[]
+  users                users[]
 }
 
 model karyawan_tag {
@@ -183,15 +178,10 @@ model karyawan_tag {
 model karyawan_personal {
   id                     Int       @id @default(autoincrement())
   karyawan_id            Int       @unique
-  karyawan               karyawan  @relation(fields: [karyawan_id], references: [id], onDelete: Cascade)
-  
-  // Biodata
   jenis_kelamin          String?
   tempat_lahir           String?
   tanggal_lahir          DateTime?
   email_pribadi          String?
-
-  // Identifikasi
   agama                  String?
   golongan_darah         String?
   nomor_kartu_keluarga   String?
@@ -200,23 +190,15 @@ model karyawan_personal {
   nomor_bpjs             String?
   no_nik_kk              String?
   status_pajak           String?
-
-  // Alamat Domisili
   alamat_domisili        String?
   kota_domisili          String?
   provinsi_domisili      String?
-
-  // Alamat KTP
   alamat_ktp             String?
   kota_ktp               String?
   provinsi_ktp           String?
-
-  // Kontak Tambahan
   nomor_handphone_2      String?
   nomor_telepon_rumah_1  String?
   nomor_telepon_rumah_2  String?
-
-  // Pernikahan
   status_pernikahan      String?
   nama_pasangan          String?
   tanggal_menikah        DateTime?
@@ -224,158 +206,134 @@ model karyawan_personal {
   tanggal_wafat_pasangan DateTime?
   pekerjaan_pasangan     String?
   jumlah_anak            Int?
-
-  // Bank
-  nomor_rekening          String?
-  nama_pemegang_rekening  String?
-  nama_bank               String?
-  cabang_bank             String?
+  nomor_rekening         String?
+  nama_pemegang_rekening String?
+  nama_bank              String?
+  cabang_bank            String?
+  nama_ayah              String?
+  nama_ibu               String?
+  karyawan               karyawan  @relation(fields: [karyawan_id], references: [id], onDelete: Cascade)
 }
 
 model karyawan_hr {
-  id                        Int                   @id @default(autoincrement())
-  karyawan_id               Int                   @unique
-  karyawan                  karyawan              @relation(fields: [karyawan_id], references: [id], onDelete: Cascade)
-  
-  // Kontrak
-  jenis_hubungan_kerja_id   Int?
-  jenis_hubungan_kerja      jenis_hubungan_kerja? @relation(fields: [jenis_hubungan_kerja_id], references: [id])
-  tanggal_masuk_group       DateTime?
-  tanggal_masuk             DateTime?
-  tanggal_permanent         DateTime?
-  tanggal_kontrak           DateTime?
-  tanggal_akhir_kontrak     DateTime?
-  tanggal_berhenti          DateTime?
-
-  // Education
-  tingkat_pendidikan        String?
-  bidang_studi              String?
-  nama_sekolah              String?
-  kota_sekolah              String?
-  status_kelulusan          String?
-  keterangan_pendidikan     String?
-
-  // Pangkat
-  kategori_pangkat_id       Int?
-  kategori_pangkat          kategori_pangkat?     @relation(fields: [kategori_pangkat_id], references: [id])
-  golongan_id               Int?
-  golongan                  golongan?             @relation(fields: [golongan_id], references: [id])
-  sub_golongan_id           Int?
-  sub_golongan              sub_golongan?         @relation(fields: [sub_golongan_id], references: [id])
-  no_dana_pensiun           String?
-
-  // Kontak Darurat 1
-  emergency_nama_1          String?
-  emergency_nomor_1         String?
-  emergency_hubungan_1      String?
-  emergency_alamat_1        String?
-
-  // Kontak Darurat 2
-  emergency_nama_2          String?
-  emergency_nomor_2         String?
-  emergency_hubungan_2      String?
-  emergency_alamat_2        String?
-
-  // POO/POH
-  point_of_original         String?
-  point_of_hire             String?
-
-  // Seragam
-  ukuran_seragam_kerja      String?
-  ukuran_sepatu_kerja       String?
-
-  // Pergerakan
-  lokasi_sebelumnya_id      Int?
-  lokasi_sebelumnya         lokasi_kerja?         @relation("LokasiSebelumnya", fields: [lokasi_sebelumnya_id], references: [id])
-  tanggal_mutasi            DateTime?
-
-  // Costing
-  siklus_pembayaran_gaji    String?
-  costing                   String?
-  assign                    String?
-  actual                    String?
+  id                      Int                   @id @default(autoincrement())
+  karyawan_id             Int                   @unique
+  jenis_hubungan_kerja_id Int?
+  tanggal_masuk_group     DateTime?
+  tanggal_masuk           DateTime?
+  tanggal_permanent       DateTime?
+  tanggal_kontrak         DateTime?
+  tanggal_akhir_kontrak   DateTime?
+  tanggal_berhenti        DateTime?
+  tingkat_pendidikan      String?
+  bidang_studi            String?
+  nama_sekolah            String?
+  kota_sekolah            String?
+  status_kelulusan        String?
+  keterangan_pendidikan   String?
+  kategori_pangkat_id     Int?
+  golongan_id             Int?
+  sub_golongan_id         Int?
+  no_dana_pensiun         String?
+  emergency_nama_1        String?
+  emergency_nomor_1       String?
+  emergency_hubungan_1    String?
+  emergency_alamat_1      String?
+  emergency_nama_2        String?
+  emergency_nomor_2       String?
+  emergency_hubungan_2    String?
+  emergency_alamat_2      String?
+  point_of_original       String?
+  point_of_hire           String?
+  ukuran_seragam_kerja    String?
+  ukuran_sepatu_kerja     String?
+  lokasi_sebelumnya_id    Int?
+  tanggal_mutasi          DateTime?
+  siklus_pembayaran_gaji  String?
+  costing                 String?
+  assign                  String?
+  actual                  String?
+  golongan                golongan?             @relation(fields: [golongan_id], references: [id])
+  jenis_hubungan_kerja    jenis_hubungan_kerja? @relation(fields: [jenis_hubungan_kerja_id], references: [id])
+  karyawan                karyawan              @relation(fields: [karyawan_id], references: [id], onDelete: Cascade)
+  kategori_pangkat        kategori_pangkat?     @relation(fields: [kategori_pangkat_id], references: [id])
+  lokasi_sebelumnya       lokasi_kerja?         @relation("LokasiSebelumnya", fields: [lokasi_sebelumnya_id], references: [id])
+  sub_golongan            sub_golongan?         @relation(fields: [sub_golongan_id], references: [id])
 }
 
 model karyawan_keluarga {
-  id                             Int       @id @default(autoincrement())
-  karyawan_id                    Int       @unique
-  karyawan                       karyawan  @relation(fields: [karyawan_id], references: [id], onDelete: Cascade)
-  
-  // Pasangan Info
-  tanggal_lahir_pasangan         DateTime?
-  pendidikan_terakhir_pasangan   String?
-  pekerjaan_pasangan             String?
-  keterangan_pasangan            String?
-
-  // Saudara Metadata
-  anak_ke                        Int?
-  jumlah_saudara_kandung         Int?
-
-  // Orang Tua Mertua
-  nama_ayah_mertua               String?
-  tanggal_lahir_ayah_mertua      DateTime?
+  id                              Int       @id @default(autoincrement())
+  karyawan_id                     Int       @unique
+  tanggal_lahir_pasangan          DateTime?
+  pendidikan_terakhir_pasangan    String?
+  pekerjaan_pasangan              String?
+  keterangan_pasangan             String?
+  anak_ke                         Int?
+  jumlah_saudara_kandung          Int?
+  nama_ayah_mertua                String?
+  tanggal_lahir_ayah_mertua       DateTime?
   pendidikan_terakhir_ayah_mertua String?
-  pekerjaan_ayah_mertua          String?
-  keterangan_ayah_mertua         String?
-  nama_ibu_mertua                String?
-  tanggal_lahir_ibu_mertua       DateTime?
-  pendidikan_terakhir_ibu_mertua String?
-  pekerjaan_ibu_mertua           String?
-  keterangan_ibu_mertua          String?
+  keterangan_ayah_mertua          String?
+  nama_ibu_mertua                 String?
+  tanggal_lahir_ibu_mertua        DateTime?
+  pendidikan_terakhir_ibu_mertua  String?
+  keterangan_ibu_mertua           String?
+  pekerjaan_ayah_mertua           String?
+  pekerjaan_ibu_mertua            String?
+  karyawan                        karyawan  @relation(fields: [karyawan_id], references: [id], onDelete: Cascade)
 }
 
 model karyawan_anak {
   id            Int       @id @default(autoincrement())
   karyawan_id   Int
-  karyawan      karyawan  @relation(fields: [karyawan_id], references: [id], onDelete: Cascade)
   urutan        Int
   nama_anak     String?
   jenis_kelamin String?
   tanggal_lahir DateTime?
   keterangan    String?
+  karyawan      karyawan  @relation(fields: [karyawan_id], references: [id], onDelete: Cascade)
 }
 
 model karyawan_saudara {
-  id                 Int       @id @default(autoincrement())
-  karyawan_id        Int
-  karyawan           karyawan  @relation(fields: [karyawan_id], references: [id], onDelete: Cascade)
-  urutan             Int
-  nama_saudara       String?
-  jenis_kelamin      String?
-  tanggal_lahir      DateTime?
+  id                  Int       @id @default(autoincrement())
+  karyawan_id         Int
+  urutan              Int
+  nama_saudara        String?
+  jenis_kelamin       String?
+  tanggal_lahir       DateTime?
   pendidikan_terakhir String?
-  pekerjaan          String?
-  keterangan         String?
+  pekerjaan           String?
+  keterangan          String?
+  karyawan            karyawan  @relation(fields: [karyawan_id], references: [id], onDelete: Cascade)
 }
 
 model users {
   id          Int       @id @default(autoincrement())
   karyawan_id Int?
-  karyawan    karyawan? @relation(fields: [karyawan_id], references: [id])
   nama        String
   nik         String    @unique
   password    String
   role        String    @default("user")
   created_at  DateTime  @default(now())
   updated_at  DateTime  @updatedAt
+  karyawan    karyawan? @relation(fields: [karyawan_id], references: [id])
 }
 
 model mess {
-  id          Int         @id @default(autoincrement())
-  code        String      @unique
-  nama        String
-  lokasi      String?
-  keterangan  String?
-  status      String      @default("Aktif")
-  created_at  DateTime    @default(now())
-  updated_at  DateTime    @updatedAt
-  rooms       mess_room[]
+  id         Int         @id @default(autoincrement())
+  code       String      @unique
+  nama       String
+  lokasi     String?
+  keterangan String?
+  status     String      @default("Aktif")
+  created_at DateTime    @default(now())
+  updated_at DateTime    @updatedAt
+  rooms      mess_room[]
 }
 
 model mess_room {
   id          Int        @id @default(autoincrement())
   mess_id     Int
-  mess        mess       @relation(fields: [mess_id], references: [id], onDelete: Cascade)
   nomor_kamar String
   kapasitas   Int        @default(1)
   fasilitas   String?
@@ -383,4 +341,17 @@ model mess_room {
   created_at  DateTime   @default(now())
   updated_at  DateTime   @updatedAt
   penghuni    karyawan[]
+  mess        mess       @relation(fields: [mess_id], references: [id], onDelete: Cascade)
+}
+
+model karyawan_dokumen {
+  id           Int      @id @default(autoincrement())
+  karyawan_id  Int
+  nama_dokumen String
+  file_path    String
+  file_type    String?
+  file_size    Int?
+  created_at   DateTime @default(now())
+  updated_at   DateTime @updatedAt
+  karyawan     karyawan @relation(fields: [karyawan_id], references: [id], onDelete: Cascade)
 }

@@ -1,4 +1,5 @@
 import { z } from 'zod';
+const zNumeric = z.union([z.string(), z.number(), z.null(), z.undefined()]).transform((v): number | null => (v === "" || v === undefined || v === null ? null : Number(v)));
 
 export interface KaryawanListItem {
     id: number;
@@ -55,11 +56,13 @@ export interface KaryawanPersonal {
     nama_pasangan: string | null;
     tanggal_menikah: string | null;
     pekerjaan_pasangan: string | null;
-    jumlah_anak: number | null;
+    jumlah_anak?: number | null;
     nomor_rekening: string | null;
     nama_pemegang_rekening: string | null;
     nama_bank: string | null;
     cabang_bank: string | null;
+    nama_ayah: string | null;
+    nama_ibu: string | null;
 }
 
 export interface KaryawanHR {
@@ -114,6 +117,36 @@ export interface KaryawanSaudara {
     keterangan: string | null;
 }
 
+export interface KaryawanKeluarga {
+    id: number;
+    karyawan_id: number;
+    tanggal_lahir_pasangan: string | null;
+    pendidikan_terakhir_pasangan: string | null;
+    pekerjaan_pasangan: string | null;
+    keterangan_pasangan: string | null;
+    anak_ke?: number | null;
+    jumlah_saudara_kandung?: number | null;
+    nama_ayah_mertua: string | null;
+    tanggal_lahir_ayah_mertua: string | null;
+    pendidikan_terakhir_ayah_mertua: string | null;
+    pekerjaan_ayah_mertua: string | null;
+    keterangan_ayah_mertua: string | null;
+    nama_ibu_mertua: string | null;
+    tanggal_lahir_ibu_mertua: string | null;
+    pendidikan_terakhir_ibu_mertua: string | null;
+    pekerjaan_ibu_mertua: string | null;
+    keterangan_ibu_mertua: string | null;
+}
+
+export interface KaryawanDokumen {
+    id: number;
+    nama_dokumen: string;
+    file_path: string;
+    file_type: string | null;
+    file_size: number | null;
+    created_at: string;
+}
+
 export interface KaryawanDetail extends KaryawanListItem {
     email_perusahaan: string | null;
     nomor_handphone: string | null;
@@ -123,6 +156,14 @@ export interface KaryawanDetail extends KaryawanListItem {
     hr: KaryawanHR | null;
     anak: KaryawanAnak[];
     saudara: KaryawanSaudara[];
+    dokumen: KaryawanDokumen[];
+    keluarga: KaryawanKeluarga | null;
+    mess_room?: {
+        nomor_kamar: string;
+        mess: {
+            nama: string;
+        };
+    } | null;
 }
 
 export interface KaryawanListResponse {
@@ -162,13 +203,14 @@ export const karyawanPersonalSchema = z.object({
     jenis_kelamin: z.string().optional().nullable(),
     tempat_lahir: z.string().optional().nullable(),
     tanggal_lahir: z.string().optional().nullable(),
-    email_pribadi: z.string().email('Format email tidak valid').optional().nullable(),
+    email_pribadi: z.string().email('Format email tidak valid').or(z.literal('')).optional().nullable(),
     agama: z.string().optional().nullable(),
     golongan_darah: z.string().optional().nullable(),
     nomor_kartu_keluarga: z.string().optional().nullable(),
     nomor_ktp: z.string().optional().nullable(),
     nomor_npwp: z.string().optional().nullable(),
     nomor_bpjs: z.string().optional().nullable(),
+    no_nik_kk: z.string().optional().nullable(),
     status_pajak: z.string().optional().nullable(),
     alamat_domisili: z.string().optional().nullable(),
     kota_domisili: z.string().optional().nullable(),
@@ -176,10 +218,22 @@ export const karyawanPersonalSchema = z.object({
     alamat_ktp: z.string().optional().nullable(),
     kota_ktp: z.string().optional().nullable(),
     provinsi_ktp: z.string().optional().nullable(),
+    nomor_handphone_2: z.string().optional().nullable(),
+    nomor_telepon_rumah_1: z.string().optional().nullable(),
+    nomor_telepon_rumah_2: z.string().optional().nullable(),
     status_pernikahan: z.string().optional().nullable(),
-    nama_rekening: z.string().optional().nullable(),
+    nama_pasangan: z.string().optional().nullable(),
+    tanggal_menikah: z.string().optional().nullable(),
+    tanggal_cerai: z.string().optional().nullable(),
+    tanggal_wafat_pasangan: z.string().optional().nullable(),
+    pekerjaan_pasangan: z.string().optional().nullable(),
+    jumlah_anak: zNumeric,
     nomor_rekening: z.string().optional().nullable(),
+    nama_pemegang_rekening: z.string().optional().nullable(),
     nama_bank: z.string().optional().nullable(),
+    cabang_bank: z.string().optional().nullable(),
+    nama_ayah: z.string().optional().nullable(),
+    nama_ibu: z.string().optional().nullable(),
 });
 
 export const karyawanHRSchema = z.object({
@@ -188,6 +242,7 @@ export const karyawanHRSchema = z.object({
     tanggal_permanent: z.string().optional().nullable(),
     tanggal_kontrak: z.string().optional().nullable(),
     tanggal_akhir_kontrak: z.string().optional().nullable(),
+    tanggal_berhenti: z.string().optional().nullable(),
     jenis_hubungan_kerja_id: z.string().optional().nullable(),
     kategori_pangkat_id: z.string().optional().nullable(),
     golongan_id: z.string().optional().nullable(),
@@ -195,12 +250,47 @@ export const karyawanHRSchema = z.object({
     tingkat_pendidikan: z.string().optional().nullable(),
     nama_sekolah: z.string().optional().nullable(),
     bidang_studi: z.string().optional().nullable(),
+    kota_sekolah: z.string().optional().nullable(),
+    status_kelulusan: z.string().optional().nullable(),
+    keterangan_pendidikan: z.string().optional().nullable(),
+    no_dana_pensiun: z.string().optional().nullable(),
     emergency_nama_1: z.string().optional().nullable(),
     emergency_nomor_1: z.string().optional().nullable(),
     emergency_hubungan_1: z.string().optional().nullable(),
+    emergency_alamat_1: z.string().optional().nullable(),
     emergency_nama_2: z.string().optional().nullable(),
     emergency_nomor_2: z.string().optional().nullable(),
     emergency_hubungan_2: z.string().optional().nullable(),
+    emergency_alamat_2: z.string().optional().nullable(),
+    point_of_original: z.string().optional().nullable(),
+    point_of_hire: z.string().optional().nullable(),
+    ukuran_seragam_kerja: z.string().optional().nullable(),
+    ukuran_sepatu_kerja: z.string().optional().nullable(),
+    lokasi_sebelumnya_id: z.string().optional().nullable(),
+    tanggal_mutasi: z.string().optional().nullable(),
+    siklus_pembayaran_gaji: z.string().optional().nullable(),
+    costing: z.string().optional().nullable(),
+    assign: z.string().optional().nullable(),
+    actual: z.string().optional().nullable(),
+});
+
+export const karyawanKeluargaSchema = z.object({
+    tanggal_lahir_pasangan: z.string().optional().nullable(),
+    pendidikan_terakhir_pasangan: z.string().optional().nullable(),
+    pekerjaan_pasangan: z.string().optional().nullable(),
+    keterangan_pasangan: z.string().optional().nullable(),
+    anak_ke: zNumeric,
+    jumlah_saudara_kandung: zNumeric,
+    nama_ayah_mertua: z.string().optional().nullable(),
+    tanggal_lahir_ayah_mertua: z.string().optional().nullable(),
+    pendidikan_terakhir_ayah_mertua: z.string().optional().nullable(),
+    pekerjaan_ayah_mertua: z.string().optional().nullable(),
+    keterangan_ayah_mertua: z.string().optional().nullable(),
+    nama_ibu_mertua: z.string().optional().nullable(),
+    tanggal_lahir_ibu_mertua: z.string().optional().nullable(),
+    pendidikan_terakhir_ibu_mertua: z.string().optional().nullable(),
+    pekerjaan_ibu_mertua: z.string().optional().nullable(),
+    keterangan_ibu_mertua: z.string().optional().nullable(),
 });
 
 export const karyawanAnakSchema = z.object({
@@ -221,6 +311,7 @@ export const karyawanSchema = z.object({
     head: karyawanHeadSchema,
     personal: karyawanPersonalSchema.optional(),
     hr: karyawanHRSchema.optional(),
+    keluarga: karyawanKeluargaSchema.optional(),
     anak: z.array(karyawanAnakSchema).optional(),
     saudara: z.array(karyawanSaudaraSchema).optional(),
     tag_ids: z.array(z.number()).optional(),

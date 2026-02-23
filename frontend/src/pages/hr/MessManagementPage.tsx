@@ -214,8 +214,9 @@ export default function MessManagementPage() {
             toast.success('Karyawan berhasil ditempatkan');
             setShowAssignModal(false);
             if (selectedMess) fetchRooms(selectedMess.id);
-        } catch (error: any) {
-            toast.error(error.response?.data?.message || 'Gagal menempatkan karyawan');
+        } catch (error: unknown) {
+            const err = error as { response?: { data?: { message?: string } } };
+            toast.error(err.response?.data?.message || 'Gagal menempatkan karyawan');
         } finally {
             setAssignmentLoading(false);
         }

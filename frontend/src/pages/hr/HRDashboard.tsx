@@ -10,7 +10,6 @@ import {
     TrendingUp,
     Clock,
     UserPlus,
-    FileText,
     ArrowUpRight,
     ArrowDownRight
 } from 'lucide-react';
@@ -20,10 +19,21 @@ import { Skeleton } from '@/components/ui/skeleton';
 import api from '@/lib/api';
 
 interface Stats {
-    divisi: number;
-    posisi: number;
-    golongan: number;
-    karyawan: number;
+    totalKaryawan: number;
+    activeKaryawan: number;
+    karyawanPerDivisi: Array<{ nama: string; jumlah: number }>;
+    recentKaryawan: Array<{
+        id: number;
+        nama_lengkap: string;
+        nomor_induk_karyawan: string;
+        created_at: string;
+        posisi_jabatan: { nama: string };
+    }>;
+    masterCount: {
+        divisi: number;
+        posisi: number;
+        golongan: number;
+    }
 }
 
 interface KPICardProps {
@@ -70,18 +80,20 @@ export default function HRDashboard() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const [divs, pos, gols, kars] = await Promise.all([
+                const [statsRes, masterDiv, masterPos, masterGol] = await Promise.all([
+                    api.get('/karyawan/stats'),
                     api.get('/master/divisi'),
                     api.get('/master/posisi-jabatan'),
-                    api.get('/master/golongan'),
-                    api.get('/karyawan?limit=1')
+                    api.get('/master/golongan')
                 ]);
 
                 setStats({
-                    divisi: divs.data.length,
-                    posisi: pos.data.length,
-                    golongan: gols.data.length,
-                    karyawan: kars.data.total
+                    ...statsRes.data,
+                    masterCount: {
+                        divisi: masterDiv.data.length,
+                        posisi: masterPos.data.length,
+                        golongan: masterGol.data.length
+                    }
                 });
             } catch (error) {
                 console.error('Fetch dashboard stats error:', error);
@@ -90,12 +102,6 @@ export default function HRDashboard() {
 
         fetchData();
     }, []);
-
-    const recentActivities = [
-        { id: 1, type: 'Karyawan', desc: 'Penambahan karyawan baru: Ahmad Fauzi', user: 'Admin HR', time: '2 jam yang lalu', status: 'Selesai' },
-        { id: 2, type: 'Master Data', desc: 'Update master divisi: Operasional Site', user: 'Sistem', time: '5 jam yang lalu', status: 'Selesai' },
-        { id: 3, type: 'Dokumen', desc: 'Export data karyawan bulanan', user: 'HR Manager', time: '1 hari yang lalu', status: 'Selesai' },
-    ];
 
     return (
         <div className="space-y-8">
@@ -121,38 +127,38 @@ export default function HRDashboard() {
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                 <KPICard
                     title="Total Divisi"
-                    value={stats?.divisi}
+                    value={stats?.masterCount.divisi}
                     icon={Building2}
                     description="Struktur organisasi aktif"
                     trend="up"
-                    trendValue={12}
+                    trendValue={0}
                     color="bg-blue-600"
                 />
                 <KPICard
                     title="Posisi Jabatan"
-                    value={stats?.posisi}
+                    value={stats?.masterCount.posisi}
                     icon={BadgeCheck}
                     description="Varian peran di site"
                     trend="up"
-                    trendValue={5}
+                    trendValue={0}
                     color="bg-purple-600"
                 />
                 <KPICard
                     title="Total Golongan"
-                    value={stats?.golongan}
+                    value={stats?.masterCount.golongan}
                     icon={Award}
                     description="Klasifikasi pangkat"
-                    trend="down"
-                    trendValue={2}
+                    trend="up"
+                    trendValue={0}
                     color="bg-amber-600"
                 />
                 <KPICard
                     title="Karyawan Aktif"
-                    value={stats?.karyawan}
+                    value={stats?.activeKaryawan}
                     icon={Users}
                     description="Total tenaga kerja site"
                     trend="up"
-                    trendValue={8}
+                    trendValue={0}
                     color="bg-emerald-600"
                 />
             </div>
@@ -192,30 +198,28 @@ export default function HRDashboard() {
                 {/* Donut Chart Mockup */}
                 <Card className="border-none shadow-md overflow-hidden">
                     <CardHeader className="border-b bg-muted/10">
-                        <CardTitle className="text-lg font-black tracking-tight">Distribusi Golongan</CardTitle>
-                        <CardDescription className="font-medium">Berdasarkan pangkat</CardDescription>
+                        <CardTitle className="text-lg font-black tracking-tight">Karyawan per Divisi</CardTitle>
+                        <CardDescription className="font-medium">Distribusi departemen</CardDescription>
                     </CardHeader>
                     <CardContent className="p-8 flex flex-col items-center justify-center">
-                        <div className="relative w-40 h-40 rounded-full bg-slate-100 flex items-center justify-center overflow-hidden mb-6 shadow-inner">
-                            <div className="absolute inset-0" style={{ background: 'conic-gradient(#2563eb 0% 45%, #9333ea 45% 75%, #f59e0b 75% 100%)' }} />
-                            <div className="relative w-28 h-28 rounded-full bg-white dark:bg-slate-900 shadow-xl flex flex-col items-center justify-center">
-                                <span className="text-2xl font-black tracking-tighter">100%</span>
-                                <span className="text-[10px] uppercase font-bold text-muted-foreground">Total</span>
-                            </div>
-                        </div>
-                        <div className="w-full space-y-3">
-                            <div className="flex items-center justify-between text-xs font-bold">
-                                <span className="flex items-center gap-2"><div className="w-2 h-2 rounded-full bg-blue-600" /> Golongan 1</span>
-                                <span>45%</span>
-                            </div>
-                            <div className="flex items-center justify-between text-xs font-bold">
-                                <span className="flex items-center gap-2"><div className="w-2 h-2 rounded-full bg-purple-600" /> Golongan 2</span>
-                                <span>30%</span>
-                            </div>
-                            <div className="flex items-center justify-between text-xs font-bold">
-                                <span className="flex items-center gap-2"><div className="w-2 h-2 rounded-full bg-amber-600" /> Golongan 3</span>
-                                <span>25%</span>
-                            </div>
+                        <div className="w-full space-y-4">
+                            {stats?.karyawanPerDivisi.map((div, idx) => (
+                                <div key={idx} className="space-y-1">
+                                    <div className="flex items-center justify-between text-xs font-bold uppercase tracking-widest">
+                                        <span>{div.nama}</span>
+                                        <span>{div.jumlah}</span>
+                                    </div>
+                                    <div className="w-full h-2 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
+                                        <div
+                                            className="h-full bg-primary transition-all duration-1000"
+                                            style={{ width: `${stats.totalKaryawan > 0 ? (div.jumlah / stats.totalKaryawan) * 100 : 0}%` }}
+                                        />
+                                    </div>
+                                </div>
+                            ))}
+                            {(!stats || stats.karyawanPerDivisi.length === 0) && (
+                                <p className="text-xs text-center text-muted-foreground font-medium italic">Belum ada data divisi</p>
+                            )}
                         </div>
                     </CardContent>
                 </Card>
@@ -245,28 +249,30 @@ export default function HRDashboard() {
                                 </tr>
                             </thead>
                             <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
-                                {recentActivities.map((act) => (
-                                    <tr key={act.id} className="hover:bg-muted/30 transition-colors">
+                                {stats?.recentKaryawan.map((karyawan) => (
+                                    <tr key={karyawan.id} className="hover:bg-muted/30 transition-colors cursor-pointer" onClick={() => navigate(`/hr/karyawan/${karyawan.id}`)}>
                                         <td className="px-6 py-4">
-                                            <span className={`px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-tight
-                                                ${act.type === 'Karyawan' ? 'bg-blue-100 text-blue-700' :
-                                                    act.type === 'Master Data' ? 'bg-purple-100 text-purple-700' : 'bg-slate-100 text-slate-700'}
-                                            `}>
-                                                {act.type === 'Karyawan' ? <UserPlus className="inline mr-1 w-3 h-3" /> : <FileText className="inline mr-1 w-3 h-3" />}
-                                                {act.type}
+                                            <span className="px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-tight bg-blue-100 text-blue-700">
+                                                <UserPlus className="inline mr-1 w-3 h-3" />
+                                                Karyawan
                                             </span>
                                         </td>
-                                        <td className="px-6 py-4 text-sm font-medium">{act.desc}</td>
-                                        <td className="px-6 py-4 text-sm font-bold text-muted-foreground">{act.user}</td>
-                                        <td className="px-6 py-4 text-xs font-medium text-muted-foreground/60">{act.time}</td>
+                                        <td className="px-6 py-4 text-sm font-medium">Bergabungnya {karyawan.nama_lengkap} ({karyawan.nomor_induk_karyawan})</td>
+                                        <td className="px-6 py-4 text-sm font-bold text-muted-foreground">{karyawan.posisi_jabatan.nama}</td>
+                                        <td className="px-6 py-4 text-xs font-medium text-muted-foreground/60">{new Date(karyawan.created_at).toLocaleDateString()}</td>
                                         <td className="px-6 py-4">
                                             <span className="flex items-center gap-1.5 text-xs font-bold text-emerald-600">
                                                 <div className="w-1.5 h-1.5 rounded-full bg-emerald-600 animate-pulse" />
-                                                {act.status}
+                                                Baru
                                             </span>
                                         </td>
                                     </tr>
                                 ))}
+                                {(!stats || stats.recentKaryawan.length === 0) && (
+                                    <tr>
+                                        <td colSpan={5} className="px-6 py-12 text-center text-sm font-medium text-muted-foreground italic">Belum ada aktivitas terbaru</td>
+                                    </tr>
+                                )}
                             </tbody>
                         </table>
                     </div>

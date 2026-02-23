@@ -143,8 +143,7 @@ export default function WelcomePage() {
                         title="Mess Management"
                         description="Pengaturan hunian mess, reservasi, dan fasilitas akomodasi karyawan."
                         icon={<Utensils className="w-6 h-6 text-orange-600" />}
-                        path="/mess"
-                        disabled
+                        path="/hr/mess"
                         color="bg-orange-600"
                     />
                     <ModuleCard
@@ -159,8 +158,7 @@ export default function WelcomePage() {
                         title="Access Control"
                         description="Manajemen hak akses pengguna dan keamanan sistem informasi."
                         icon={<ShieldCheck className="w-6 h-6 text-rose-600" />}
-                        path="/settings"
-                        disabled
+                        path="/hr/users"
                         color="bg-rose-600"
                     />
                     <ModuleCard
