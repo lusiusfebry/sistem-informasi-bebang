@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useForm, useFieldArray } from 'react-hook-form';
+import type { SubmitHandler, Resolver } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import {
     ChevronLeft,
@@ -69,7 +70,7 @@ export const FormKaryawan = ({ mode = 'add' }: { mode?: 'add' | 'edit' }) => {
         watch,
         formState: { errors }
     } = useForm<KaryawanFormData>({
-        resolver: zodResolver(karyawanSchema) as any,
+        resolver: zodResolver(karyawanSchema) as unknown as Resolver<KaryawanFormData>,
         defaultValues: {
             head: {
                 nama_lengkap: '',
@@ -223,7 +224,7 @@ export const FormKaryawan = ({ mode = 'add' }: { mode?: 'add' | 'edit' }) => {
         }
     };
 
-    const onSubmit = async (formData: any) => {
+    const onSubmit: SubmitHandler<KaryawanFormData> = async (formData) => {
         setIsSaving(true);
         try {
             // Sanitize data: convert "null" strings back to actual nulls
@@ -290,7 +291,7 @@ export const FormKaryawan = ({ mode = 'add' }: { mode?: 'add' | 'edit' }) => {
     }
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-8 pb-20 max-w-5xl mx-auto">
+        <form onSubmit={handleSubmit(onSubmit as any)} className="space-y-8 pb-20 max-w-5xl mx-auto">
             {/* Header Sticky */}
             <div className="sticky top-0 z-20 bg-slate-50/80 backdrop-blur-md py-4 flex items-center justify-between border-b border-slate-200 -mx-4 px-4 sm:-mx-8 sm:px-8">
                 <div className="flex items-center gap-4">
@@ -930,6 +931,10 @@ export const FormKaryawan = ({ mode = 'add' }: { mode?: 'add' | 'edit' }) => {
                                             <Input type="date" {...register('keluarga.tanggal_lahir_ayah_mertua')} className="h-11 rounded-xl bg-white" />
                                         </div>
                                         <div className="space-y-2">
+                                            <Label className="text-[10px] font-black uppercase tracking-widest text-slate-500">Pendidikan</Label>
+                                            <Input {...register('keluarga.pendidikan_terakhir_ayah_mertua')} className="h-11 rounded-xl bg-white" />
+                                        </div>
+                                        <div className="space-y-2">
                                             <Label className="text-[10px] font-black uppercase tracking-widest text-slate-500">Pekerjaan</Label>
                                             <Input {...register('keluarga.pekerjaan_ayah_mertua')} className="h-11 rounded-xl bg-white" />
                                         </div>
@@ -946,6 +951,10 @@ export const FormKaryawan = ({ mode = 'add' }: { mode?: 'add' | 'edit' }) => {
                                         <div className="space-y-2">
                                             <Label className="text-[10px] font-black uppercase tracking-widest text-slate-500">Tgl Lahir</Label>
                                             <Input type="date" {...register('keluarga.tanggal_lahir_ibu_mertua')} className="h-11 rounded-xl bg-white" />
+                                        </div>
+                                        <div className="space-y-2">
+                                            <Label className="text-[10px] font-black uppercase tracking-widest text-slate-500">Pendidikan</Label>
+                                            <Input {...register('keluarga.pendidikan_terakhir_ibu_mertua')} className="h-11 rounded-xl bg-white" />
                                         </div>
                                         <div className="space-y-2">
                                             <Label className="text-[10px] font-black uppercase tracking-widest text-slate-500">Pekerjaan</Label>

@@ -437,7 +437,7 @@ export const ProfilKaryawan = () => {
                                         </div>
                                         <div className="space-y-1">
                                             <label className="text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wide">Kode Pos</label>
-                                            <p className="text-sm font-semibold text-slate-900 dark:text-slate-100 p-2.5 bg-slate-50 dark:bg-slate-800 rounded border border-slate-100 dark:border-slate-700">12730</p>
+                                            <p className="text-sm font-semibold text-slate-900 dark:text-slate-100 p-2.5 bg-slate-50 dark:bg-slate-800 rounded border border-slate-100 dark:border-slate-700">{data.personal?.provinsi_domisili || '-'}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -639,32 +639,27 @@ export const ProfilKaryawan = () => {
                                         </tr>
                                     </thead>
                                     <tbody className="divide-y divide-slate-50 dark:divide-slate-800">
-                                        <tr className="hover:bg-slate-50/50 dark:hover:bg-slate-800/50 transition-colors">
-                                            <td className="px-6 py-4 text-sm font-semibold text-slate-900 dark:text-slate-100 font-mono italic">01 Jan 2024</td>
-                                            <td className="px-6 py-4">
-                                                <Badge className="bg-purple-50 text-purple-600 border-none px-2 py-0.5 rounded text-[10px] font-bold">Promosi</Badge>
-                                            </td>
-                                            <td className="px-6 py-4">
-                                                <div className="flex flex-col">
-                                                    <span className="text-sm font-bold text-slate-900 dark:text-slate-100">{data.posisi_jabatan.nama}</span>
-                                                    <span className="text-[10px] text-slate-500 font-medium">Prev: Senior Operator</span>
-                                                </div>
-                                            </td>
-                                            <td className="px-6 py-4 text-xs font-bold text-slate-400">SK-2024/PM/012</td>
-                                        </tr>
-                                        <tr className="hover:bg-slate-50/50 dark:hover:bg-slate-800/50 transition-colors">
-                                            <td className="px-6 py-4 text-sm font-semibold text-slate-900 dark:text-slate-100 font-mono italic">15 Jun 2022</td>
-                                            <td className="px-6 py-4">
-                                                <Badge className="bg-orange-50 text-orange-600 border-none px-2 py-0.5 rounded text-[10px] font-bold">Mutasi</Badge>
-                                            </td>
-                                            <td className="px-6 py-4">
-                                                <div className="flex flex-col">
-                                                    <span className="text-sm font-bold text-slate-900 dark:text-slate-100">{data.lokasi_kerja.nama}</span>
-                                                    <span className="text-[10px] text-slate-500 font-medium">Prev: Site Morowali</span>
-                                                </div>
-                                            </td>
-                                            <td className="px-6 py-4 text-xs font-bold text-slate-400">SK-2022/MT/089</td>
-                                        </tr>
+                                        {data.hr?.tanggal_mutasi ? (
+                                            <tr className="hover:bg-slate-50/50 dark:hover:bg-slate-800/50 transition-colors">
+                                                <td className="px-6 py-4 text-sm font-semibold text-slate-900 dark:text-slate-100 font-mono italic">{formatDate(data.hr.tanggal_mutasi)}</td>
+                                                <td className="px-6 py-4">
+                                                    <Badge className="bg-orange-50 text-orange-600 border-none px-2 py-0.5 rounded text-[10px] font-bold">Mutasi</Badge>
+                                                </td>
+                                                <td className="px-6 py-4">
+                                                    <div className="flex flex-col">
+                                                        <span className="text-sm font-bold text-slate-900 dark:text-slate-100">{data.lokasi_kerja.nama}</span>
+                                                        <span className="text-[10px] text-slate-500 font-medium">Prev: {data.hr.lokasi_sebelumnya?.nama || '-'}</span>
+                                                    </div>
+                                                </td>
+                                                <td className="px-6 py-4 text-xs font-bold text-slate-400">-</td>
+                                            </tr>
+                                        ) : (
+                                            <tr>
+                                                <td colSpan={4} className="px-6 py-8 text-center text-slate-400 italic text-sm font-medium bg-slate-50/30 dark:bg-slate-800/20">
+                                                    Belum ada riwayat pergerakan
+                                                </td>
+                                            </tr>
+                                        )}
                                     </tbody>
                                 </table>
                             </div>
@@ -683,7 +678,11 @@ export const ProfilKaryawan = () => {
                                     </div>
                                     <h3 className="text-lg font-bold text-slate-900 dark:text-white">Data Pasangan (Spouse)</h3>
                                 </div>
-                                <Badge variant="outline" className="text-[10px] font-black uppercase tracking-widest text-slate-400">Verified</Badge>
+                                <div className="flex items-center gap-4">
+                                    <Badge variant="outline" className="text-[10px] font-black uppercase tracking-widest text-slate-400">Verified</Badge>
+                                    <Badge className="bg-indigo-50 text-indigo-600 border-none px-2 py-1 rounded text-[10px] font-bold">Anak Ke-{data.keluarga?.anak_ke || '-'}</Badge>
+                                    <Badge className="bg-purple-50 text-purple-600 border-none px-2 py-1 rounded text-[10px] font-bold">{data.keluarga?.jumlah_saudara_kandung || '0'} Bersaudara</Badge>
+                                </div>
                             </div>
                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                                 <div className="space-y-1">
@@ -796,11 +795,31 @@ export const ProfilKaryawan = () => {
                                     <div className="grid grid-cols-2 gap-3">
                                         <div className="p-3 bg-slate-50 dark:bg-slate-800 rounded-lg border border-slate-100 dark:border-slate-700">
                                             <p className="text-[10px] text-slate-500 font-medium mb-1">Nama Ayah Mertua</p>
-                                            <p className="text-xs font-bold text-slate-900 dark:text-white">{data.keluarga?.nama_ayah_mertua || '-'}</p>
+                                            <p className="text-xs font-bold text-slate-900 dark:text-white mb-2">{data.keluarga?.nama_ayah_mertua || '-'}</p>
+                                            <div className="grid grid-cols-2 gap-2 mt-2 pt-2 border-t border-slate-100 dark:border-slate-700">
+                                                <div>
+                                                    <p className="text-[9px] text-slate-400 uppercase">Pendidikan</p>
+                                                    <p className="text-[10px] font-semibold text-slate-600 dark:text-slate-300">{data.keluarga?.pendidikan_terakhir_ayah_mertua || '-'}</p>
+                                                </div>
+                                                <div>
+                                                    <p className="text-[9px] text-slate-400 uppercase">Pekerjaan</p>
+                                                    <p className="text-[10px] font-semibold text-slate-600 dark:text-slate-300">{data.keluarga?.pekerjaan_ayah_mertua || '-'}</p>
+                                                </div>
+                                            </div>
                                         </div>
                                         <div className="p-3 bg-slate-50 dark:bg-slate-800 rounded-lg border border-slate-100 dark:border-slate-700">
                                             <p className="text-[10px] text-slate-500 font-medium mb-1">Nama Ibu Mertua</p>
-                                            <p className="text-xs font-bold text-slate-900 dark:text-white">{data.keluarga?.nama_ibu_mertua || '-'}</p>
+                                            <p className="text-xs font-bold text-slate-900 dark:text-white mb-2">{data.keluarga?.nama_ibu_mertua || '-'}</p>
+                                            <div className="grid grid-cols-2 gap-2 mt-2 pt-2 border-t border-slate-100 dark:border-slate-700">
+                                                <div>
+                                                    <p className="text-[9px] text-slate-400 uppercase">Pendidikan</p>
+                                                    <p className="text-[10px] font-semibold text-slate-600 dark:text-slate-300">{data.keluarga?.pendidikan_terakhir_ibu_mertua || '-'}</p>
+                                                </div>
+                                                <div>
+                                                    <p className="text-[9px] text-slate-400 uppercase">Pekerjaan</p>
+                                                    <p className="text-[10px] font-semibold text-slate-600 dark:text-slate-300">{data.keluarga?.pekerjaan_ibu_mertua || '-'}</p>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

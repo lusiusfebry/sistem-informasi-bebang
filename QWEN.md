@@ -5,7 +5,7 @@
 **Bebang Sistem Informasi** is an enterprise web application being implemented for PT Prima Sarana Gemilang, site Taliabu. The system serves as a central data service platform for employees, supporting 500+ users.
 
 ### Architecture
-- **Frontend**: React 19 + TypeScript + Vite + Tailwind CSS v4 + Radix UI
+- **Frontend**: React 19 + TypeScript + Vite + Tailwind CSS v4 + Radix UI (shadcn/ui)
 - **Backend**: Node.js + Express + TypeScript + Prisma ORM
 - **Database**: PostgreSQL
 - **Design**: Modern, professional UI with Indonesian language support
@@ -17,15 +17,15 @@ sistem-informasi-bebang/
 ├── frontend/         # React + TypeScript + Vite SPA
 ├── planning/         # Requirements and module specifications
 ├── desain-ui-ux/     # UI/UX design variants and mockups
-├── directives/       # (Empty - for future directives)
-├── execution/        # (Empty - for future execution docs)
+├── directives/       # (Empty - for future SOPs)
+├── execution/        # (Empty - for future scripts)
 └── .tmp/             # Temporary files (gitignored)
 ```
 
 ## Key Modules (Planned)
 
 1. **Human Resources** (Primary focus - detailed spec in `planning/02_modul_hr_v2.md`)
-2. Inventory (spec in `.qwen/skills/03_modul_inventory.md`)
+2. Inventory
 3. Mess Management
 4. Building Management
 5. User Access Right Management
@@ -40,75 +40,83 @@ Login Page → Welcome Page → Module Selection
 
 ## Building and Running
 
-### Backend
+### Prerequisites
+- Node.js v18 or newer
+- PostgreSQL
+
+### Backend Setup
 ```bash
 cd backend
 npm install
-npm run dev        # Development with nodemon
-npm run build      # TypeScript compilation
-npm run start      # Production start
+npx prisma migrate dev    # Run migrations
+npx prisma db seed        # Seed initial data
+npm run dev               # Development with nodemon (port 3000)
+npm run build             # TypeScript compilation
+npm run start             # Production start
+npm run lint              # ESLint check
 ```
 
-### Frontend
+### Frontend Setup
 ```bash
 cd frontend
 npm install
-npm run dev        # Vite development server
-npm run build      # Production build
-npm run lint       # ESLint check
-npm run preview    # Preview production build
+npm run dev               # Vite development server (port 5173)
+npm run build             # Production build
+npm run lint              # ESLint check
+npm run preview           # Preview production build
 ```
 
 ### Database Setup
-```bash
-cd backend
-npx prisma migrate dev    # Run migrations
-npx prisma studio         # Open Prisma Studio
-```
-
 **Database Credentials (Development):**
 - User: `postgres`
 - Password: `123456789`
+- Database: `bebang-sistem-informasi`
 - Connection string stored in `backend/.env` as `DATABASE_URL`
 
 ## Development Conventions
 
 ### Language
-- Application UI/UX: **Indonesian (Bahasa Indonesia)**
-- Code comments and documentation: **English**
-- No hardcoded/mock data allowed (use seed data for development)
+- **Application UI/UX**: Indonesian (Bahasa Indonesia)
+- **Code comments and documentation**: English
+- **No hardcoded/mock data**: All data from database (seed data allowed for development)
 
 ### Code Style
 - **TypeScript** for both frontend and backend
-- **ESLint** configured for frontend
-- Strict typing enforced
+- **Strict typing** enforced
+- **ESLint** configured for both frontend and backend
+- Use **shadcn/ui** components for UI consistency
 
 ### Project Organization
-- Separate frontend/backend folders
-- Modules organized in separate folders
-- No static/hardcoded data - all data from database
-- Support for QR Code generation, file uploads, photo/document handling
+- Separate `frontend/` and `backend/` folders
+- Modules organized in separate folders within `planning/`
+- Support for QR Code generation (from `nomor_induk_karyawan`)
+- File upload support for photos and documents (`backend/uploads/`)
 
 ### Key Requirements
 - Employee ID format: `xx-xxxxx`
-- Password managed by Access Management module (seed data for dev)
+- Password managed by Access Management module (seed data for dev: `admin` / `admin123`)
 - UI must be professional, clean, modern
 - Support for 500+ concurrent employees
-- QR Code support (generated from `nomor_induk_karyawan`)
+- QR Code support
 - File upload support for photos and documents
 
 ## HR Module Details
 
 ### Master Data Entities
-- Divisi (Division) - auto-generated code: `div-xxxx`
-- Department
-- Posisi Jabatan (Position)
-- Kategori Pangkat (Rank Category)
-- Golongan / Sub Golongan
-- Jenis Hubungan Kerja
-- Tag (with color)
-- Lokasi Kerja
-- Status Karyawan
+All master data use auto-generated codes (e.g., `div-xxxx` for divisions) that cannot be changed after generation:
+
+| Entity | Code Format | Description |
+|--------|-------------|-------------|
+| Divisi | `div-xxxx` | Division |
+| Department | `dep-xxxx` | Department |
+| Posisi Jabatan | `pos-xxxx` | Position |
+| Kategori Pangkat | `kpk-xxxx` | Rank Category |
+| Golongan | `gol-x` | Group |
+| Sub Golongan | `sgol-xx` | Sub Group |
+| Jenis Hubungan Kerja | `jhk-xxxx` | Employment Type |
+| Tag | `tag-xxx` | Tag with color |
+| Lokasi Kerja | `lok-xxxx` | Work Location |
+| Status Karyawan | `stk-xxxx` | Employee Status |
 
 ### Employee Profile Sections
 1. **Head Section**: Photo, NIK, Division, Department, Position, Contact
@@ -128,15 +136,17 @@ npx prisma studio         # Open Prisma Studio
 | `planning/02_modul_hr_v2.md` | HR module detailed specification |
 | `planning/08_relasi_dengan_sheet_excel.md` | Excel data mapping |
 | `backend/prisma/schema.prisma` | Database schema |
-| `backend/prisma.config.ts` | Prisma configuration |
+| `backend/src/index.ts` | Express server entry point |
 | `frontend/src/App.tsx` | Main React application |
+| `backend/prisma/seed.ts` | Database seed data |
 
 ## Environment Variables
 
 ### Backend (.env)
 ```env
-DATABASE_URL="postgresql://postgres:123456789@localhost:5432/bebang_db"
 PORT=3000
+DATABASE_URL="postgresql://postgres:123456789@localhost:5432/bebang-sistem-informasi"
+JWT_SECRET=bebang_jwt_secret_key_2024
 ```
 
 ### Frontend (.env)
@@ -163,76 +173,61 @@ UI/UX design variants located in `desain-ui-ux/`:
 - Codes include abbreviations and cannot be changed after generation
 - Search functionality required for dropdown/selection fields
 - Family information sections are repeatable based on counts
+- Default admin credentials (development): `admin` / `admin` or `00-00001` / `admin123`
 
-## General Rules 1
+## Database Schema Overview
 
-You operate within a 3-layer architecture that separates concerns to maximize reliability. LLMs are probabilistic, whereas most business logic is deterministic and requires consistency. This system fixes that mismatch.
+The Prisma schema (`backend/prisma/schema.prisma`) defines the following main entities:
 
-## The 3-Layer Architecture
+### Core HR Tables
+- `karyawan` - Main employee table
+- `karyawan_personal` - Personal information
+- `karyawan_hr` - HR-specific information
+- `karyawan_keluarga` - Family information
+- `karyawan_anak` - Children (repeatable)
+- `karyawan_saudara` - Siblings (repeatable)
+- `karyawan_dokumen` - Employee documents
+- `karyawan_tag` - Employee tags (many-to-many)
 
-**Layer 1: Directive (What to do)**
-- Basically just SOPs written in Markdown, live in `directives/`
-- Define the goals, inputs, tools/scripts to use, outputs, and edge cases
-- Natural language instructions, like you'd give a mid-level employee
+### Master Data Tables
+- `divisi`, `department`, `posisi_jabatan`
+- `kategori_pangkat`, `golongan`, `sub_golongan`
+- `jenis_hubungan_kerja`, `tag`, `lokasi_kerja`, `status_karyawan`
 
-**Layer 2: Orchestration (Decision making)**
-- This is you. Your job: intelligent routing.
-- Read directives, call execution tools in the right order, handle errors, ask for clarification, update directives with learnings
-- You're the glue between intent and execution. E.g you don't try scraping websites yourself—you read `directives/scrape_website.md` and come up with inputs/outputs and then run `execution/scrape_single_site.py`
+### Other Tables
+- `users` - User authentication
+- `mess`, `mess_room` - Mess/accommodation management
 
-**Layer 3: Execution (Doing the work)**
-- Deterministic Python scripts in `execution/`
-- Environment variables, api tokens, etc are stored in `.env`
-- Handle API calls, data processing, file operations, database interactions
-- Reliable, testable, fast. Use scripts instead of manual work.
+## API Routes
 
-**Why this works:** if you do everything yourself, errors compound. 90% accuracy per step = 59% success over 5 steps. The solution is push complexity into deterministic code. That way you just focus on decision-making.
+| Route | Description |
+|-------|-------------|
+| `/api/auth` | Authentication endpoints |
+| `/api/master` | Master data CRUD operations |
+| `/api/karyawan` | Employee management |
+| `/api/users` | User management |
+| `/api/mess` | Mess management |
+| `/api/health` | Health check endpoint |
+| `/uploads` | Static file serving |
 
-## Operating Principles
+## Frontend Pages
 
-**1. Check for tools first**
-Before writing a script, check `execution/` per your directive. Only create new scripts if none exist.
+| Path | Component |
+|------|-----------|
+| `/login` | LoginPage |
+| `/welcome` | WelcomePage |
+| `/hr` | HRDashboard |
+| `/hr/master/*` | Master data pages |
+| `/hr/karyawan` | Employee directory |
+| `/hr/karyawan/:id` | Employee profile |
+| `/hr/users` | User management |
+| `/hr/mess` | Mess management |
 
-**2. Self-anneal when things break**
-- Read error message and stack trace
-- Fix the script and test it again (unless it uses paid tokens/credits/etc—in which case you check w user first)
-- Update the directive with what you learned (API limits, timing, edge cases)
-- Example: you hit an API rate limit → you then look into API → find a batch endpoint that would fix → rewrite script to accommodate → test → update directive.
+## General Rules
 
-**3. Update directives as you learn**
-Directives are living documents. When you discover API constraints, better approaches, common errors, or timing expectations—update the directive. But don't create or overwrite directives without asking unless explicitly told to. Directives are your instruction set and must be preserved (and improved upon over time, not extemporaneously used and then discarded).
-
-## Self-annealing loop
-
-Errors are learning opportunities. When something breaks:
-1. Fix it
-2. Update the tool
-3. Test tool, make sure it works
-4. Update directive to include new flow
-5. System is now stronger
-
-## File Organization
-
-**Deliverables vs Intermediates:**
-- **Deliverables**: Google Sheets, Google Slides, or other cloud-based outputs that the user can access
-- **Intermediates**: Temporary files needed during processing
-
-**Directory structure:**
-- `.tmp/` - All intermediate files (dossiers, scraped data, temp exports). Never commit, always regenerated.
-- `execution/` - Python scripts (the deterministic tools)
-- `directives/` - SOPs in Markdown (the instruction set)
-- `.env` - Environment variables and API keys
-- `credentials.json`, `token.json` - Google OAuth credentials (required files, in `.gitignore`)
-
-**Key principle:** Local files are only for processing. Deliverables live in cloud services (Google Sheets, Slides, etc.) where the user can access them. Everything in `.tmp/` can be deleted and regenerated.
-
-## Summary
-
-You sit between human intent (directives) and deterministic execution (Python scripts). Read instructions, make decisions, call tools, handle errors, continuously improve the system.
-
-Be pragmatic. Be reliable. Self-anneal.
-
-## General rules 2
-1. aplikasi ini menggunakan bahasa indonesia
-2. dokumentasi menggunakan bahasa indonesia
-3. setelah selesai menyelesaikan task, cek error script atau lint error. dan pastikan aplikasi ini 100% free lint error dan script error
+1. **Language**: Application uses Indonesian; documentation uses English
+2. **No Mock Data**: All data must come from database (seed allowed for dev)
+3. **Lint-Free**: Ensure 100% free from lint errors before commit
+4. **TypeScript**: Strict typing enforced throughout the project
+5. **UI Components**: Use shadcn/ui components for consistency
+6. **File Organization**: Keep frontend and backend separate; organize by module

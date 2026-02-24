@@ -291,6 +291,21 @@ export const uploadFoto = async (req: Request, res: Response) => {
     }
 };
 
+export const downloadTemplate = async (_req: Request, res: Response) => {
+    try {
+        const templatePath = path.resolve(__dirname, '../../templates/BMI-kosong.xlsx');
+        if (!fs.existsSync(templatePath)) {
+            return res.status(404).json({ message: 'Template tidak ditemukan' });
+        }
+        res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        res.setHeader('Content-Disposition', 'attachment; filename=template-import-karyawan.xlsx');
+        return res.sendFile(templatePath);
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ message: 'Terjadi kesalahan saat mengunduh template' });
+    }
+};
+
 export const getQrCode = async (req: Request, res: Response) => {
     try {
         const { id } = req.params;
@@ -522,6 +537,74 @@ export const importExcel = async (req: Request, res: Response) => {
     } catch (error) {
         console.error(error);
         return res.status(500).json({ message: 'Terjadi kesalahan saat impor data' });
+    }
+};
+
+export const previewImport = async (req: Request, res: Response) => {
+    try {
+        if (!req.file) return res.status(400).json({ message: 'Tidak ada file yang diunggah' });
+        if (!req.file.buffer) return res.status(400).json({ message: 'File buffer tidak ditemukan' });
+
+        const workbook = new ExcelJS.Workbook();
+        await workbook.xlsx.load(req.file.buffer as any);
+        const worksheet = workbook.getWorksheet(1);
+        if (!worksheet) return res.status(400).json({ message: 'Sheet tidak ditemukan' });
+
+        const headers: string[] = [];
+        worksheet.getRow(1).eachCell((cell) => headers.push(String(cell.value)));
+
+        const rows: any[] = [];
+        let total = 0;
+        let valid = 0;
+        let invalid = 0;
+
+        for (let rowNumber = 2; rowNumber <= worksheet.rowCount; rowNumber++) {
+            const row = worksheet.getRow(rowNumber);
+            const namaLengkapCell = row.getCell(headers.indexOf("NAMA LENGKAP") + 1).value;
+            if (!namaLengkapCell) continue; // Skip empty row
+
+            total++;
+            try {
+                const parsed = parseImportRow(row, headers);
+
+                // Light validation
+                if (!parsed.head.nomor_induk_karyawan) {
+                    throw new Error("NIK wajib ada");
+                }
+                if (!parsed.head.nama_lengkap) {
+                    throw new Error("Nama lengkap wajib ada");
+                }
+
+                rows.push({
+                    baris: rowNumber,
+                    nama_lengkap: parsed.head.nama_lengkap,
+                    nomor_induk_karyawan: parsed.head.nomor_induk_karyawan,
+                    divisi: parsed.head.divisi_nama,
+                    department: parsed.head.department_nama,
+                    status_karyawan: parsed.head.status_karyawan_nama,
+                    status: "valid",
+                    pesan: ""
+                });
+                valid++;
+            } catch (e: any) {
+                invalid++;
+                rows.push({
+                    baris: rowNumber,
+                    nama_lengkap: String(row.getCell(headers.indexOf("NAMA LENGKAP") + 1).value || ''),
+                    nomor_induk_karyawan: String(row.getCell(headers.indexOf("NOMOR INDUK KARYAWAN") + 1).value || ''),
+                    divisi: String(row.getCell(headers.indexOf("DIVISI") + 1).value || ''),
+                    department: String(row.getCell(headers.indexOf("DEPARTMENT") + 1).value || ''),
+                    status_karyawan: String(row.getCell(headers.indexOf("STATUS KARYAWAN") + 1).value || ''),
+                    status: "error",
+                    pesan: e.message
+                });
+            }
+        }
+
+        return res.json({ total, valid, invalid, rows });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ message: 'Terjadi kesalahan saat memproses pratinjau' });
     }
 };
 

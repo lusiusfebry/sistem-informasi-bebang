@@ -89,6 +89,7 @@ export interface KaryawanHR {
     point_of_hire: string | null;
     ukuran_seragam_kerja: string | null;
     ukuran_sepatu_kerja: string | null;
+    tanggal_mutasi: string | null;
     siklus_pembayaran_gaji: string | null;
     jenis_hubungan_kerja: { nama: string } | null;
     kategori_pangkat: { nama: string } | null;
