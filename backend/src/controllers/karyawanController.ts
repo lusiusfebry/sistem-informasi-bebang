@@ -293,7 +293,11 @@ export const uploadFoto = async (req: Request, res: Response) => {
 
 export const downloadTemplate = async (_req: Request, res: Response) => {
     try {
-        const templatePath = path.resolve(__dirname, '../../templates/BMI-kosong.xlsx');
+        // Resolve from project root or backend folder
+        let templatePath = path.resolve(process.cwd(), 'backend/templates/BMI-kosong.xlsx');
+        if (!fs.existsSync(templatePath)) {
+            templatePath = path.resolve(process.cwd(), 'templates/BMI-kosong.xlsx');
+        }
         if (!fs.existsSync(templatePath)) {
             return res.status(404).json({ message: 'Template tidak ditemukan' });
         }

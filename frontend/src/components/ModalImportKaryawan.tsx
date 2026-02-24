@@ -295,6 +295,8 @@ export const ModalImportKaryawan = ({ open, onClose, onSuccess }: ModalImportKar
                                                 <th className="px-4 py-3 text-[10px] font-black uppercase tracking-widest text-slate-400">Nama Lengkap</th>
                                                 <th className="px-4 py-3 text-[10px] font-black uppercase tracking-widest text-slate-400">NIK</th>
                                                 <th className="px-4 py-3 text-[10px] font-black uppercase tracking-widest text-slate-400">Divisi</th>
+                                                <th className="px-4 py-3 text-[10px] font-black uppercase tracking-widest text-slate-400">Department</th>
+                                                <th className="px-4 py-3 text-[10px] font-black uppercase tracking-widest text-slate-400">Status Karyawan</th>
                                                 <th className="px-4 py-3 text-[10px] font-black uppercase tracking-widest text-slate-400">Status</th>
                                             </tr>
                                         </thead>
@@ -305,6 +307,8 @@ export const ModalImportKaryawan = ({ open, onClose, onSuccess }: ModalImportKar
                                                     <td className="px-4 py-3 text-xs font-bold text-slate-900">{row.nama_lengkap}</td>
                                                     <td className="px-4 py-3 text-xs font-mono font-medium text-slate-600">{row.nomor_induk_karyawan}</td>
                                                     <td className="px-4 py-3 text-[10px] font-bold text-slate-500 uppercase tracking-tight">{row.divisi || '-'}</td>
+                                                    <td className="px-4 py-3 text-[10px] font-bold text-slate-500 uppercase tracking-tight">{row.department || '-'}</td>
+                                                    <td className="px-4 py-3 text-[10px] font-bold text-slate-500 uppercase tracking-tight">{row.status_karyawan || '-'}</td>
                                                     <td className="px-4 py-3">
                                                         {row.status === 'valid' ? (
                                                             <div className="flex items-center gap-1.5 text-emerald-600 font-black text-[10px] uppercase tracking-widest">

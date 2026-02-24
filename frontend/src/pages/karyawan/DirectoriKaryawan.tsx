@@ -350,11 +350,15 @@ export const DirectoriKaryawan = () => {
                     data.map((it) => (
                         <div
                             key={it.id}
-                            className={`group relative bg-white p-6 rounded-3xl shadow-sm border transition-all duration-300 hover:shadow-xl hover:shadow-slate-200/50 hover:-translate-y-1 ${selectedIds.has(it.id) ? 'border-primary ring-2 ring-primary/20 bg-primary/5' : 'border-slate-100'
+                            onClick={() => navigate(`/hr/karyawan/${it.id}`)}
+                            className={`group relative bg-white p-6 rounded-3xl shadow-sm border transition-all duration-300 cursor-pointer hover:shadow-xl hover:shadow-slate-200/50 hover:-translate-y-1 ${selectedIds.has(it.id) ? 'border-primary ring-2 ring-primary/20 bg-primary/5' : 'border-slate-100'
                                 }`}
                         >
                             {/* Selection Checkbox */}
-                            <div className={`absolute top-4 left-4 z-10 transition-opacity duration-200 ${selectedIds.has(it.id) ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`}>
+                            <div
+                                className={`absolute top-4 left-4 z-10 transition-opacity duration-200 ${selectedIds.has(it.id) ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`}
+                                onClick={(e) => e.stopPropagation()}
+                            >
                                 <Checkbox
                                     checked={selectedIds.has(it.id)}
                                     onCheckedChange={() => toggleSelection(it.id)}
@@ -437,7 +441,8 @@ export const DirectoriKaryawan = () => {
                                     variant="secondary"
                                     size="sm"
                                     className="h-8 rounded-xl px-4 text-[9px] font-black uppercase tracking-widest bg-slate-100 hover:bg-primary hover:text-white transition-all"
-                                    onClick={() => {
+                                    onClick={(e) => {
+                                        e.stopPropagation();
                                         setSelectedIds(new Set([it.id]));
                                         setShowCetakModal(true);
                                     }}

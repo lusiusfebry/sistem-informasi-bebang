@@ -115,7 +115,7 @@ const MasterDataTable = <T extends { id: string | number }>({
                                         <td className="px-6 py-4 text-right"><Skeleton className="h-8 w-20 ml-auto" /></td>
                                     </tr>
                                 ))
-                            ) : data.length === 0 ? (
+                            ) : !data || data.length === 0 ? (
                                 <tr>
                                     <td colSpan={columns.length + 2} className="px-6 py-12 text-center">
                                         <div className="flex flex-col items-center justify-center text-muted-foreground">

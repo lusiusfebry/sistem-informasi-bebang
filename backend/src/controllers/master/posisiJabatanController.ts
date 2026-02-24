@@ -5,24 +5,42 @@ import { generateCode, ensureUniqueCode } from '../../utils/codeGenerator';
 const PREFIX = 'pjb';
 
 export const getAll = async (req: Request, res: Response) => {
-    const { search } = req.query;
+    const { search, page = 1, limit = 10 } = req.query;
+    const p = Number(page);
+    const l = Number(limit);
+
     try {
-        const data = await prisma.posisi_jabatan.findMany({
-            where: search ? {
-                nama: { contains: String(search), mode: 'insensitive' }
-            } : {},
-            include: {
-                department: {
-                    select: {
-                        nama: true,
-                        divisi: { select: { nama: true } }
+        const where = search ? {
+            nama: { contains: String(search), mode: 'insensitive' as const }
+        } : {};
+
+        const [data, total] = await Promise.all([
+            prisma.posisi_jabatan.findMany({
+                where,
+                include: {
+                    department: {
+                        select: {
+                            nama: true,
+                            divisi: { select: { nama: true } }
+                        }
                     }
-                }
-            },
-            orderBy: { nama: 'asc' }
+                },
+                skip: (p - 1) * l,
+                take: l,
+                orderBy: { nama: 'asc' }
+            }),
+            prisma.posisi_jabatan.count({ where })
+        ]);
+
+        return res.json({
+            data,
+            total,
+            page: p,
+            limit: l,
+            totalPages: Math.ceil(total / l)
         });
-        return res.json(data);
-    } catch {
+    } catch (error) {
+        console.error(error);
         return res.status(500).json({ message: 'Terjadi kesalahan saat mengambil data' });
     }
 };
