@@ -467,21 +467,21 @@ export const DirectoriKaryawan = () => {
                                 <div className="w-full space-y-2 text-left">
                                     <div className="flex items-center gap-2">
                                         <Briefcase className="w-3 h-3 text-slate-400" />
-                                        <p className="text-[10px] font-bold text-slate-600 line-clamp-1">{it.posisi_jabatan.nama}</p>
+                                        <p className="text-[10px] font-bold text-slate-600 line-clamp-1">{it.posisi_jabatan?.nama || 'Tanpa Jabatan'}</p>
                                     </div>
                                     <div className="flex items-center gap-2">
                                         <MapPin className="w-3 h-3 text-slate-400" />
-                                        <p className="text-[10px] font-bold text-slate-500 line-clamp-1">{it.divisi.nama}</p>
+                                        <p className="text-[10px] font-bold text-slate-500 line-clamp-1">{it.divisi?.nama || 'Tanpa Divisi'}</p>
                                     </div>
                                 </div>
 
                                 <div className="w-full flex flex-wrap gap-1 mt-auto">
                                     <Badge
                                         variant="outline"
-                                        style={{ borderColor: it.status_karyawan.warna, color: it.status_karyawan.warna, backgroundColor: `${it.status_karyawan.warna}10` }}
+                                        style={{ borderColor: it.status_karyawan?.warna, color: it.status_karyawan?.warna, backgroundColor: `${it.status_karyawan?.warna}10` }}
                                         className="text-[9px] font-black uppercase tracking-widest px-2 py-0 border-2"
                                     >
-                                        {it.status_karyawan.nama}
+                                        {it.status_karyawan?.nama || 'Tanpa Status'}
                                     </Badge>
                                     {it.tags.slice(0, 1).map((t: { tag: { nama: string; warna: string } }, idx: number) => (
                                         <Badge
@@ -509,7 +509,7 @@ export const DirectoriKaryawan = () => {
                                 >
                                     Lihat Profil
                                 </Button>
-                                {it.status_karyawan.nama === 'Aktif' && (!it.status_proses || it.status_proses === 'Aktif') && (
+                                {it.status_karyawan?.nama === 'Aktif' && (!it.status_proses || it.status_proses === 'Aktif') && (
                                     <Button
                                         variant="secondary"
                                         size="sm"

@@ -45,7 +45,7 @@ interface Stats {
         nama_lengkap: string;
         nomor_induk_karyawan: string;
         created_at: string;
-        posisi_jabatan: { nama: string };
+        posisi_jabatan: { nama: string } | null;
     }>;
     upcomingBirthdays: Array<{
         id: number;
@@ -383,7 +383,7 @@ export default function HRDashboard() {
                                                     </div>
                                                 </td>
                                                 <td className="px-6 py-4">
-                                                    <span className="text-xs font-bold text-muted-foreground">{karyawan.posisi_jabatan.nama}</span>
+                                                    <span className="text-xs font-bold text-muted-foreground">{karyawan.posisi_jabatan?.nama || 'Tanpa Jabatan'}</span>
                                                 </td>
                                                 <td className="px-6 py-4">
                                                     <div className="flex items-center gap-2 text-xs font-semibold text-muted-foreground/60">

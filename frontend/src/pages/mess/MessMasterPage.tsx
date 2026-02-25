@@ -77,6 +77,7 @@ export default function MessMasterPage() {
     const [selectedRoomForAssign, setSelectedRoomForAssign] = useState<Room | null>(null);
     const [karyawanSearch, setKaryawanSearch] = useState('');
     const [lokasiKerja, setLokasiKerja] = useState<{ id: number; nama: string }[]>([]);
+    const [availableFacilities, setAvailableFacilities] = useState<{ id: number; nama: string }[]>([]);
 
     const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
     const [deleteTarget, setDeleteTarget] = useState<{ type: 'mess' | 'room' | 'unassign'; id: number; name: string } | null>(null);
@@ -96,7 +97,8 @@ export default function MessMasterPage() {
         nomor_kamar: '',
         kapasitas: 1,
         tipe: 'Single',
-        status: 'Tersedia'
+        status: 'Tersedia',
+        facility_ids: [] as number[]
     });
 
     const fetchMess = useCallback(async () => {
@@ -114,6 +116,15 @@ export default function MessMasterPage() {
             setLokasiKerja(response.data.data || []);
         } catch {
             toast.error('Gagal mengambil data lokasi kerja');
+        }
+    }, []);
+
+    const fetchAvailableFacilities = useCallback(async () => {
+        try {
+            const response = await api.get('/mess/facilities');
+            setAvailableFacilities(response.data);
+        } catch {
+            toast.error('Gagal mengambil data fasilitas');
         }
     }, []);
 

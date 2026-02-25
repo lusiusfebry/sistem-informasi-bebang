@@ -30,6 +30,9 @@ import MessDashboard from './pages/mess/MessDashboard'
 import MessMasterPage from './pages/mess/MessMasterPage'
 import MessOperationalPage from './pages/mess/MessOperationalPage'
 import MessMaintenancePage from './pages/mess/MessMaintenancePage'
+import MessFacilityPage from './pages/mess/MessFacilityPage'
+import MessPetugasPage from './pages/mess/MessPetugasPage'
+import MessCleaningPage from './pages/mess/MessCleaningPage'
 
 function App() {
   return (
@@ -68,6 +71,9 @@ function App() {
           <Route path="gedung" element={<MessMasterPage />} />
           <Route path="operasional" element={<MessOperationalPage />} />
           <Route path="perawatan" element={<MessMaintenancePage />} />
+          <Route path="cleaning" element={<MessCleaningPage />} />
+          <Route path="master/fasilitas" element={<MessFacilityPage />} />
+          <Route path="master/petugas" element={<MessPetugasPage />} />
         </Route>
       </Route>
 

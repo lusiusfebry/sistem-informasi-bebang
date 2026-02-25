@@ -8,20 +8,20 @@ export interface KaryawanListItem {
     foto_karyawan: string | null;
     posisi_jabatan: {
         nama: string;
-    };
+    } | null;
     divisi: {
         nama: string;
-    };
+    } | null;
     department: {
         nama: string;
-    };
+    } | null;
     status_karyawan: {
         nama: string;
         warna: string;
-    };
+    } | null;
     lokasi_kerja: {
         nama: string;
-    };
+    } | null;
     status_proses: string | null;
     tags: Array<{
         tag: {
