@@ -38,26 +38,67 @@ export const login = async (req: Request, res: Response) => {
             return res.status(401).json({ message: 'NIK atau password salah' });
         }
 
-        // 5. Generate Token
+        // 5. Fetch Roles and Permissions
+        const userWithDetails = await prisma.users.findUnique({
+            where: { id: user.id },
+            include: {
+                roles: {
+                    include: {
+                        role: {
+                            include: {
+                                permissions: {
+                                    include: {
+                                        permission: true
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        const roles = userWithDetails?.roles.map(ur => ur.role.nama) || [];
+        const permissions = userWithDetails?.roles.flatMap(ur =>
+            ur.role.permissions.map(rp => ({
+                module: rp.permission.module,
+                feature: rp.permission.feature,
+                action: rp.permission.action,
+                field: rp.permission.field
+            }))
+        ) || [];
+
+        // 6. Generate Token
         const token = jwt.sign(
             {
                 id: user.id,
                 nik: user.nik,
                 nama: user.nama,
-                role: user.role,
+                roles,
+                permissions,
             },
             JWT_SECRET,
             { expiresIn: '8h' }
         );
 
-        // 6. Return Response
+        // 7. Audit Log
+        await prisma.security_audit_log.create({
+            data: {
+                user_id: user.id,
+                action: 'LOGIN',
+                details: { ip: req.ip }
+            }
+        });
+
+        // 8. Return Response
         return res.status(200).json({
             token,
             user: {
                 id: user.id,
                 nik: user.nik,
                 nama: user.nama,
-                role: user.role,
+                roles,
+                permissions,
             },
         });
     } catch (error) {

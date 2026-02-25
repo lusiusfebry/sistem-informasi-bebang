@@ -22,13 +22,6 @@ import {
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
-} from '@/components/ui/select';
-import {
     DropdownMenu,
     DropdownMenuContent,
     DropdownMenuItem,
@@ -43,9 +36,14 @@ interface User {
     id: number;
     nik: string;
     nama: string;
-    role: string;
     karyawan_id: number | null;
     created_at: string;
+    roles: {
+        role: {
+            id: number;
+            nama: string;
+        }
+    }[];
     karyawan?: {
         nama_lengkap: string;
         foto_karyawan: string | null;
@@ -62,6 +60,7 @@ export default function UserManagementPage() {
     const [showModal, setShowModal] = useState(false);
     const [editingUser, setEditingUser] = useState<User | null>(null);
     const [formLoading, setFormLoading] = useState(false);
+    const [availableRoles, setAvailableRoles] = useState<{ id: number, nama: string }[]>([]);
 
     // Delete Modal state
     const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
@@ -72,23 +71,27 @@ export default function UserManagementPage() {
         nik: '',
         nama: '',
         password: '',
-        role: 'user'
+        roleIds: [] as number[]
     });
 
     useEffect(() => {
-        const fetchUsers = async () => {
+        const fetchData = async () => {
             setLoading(true);
             try {
-                const response = await api.get(`/users?search=${search}`);
-                setUsers(response.data);
+                const [usersRes, rolesRes] = await Promise.all([
+                    api.get(`/users?search=${search}`),
+                    api.get('/access/roles')
+                ]);
+                setUsers(usersRes.data);
+                setAvailableRoles(rolesRes.data);
             } catch (error) {
-                console.error('Fetch users error', error);
-                toast.error('Gagal mengambil data pengguna');
+                console.error('Fetch data error', error);
+                toast.error('Gagal mengambil data');
             } finally {
                 setLoading(false);
             }
         };
-        fetchUsers();
+        fetchData();
     }, [search]);
 
     const handleSave = async (e: React.FormEvent) => {
@@ -153,7 +156,7 @@ export default function UserManagementPage() {
 
     const openCreateModal = () => {
         setEditingUser(null);
-        setFormData({ nik: '', nama: '', password: '', role: 'user' });
+        setFormData({ nik: '', nama: '', password: '', roleIds: [] });
         setShowModal(true);
     };
 
@@ -163,9 +166,18 @@ export default function UserManagementPage() {
             nik: user.nik,
             nama: user.nama,
             password: '',
-            role: user.role
+            roleIds: user.roles.map(ur => ur.role.id)
         });
         setShowModal(true);
+    };
+
+    const toggleRole = (roleId: number) => {
+        setFormData(prev => ({
+            ...prev,
+            roleIds: prev.roleIds.includes(roleId)
+                ? prev.roleIds.filter(id => id !== roleId)
+                : [...prev.roleIds, roleId]
+        }));
     };
 
     return (
@@ -248,11 +260,6 @@ export default function UserManagementPage() {
                                                         <UserCircle className="w-6 h-6" />
                                                     </div>
                                                 )}
-                                                {user.role === 'admin' && (
-                                                    <div className="absolute -top-1 -right-1 bg-amber-500 text-white p-1 rounded-full shadow-lg">
-                                                        <ShieldCheck className="w-3 h-3" />
-                                                    </div>
-                                                )}
                                             </div>
                                             <div>
                                                 <p className="font-black text-slate-900 text-sm uppercase tracking-tight">{user.nama}</p>
@@ -287,16 +294,22 @@ export default function UserManagementPage() {
                                         )}
                                     </td>
                                     <td className="p-6">
-                                        <div className="flex items-center gap-2">
-                                            {user.role === 'admin' ? (
-                                                <div className="flex items-center gap-2 text-amber-600 font-black text-[10px] uppercase tracking-[0.15em]">
-                                                    <Shield className="w-3 h-3" />
-                                                    Administrator
-                                                </div>
+                                        <div className="flex flex-wrap gap-1">
+                                            {user.roles.length > 0 ? (
+                                                user.roles.map((ur) => (
+                                                    <Badge
+                                                        key={ur.role.id}
+                                                        variant="outline"
+                                                        className={`text-[9px] font-black uppercase tracking-wider py-0 px-2 ${ur.role.nama.toLowerCase().includes('admin')
+                                                            ? 'border-amber-200 text-amber-600 bg-amber-50'
+                                                            : 'border-slate-200 text-slate-500 bg-slate-50'
+                                                            }`}
+                                                    >
+                                                        {ur.role.nama}
+                                                    </Badge>
+                                                ))
                                             ) : (
-                                                <div className="text-slate-500 font-black text-[10px] uppercase tracking-[0.15em]">
-                                                    User Biasa
-                                                </div>
+                                                <span className="text-[10px] text-slate-300 font-bold uppercase italic tracking-widest">No Role</span>
                                             )}
                                         </div>
                                     </td>
@@ -338,116 +351,131 @@ export default function UserManagementPage() {
                         </tbody>
                     </table>
                 </div>
-            </div>
 
-            {/* Modal Create/Edit */}
-            <Dialog open={showModal} onOpenChange={setShowModal}>
-                <DialogContent className="sm:max-w-[450px] p-0 rounded-3xl overflow-hidden border-none shadow-2xl">
-                    <DialogHeader className="p-8 bg-slate-900 text-white relative">
-                        <DialogTitle className="text-2xl font-black uppercase tracking-tight flex items-center gap-3 italic">
-                            {editingUser ? <Edit2 className="w-6 h-6 text-primary" /> : <Plus className="w-6 h-6 text-primary" />}
-                            {editingUser ? 'Perbarui User' : 'User Sistem Baru'}
-                        </DialogTitle>
-                        <Button
-                            variant="ghost"
-                            size="icon"
-                            onClick={() => setShowModal(false)}
-                            className="absolute right-6 top-6 text-slate-400 hover:text-white rounded-full"
-                        >
-                            <X className="w-5 h-5" />
-                        </Button>
-                    </DialogHeader>
-
-                    <form onSubmit={handleSave} className="p-8 space-y-6 bg-white">
-                        <div className="space-y-4">
-                            <div className="space-y-2">
-                                <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Nomor Induk Karyawan (NIK)</label>
-                                <Input
-                                    value={formData.nik}
-                                    onChange={(e) => setFormData({ ...formData, nik: e.target.value })}
-                                    placeholder="xx-xxxxx"
-                                    required
-                                    disabled={!!editingUser}
-                                    className="h-12 rounded-2xl bg-slate-50 border-slate-100 focus:border-primary focus:ring-primary/20 font-['JetBrains_Mono'] font-bold text-primary"
-                                />
-                            </div>
-
-                            <div className="space-y-2">
-                                <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Nama Tampilan</label>
-                                <Input
-                                    value={formData.nama}
-                                    onChange={(e) => setFormData({ ...formData, nama: e.target.value })}
-                                    placeholder="Nama Pengguna"
-                                    required
-                                    className="h-12 rounded-2xl bg-slate-50 border-slate-100 focus:border-primary focus:ring-primary/20 font-black uppercase text-xs"
-                                />
-                            </div>
-
-                            <div className="space-y-2">
-                                <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">
-                                    {editingUser ? 'Ganti Password (Dapat dikosongkan)' : 'Password Awal'}
-                                </label>
-                                <Input
-                                    type="password"
-                                    value={formData.password}
-                                    onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-                                    placeholder="••••••••"
-                                    required={!editingUser}
-                                    className="h-12 rounded-2xl bg-slate-50 border-slate-100 focus:border-primary focus:ring-primary/20"
-                                />
-                            </div>
-
-                            <div className="space-y-2">
-                                <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Peran dalam Sistem</label>
-                                <Select
-                                    value={formData.role}
-                                    onValueChange={(val) => setFormData({ ...formData, role: val })}
-                                >
-                                    <SelectTrigger className="h-12 rounded-2xl bg-slate-50 border-slate-100 focus:ring-primary/20 font-['Inter'] font-bold">
-                                        <SelectValue placeholder="Pilih Role" />
-                                    </SelectTrigger>
-                                    <SelectContent className="rounded-2xl border-slate-100 p-2">
-                                        <SelectItem value="user" className="rounded-xl p-3 font-bold text-xs uppercase tracking-widest">User Biasa</SelectItem>
-                                        <SelectItem value="admin" className="rounded-xl p-3 font-bold text-xs uppercase tracking-widest text-amber-600">Administrator</SelectItem>
-                                    </SelectContent>
-                                </Select>
-                            </div>
-                        </div>
-
-                        <div className="flex gap-3 pt-4">
+                {/* Modal Create/Edit */}
+                <Dialog open={showModal} onOpenChange={setShowModal}>
+                    <DialogContent className="sm:max-w-[450px] p-0 rounded-3xl overflow-hidden border-none shadow-2xl">
+                        <DialogHeader className="p-8 bg-slate-900 text-white relative">
+                            <DialogTitle className="text-2xl font-black uppercase tracking-tight flex items-center gap-3 italic">
+                                {editingUser ? <Edit2 className="w-6 h-6 text-primary" /> : <Plus className="w-6 h-6 text-primary" />}
+                                {editingUser ? 'Perbarui User' : 'User Sistem Baru'}
+                            </DialogTitle>
                             <Button
-                                type="button"
-                                variant="outline"
-                                className="flex-1 h-12 rounded-2xl border-slate-200 font-black uppercase tracking-widest text-xs"
+                                variant="ghost"
+                                size="icon"
                                 onClick={() => setShowModal(false)}
+                                className="absolute right-6 top-6 text-slate-400 hover:text-white rounded-full"
                             >
-                                Batal
+                                <X className="w-5 h-5" />
                             </Button>
-                            <Button
-                                type="submit"
-                                disabled={formLoading}
-                                className="flex-1 h-12 rounded-2xl bg-primary text-primary-foreground font-black uppercase tracking-widest text-xs shadow-lg shadow-primary/20 hover:shadow-primary/30 transition-all"
-                            >
-                                {formLoading ? (
-                                    <Loader2 className="w-5 h-5 animate-spin mx-auto" />
-                                ) : (
-                                    editingUser ? 'Simpan Perubahan' : 'Buat Akun'
-                                )}
-                            </Button>
-                        </div>
-                    </form>
-                </DialogContent>
-            </Dialog>
+                        </DialogHeader>
 
-            <ModernDeleteDialog
-                open={isDeleteDialogOpen}
-                onOpenChange={setIsDeleteDialogOpen}
-                onConfirm={executeDelete}
-                isLoading={isDeleting}
-                title="Hapus Akses Pengguna"
-                description={`Apakah Anda yakin ingin menghapus user "${userToDelete?.name}"? Tindakan ini akan mencabut akses personil tersebut dari sistem.`}
-                itemName={userToDelete?.name}
-            />
+                        <form onSubmit={handleSave} className="p-8 space-y-6 bg-white">
+                            <div className="space-y-4">
+                                <div className="space-y-2">
+                                    <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Nomor Induk Karyawan (NIK)</label>
+                                    <Input
+                                        value={formData.nik}
+                                        onChange={(e) => setFormData({ ...formData, nik: e.target.value })}
+                                        placeholder="xx-xxxxx"
+                                        required
+                                        disabled={!!editingUser}
+                                        className="h-12 rounded-2xl bg-slate-50 border-slate-100 focus:border-primary focus:ring-primary/20 font-['JetBrains_Mono'] font-bold text-primary"
+                                    />
+                                </div>
+
+                                <div className="space-y-2">
+                                    <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Nama Tampilan</label>
+                                    <Input
+                                        value={formData.nama}
+                                        onChange={(e) => setFormData({ ...formData, nama: e.target.value })}
+                                        placeholder="Nama Pengguna"
+                                        required
+                                        className="h-12 rounded-2xl bg-slate-50 border-slate-100 focus:border-primary focus:ring-primary/20 font-black uppercase text-xs"
+                                    />
+                                </div>
+
+                                <div className="space-y-2">
+                                    <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">
+                                        {editingUser ? 'Ganti Password (Dapat dikosongkan)' : 'Password Awal'}
+                                    </label>
+                                    <Input
+                                        type="password"
+                                        value={formData.password}
+                                        onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+                                        placeholder="••••••••"
+                                        required={!editingUser}
+                                        className="h-12 rounded-2xl bg-slate-50 border-slate-100 focus:border-primary focus:ring-primary/20"
+                                    />
+                                </div>
+
+                                <div className="space-y-3">
+                                    <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1 flex items-center gap-2">
+                                        <Shield className="w-3 h-3" />
+                                        Peran Akses (Roles)
+                                    </label>
+                                    <div className="grid grid-cols-2 gap-2 max-h-[150px] overflow-y-auto p-1">
+                                        {availableRoles.map(role => (
+                                            <button
+                                                key={role.id}
+                                                type="button"
+                                                onClick={() => toggleRole(role.id)}
+                                                className={`flex items-center gap-2 p-3 rounded-xl border transition-all text-left ${formData.roleIds.includes(role.id)
+                                                    ? 'bg-primary/5 border-primary text-primary shadow-sm'
+                                                    : 'bg-slate-50 border-slate-100 text-slate-400 hover:border-slate-200'
+                                                    }`}
+                                            >
+                                                <div className={`w-4 h-4 rounded-md border flex items-center justify-center transition-colors ${formData.roleIds.includes(role.id) ? 'bg-primary border-primary' : 'bg-white border-slate-200'
+                                                    }`}>
+                                                    {formData.roleIds.includes(role.id) && <ShieldCheck className="w-3 h-3 text-white" />}
+                                                </div>
+                                                <span className="font-black text-[10px] uppercase tracking-widest truncate">
+                                                    {role.nama}
+                                                </span>
+                                            </button>
+                                        ))}
+                                    </div>
+                                    {formData.roleIds.length === 0 && (
+                                        <p className="text-[9px] text-amber-500 font-bold uppercase italic animate-pulse">Pilih minimal satu role</p>
+                                    )}
+                                </div>
+                            </div>
+
+                            <div className="flex gap-3 pt-4">
+                                <Button
+                                    type="button"
+                                    variant="outline"
+                                    className="flex-1 h-12 rounded-2xl border-slate-200 font-black uppercase tracking-widest text-xs"
+                                    onClick={() => setShowModal(false)}
+                                >
+                                    Batal
+                                </Button>
+                                <Button
+                                    type="submit"
+                                    disabled={formLoading}
+                                    className="flex-1 h-12 rounded-2xl bg-primary text-primary-foreground font-black uppercase tracking-widest text-xs shadow-lg shadow-primary/20 hover:shadow-primary/30 transition-all"
+                                >
+                                    {formLoading ? (
+                                        <Loader2 className="w-5 h-5 animate-spin mx-auto" />
+                                    ) : (
+                                        editingUser ? 'Simpan Perubahan' : 'Buat Akun'
+                                    )}
+                                </Button>
+                            </div>
+                        </form>
+                    </DialogContent>
+                </Dialog>
+
+                <ModernDeleteDialog
+                    open={isDeleteDialogOpen}
+                    onOpenChange={setIsDeleteDialogOpen}
+                    onConfirm={executeDelete}
+                    isLoading={isDeleting}
+                    title="Hapus Akses Pengguna"
+                    description={`Apakah Anda yakin ingin menghapus user "${userToDelete?.name}"? Tindakan ini akan mencabut akses personil tersebut dari sistem.`}
+                    itemName={userToDelete?.name}
+                />
+            </div>
         </div>
     );
 }

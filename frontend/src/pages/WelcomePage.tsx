@@ -15,6 +15,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { toast } from 'sonner';
+import { PermissionGuard } from '@/components/PermissionGuard';
 
 interface ModuleCardProps {
     title: string;
@@ -57,7 +58,7 @@ function ModuleCard({ title, description, icon, path, disabled, color }: ModuleC
 
 export default function WelcomePage() {
     const navigate = useNavigate();
-    const [user] = useState<{ nama: string; nik: string; role: string } | null>(() => {
+    const [user] = useState<{ nama: string; nik: string; roles: string[] } | null>(() => {
         const userData = localStorage.getItem('user') || sessionStorage.getItem('user');
         return userData ? JSON.parse(userData) : null;
     });
@@ -95,7 +96,9 @@ export default function WelcomePage() {
                         <div className="hidden sm:flex items-center gap-3 px-4 py-1.5 rounded-full bg-muted/50 border border-muted-foreground/10">
                             <div className="flex flex-col items-end">
                                 <span className="text-xs font-bold leading-none">{user.nama}</span>
-                                <span className="text-[10px] text-muted-foreground font-medium uppercase tracking-tighter">{user.role} • {user.nik}</span>
+                                <span className="text-[10px] text-muted-foreground font-medium uppercase tracking-tighter">
+                                    {user.roles?.join(', ') || 'No Role'} • {user.nik}
+                                </span>
                             </div>
                             <Avatar className="h-8 w-8 border-2 border-primary/20">
                                 <AvatarImage src="" />
@@ -154,13 +157,15 @@ export default function WelcomePage() {
                         disabled
                         color="bg-purple-600"
                     />
-                    <ModuleCard
-                        title="Access Control"
-                        description="Manajemen hak akses pengguna dan keamanan sistem informasi."
-                        icon={<ShieldCheck className="w-6 h-6 text-rose-600" />}
-                        path="/access"
-                        color="bg-rose-600"
-                    />
+                    <PermissionGuard module="Security" action="Read">
+                        <ModuleCard
+                            title="Access Control"
+                            description="Manajemen hak akses pengguna dan keamanan sistem informasi."
+                            icon={<ShieldCheck className="w-6 h-6 text-rose-600" />}
+                            path="/access"
+                            color="bg-rose-600"
+                        />
+                    </PermissionGuard>
                     <ModuleCard
                         title="Dashboard Analysis"
                         description="Visualisasi data dan pelaporan performa operasional site."

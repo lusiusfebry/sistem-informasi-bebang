@@ -320,10 +320,74 @@ model users {
   nama        String
   nik         String    @unique
   password    String
-  role        String    @default("user")
   created_at  DateTime  @default(now())
   updated_at  DateTime  @updatedAt
   karyawan    karyawan? @relation(fields: [karyawan_id], references: [id])
+  roles       user_roles[]
+}
+
+model roles {
+  id          Int                @id @default(autoincrement())
+  nama        String             @unique
+  deskripsi   String?
+  status      String             @default("Aktif")
+  created_at  DateTime           @default(now())
+  updated_at  DateTime           @updatedAt
+  users       user_roles[]
+  permissions role_permissions[]
+}
+
+model permissions {
+  id                Int                @id @default(autoincrement())
+  group_id          Int?
+  module            String             // e.g., "HR", "Inventory", "Mess", "Building"
+  feature           String?            // e.g., "Karyawan", "Room"
+  action            String             // e.g., "Create", "Read", "Update", "Delete", "Export", "Import", "Approve"
+  field             String?            // Granular field control
+  deskripsi         String?
+  status            String             @default("Aktif")
+  created_at        DateTime           @default(now())
+  updated_at        DateTime           @updatedAt
+  group             permission_group?  @relation(fields: [group_id], references: [id])
+  roles             role_permissions[]
+  
+  @@unique([module, feature, action, field])
+}
+
+model permission_group {
+  id          Int           @id @default(autoincrement())
+  nama        String        @unique
+  deskripsi   String?
+  permissions permissions[]
+}
+
+model role_permissions {
+  role_id       Int
+  permission_id Int
+  role          roles       @relation(fields: [role_id], references: [id], onDelete: Cascade)
+  permission    permissions @relation(fields: [permission_id], references: [id], onDelete: Cascade)
+
+  @@id([role_id, permission_id])
+}
+
+model user_roles {
+  user_id Int
+  role_id Int
+  user    users @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  role    roles @relation(fields: [role_id], references: [id], onDelete: Cascade)
+
+  @@id([user_id, role_id])
+}
+
+model security_audit_log {
+  id          Int      @id @default(autoincrement())
+  user_id     Int?
+  action      String   // e.g., "LOGIN", "ROLE_CHANGE", "ACCESS_DENIED"
+  resource    String?  // e.g., "Role:Admin"
+  details     Json?    // Store change details or audit info
+  ip_address  String?
+  user_agent  String?
+  created_at  DateTime @default(now())
 }
 
 model mess {

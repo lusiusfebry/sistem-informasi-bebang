@@ -28,6 +28,13 @@ export const getAll = async (req: Request, res: Response) => {
                             select: { nama: true }
                         }
                     }
+                },
+                roles: {
+                    include: {
+                        role: {
+                            select: { id: true, nama: true }
+                        }
+                    }
                 }
             },
             orderBy: { created_at: 'desc' }
@@ -42,9 +49,8 @@ export const getAll = async (req: Request, res: Response) => {
 
 export const create = async (req: Request, res: Response) => {
     try {
-        const { nik, password, nama, role } = req.body;
+        const { nik, password, nama, roleIds } = req.body;
 
-        // Cek apakah NIK sudah digunakan
         const existingUser = await prisma.users.findUnique({
             where: { nik }
         });
@@ -53,7 +59,6 @@ export const create = async (req: Request, res: Response) => {
             return res.status(400).json({ message: 'NIK sudah digunakan oleh akun lain' });
         }
 
-        // Cari karyawan_id berdasarkan NIK (sinkronisasi otomatis)
         const karyawan = await prisma.karyawan.findUnique({
             where: { nomor_induk_karyawan: nik }
         });
@@ -65,8 +70,23 @@ export const create = async (req: Request, res: Response) => {
                 nik,
                 nama: nama || (karyawan ? karyawan.nama_lengkap : 'User'),
                 password: hashedPassword,
-                role: role || 'user',
-                karyawan_id: karyawan ? karyawan.id : null
+                karyawan_id: karyawan ? karyawan.id : null,
+                roles: {
+                    create: (roleIds || []).map((id: number) => ({
+                        role: { connect: { id } }
+                    }))
+                }
+            },
+            include: { roles: true }
+        });
+
+        // Audit Log
+        await prisma.security_audit_log.create({
+            data: {
+                user_id: (req as any).user?.id,
+                action: 'USER_CREATE',
+                resource: `User:${newUser.id}`,
+                details: { nik: newUser.nik, roles: roleIds }
             }
         });
 
@@ -80,11 +100,10 @@ export const create = async (req: Request, res: Response) => {
 export const update = async (req: Request, res: Response) => {
     try {
         const { id } = req.params;
-        const { nama, role, password } = req.body;
+        const { nama, roleIds, password } = req.body;
 
         const updateData: any = {
             nama,
-            role,
             updated_at: new Date()
         };
 
@@ -92,9 +111,30 @@ export const update = async (req: Request, res: Response) => {
             updateData.password = await bcrypt.hash(password, 10);
         }
 
+        // Update roles if provided
+        if (roleIds) {
+            updateData.roles = {
+                deleteMany: {}, // Remove all current roles
+                create: roleIds.map((rid: number) => ({
+                    role: { connect: { id: rid } }
+                }))
+            };
+        }
+
         const updatedUser = await prisma.users.update({
             where: { id: Number(id) },
-            data: updateData
+            data: updateData,
+            include: { roles: true }
+        });
+
+        // Audit Log
+        await prisma.security_audit_log.create({
+            data: {
+                user_id: (req as any).user?.id,
+                action: 'USER_UPDATE',
+                resource: `User:${id}`,
+                details: { roles_updated: !!roleIds }
+            }
         });
 
         res.json(updatedUser);
@@ -108,11 +148,23 @@ export const remove = async (req: Request, res: Response) => {
     try {
         const { id } = req.params;
 
-        // Jangan biarkan admin menghapus dirinya sendiri
-        // (Bisa ditambahkan pengecekan req.user.id jika perlu)
+        // Prevent self-deletion
+        if (Number(id) === (req as any).user?.id) {
+            return res.status(400).json({ message: 'Anda tidak dapat menghapus akun Anda sendiri' });
+        }
 
-        await prisma.users.delete({
+        const deletedUser = await prisma.users.delete({
             where: { id: Number(id) }
+        });
+
+        // Audit Log
+        await prisma.security_audit_log.create({
+            data: {
+                user_id: (req as any).user?.id,
+                action: 'USER_DELETE',
+                resource: `User:${id}`,
+                details: { nik: deletedUser.nik }
+            }
         });
 
         res.json({ message: 'User berhasil dihapus' });

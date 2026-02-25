@@ -34,7 +34,7 @@ export default function BaseLayout({ moduleTitle, navItems, pathMap, modulePath 
     const location = useLocation();
     const navigate = useNavigate();
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-    const [user] = useState<{ nama: string; role: string; nik: string } | null>(() => {
+    const [user] = useState<{ nama: string; roles: string[]; nik: string } | null>(() => {
         const userData = localStorage.getItem('user') || sessionStorage.getItem('user');
         return userData ? JSON.parse(userData) : null;
     });
@@ -88,7 +88,7 @@ export default function BaseLayout({ moduleTitle, navItems, pathMap, modulePath 
                         const Icon = item.icon;
 
                         // Role-based filtering
-                        if (item.adminOnly && user?.role !== 'admin') {
+                        if (item.adminOnly && !user?.roles?.some(r => r.toLowerCase().includes('admin'))) {
                             return null;
                         }
 
@@ -134,7 +134,9 @@ export default function BaseLayout({ moduleTitle, navItems, pathMap, modulePath 
                             </Avatar>
                             <div className="flex-1 min-w-0">
                                 <p className="text-sm font-bold truncate leading-none mb-1">{user.nama}</p>
-                                <p className="text-[10px] text-muted-foreground font-bold uppercase truncate">{user.role} • {user.nik}</p>
+                                <p className="text-[10px] text-muted-foreground font-bold uppercase truncate">
+                                    {user.roles?.join(', ') || 'No Role'} • {user.nik}
+                                </p>
                             </div>
                             <Button
                                 variant="ghost"

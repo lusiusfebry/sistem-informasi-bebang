@@ -24,6 +24,8 @@ import StatusKaryawanPage from './pages/hr/master/StatusKaryawanPage'
 import LokasiKerjaPage from './pages/hr/master/LokasiKerjaPage'
 import TagPage from './pages/hr/master/TagPage'
 import UserManagementPage from './pages/hr/UserManagementPage'
+import RoleManagementPage from './pages/access/RoleManagementPage'
+import PermissionMatrixPage from './pages/access/PermissionMatrixPage'
 
 // Mess Module Pages
 import MessDashboard from './pages/mess/MessDashboard'
@@ -86,6 +88,8 @@ function App() {
         <Route element={<AccessLayout />}>
           <Route index element={<Navigate to="/access/users" replace />} />
           <Route path="users" element={<UserManagementPage />} />
+          <Route path="roles" element={<RoleManagementPage />} />
+          <Route path="permissions" element={<PermissionMatrixPage />} />
         </Route>
       </Route>
     </Routes>
