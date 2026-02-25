@@ -15,6 +15,7 @@ import {
     DialogHeader,
     DialogTitle,
     DialogFooter,
+    DialogDescription,
 } from "@/components/ui/dialog";
 import { toast } from 'sonner';
 import api from '@/lib/api';
@@ -181,6 +182,9 @@ export default function MessFacilityPage() {
                 <DialogContent>
                     <DialogHeader>
                         <DialogTitle>{editingFacility ? 'Edit Fasilitas' : 'Tambah Fasilitas Baru'}</DialogTitle>
+                        <DialogDescription>
+                            Isi detail fasilitas yang ingin Anda {editingFacility ? 'perbarui' : 'tambahkan'} ke daftar fasilitas mess.
+                        </DialogDescription>
                     </DialogHeader>
                     <div className="space-y-4 py-4">
                         <div className="space-y-1">

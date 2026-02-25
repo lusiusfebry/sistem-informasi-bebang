@@ -16,6 +16,7 @@ import {
     DialogHeader,
     DialogTitle,
     DialogFooter,
+    DialogDescription,
 } from "@/components/ui/dialog";
 import { toast } from 'sonner';
 import api from '@/lib/api';
@@ -225,6 +226,9 @@ export default function MessPetugasPage() {
                 <DialogContent className="max-w-md">
                     <DialogHeader>
                         <DialogTitle>{editingPetugas ? 'Edit Penugasan' : 'Tambah Petugas Baru'}</DialogTitle>
+                        <DialogDescription>
+                            Tugaskan karyawan untuk mengelola operasional di gedung mess tertentu.
+                        </DialogDescription>
                     </DialogHeader>
                     <div className="space-y-4 py-4">
                         <div className="space-y-1">

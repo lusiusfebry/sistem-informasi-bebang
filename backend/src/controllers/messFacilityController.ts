@@ -3,7 +3,16 @@ import prisma from '../lib/prisma';
 
 export const getAllFacilities = async (req: Request, res: Response) => {
     try {
+        const { search } = req.query;
+        const where = search ? {
+            OR: [
+                { nama: { contains: String(search), mode: 'insensitive' as const } },
+                { keterangan: { contains: String(search), mode: 'insensitive' as const } }
+            ]
+        } : {};
+
         const data = await prisma.mess_facility.findMany({
+            where,
             orderBy: { nama: 'asc' }
         });
         res.json(data);

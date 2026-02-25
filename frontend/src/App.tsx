@@ -33,6 +33,8 @@ import MessMaintenancePage from './pages/mess/MessMaintenancePage'
 import MessFacilityPage from './pages/mess/MessFacilityPage'
 import MessPetugasPage from './pages/mess/MessPetugasPage'
 import MessCleaningPage from './pages/mess/MessCleaningPage'
+import MessResidentPage from './pages/mess/MessResidentPage'
+import MessReportPage from './pages/mess/MessReportPage'
 
 function App() {
   return (
@@ -69,9 +71,11 @@ function App() {
         <Route element={<MessLayout />}>
           <Route index element={<MessDashboard />} />
           <Route path="gedung" element={<MessMasterPage />} />
+          <Route path="penghuni" element={<MessResidentPage />} />
           <Route path="operasional" element={<MessOperationalPage />} />
           <Route path="perawatan" element={<MessMaintenancePage />} />
           <Route path="cleaning" element={<MessCleaningPage />} />
+          <Route path="laporan" element={<MessReportPage />} />
           <Route path="master/fasilitas" element={<MessFacilityPage />} />
           <Route path="master/petugas" element={<MessPetugasPage />} />
         </Route>

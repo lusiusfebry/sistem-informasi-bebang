@@ -302,10 +302,11 @@ export const unassignKaryawan = async (req: Request, res: Response) => {
 // HISTORY
 export const getAssignmentHistory = async (req: Request, res: Response) => {
     try {
-        const { room_id, karyawan_id } = req.query;
+        const { room_id, karyawan_id, status } = req.query;
         const where: any = {};
         if (room_id) where.room_id = Number(room_id);
         if (karyawan_id) where.karyawan_id = Number(karyawan_id);
+        if (status) where.status = String(status);
 
         const data = await prisma.mess_assignment.findMany({
             where,
@@ -322,5 +323,101 @@ export const getAssignmentHistory = async (req: Request, res: Response) => {
         res.json(data);
     } catch (error) {
         res.status(500).json({ message: 'Gagal mengambil riwayat penempatan', error });
+    }
+};
+
+export const getCurrentResidents = async (req: Request, res: Response) => {
+    try {
+        const { search, mess_id } = req.query;
+        const where: any = {
+            mess_room_id: { not: null }
+        };
+
+        if (mess_id) {
+            where.mess_room = { mess_id: Number(mess_id) };
+        }
+
+        if (search) {
+            where.OR = [
+                { nama_lengkap: { contains: String(search), mode: 'insensitive' as const } },
+                { nomor_induk_karyawan: { contains: String(search), mode: 'insensitive' as const } },
+                { mess_room: { nomor_kamar: { contains: String(search), mode: 'insensitive' as const } } }
+            ];
+        }
+
+        const data = await prisma.karyawan.findMany({
+            where,
+            include: {
+                mess_room: {
+                    include: { mess: true }
+                }
+            },
+            orderBy: { nama_lengkap: 'asc' }
+        });
+        res.json(data);
+    } catch (error) {
+        res.status(500).json({ message: 'Gagal mengambil data penghuni saat ini', error });
+    }
+};
+
+// REPORTS
+export const getOccupancyReport = async (req: Request, res: Response) => {
+    try {
+        const messList = await prisma.mess.findMany({
+            include: {
+                rooms: {
+                    include: {
+                        _count: { select: { penghuni: true } }
+                    }
+                }
+            }
+        });
+
+        const report = messList.map(m => {
+            const totalCapacity = m.rooms.reduce((acc, r) => acc + r.kapasitas, 0);
+            const currentOccupants = m.rooms.reduce((acc, r) => acc + r._count.penghuni, 0);
+            const totalRooms = m.rooms.length;
+            const fullRooms = m.rooms.filter(r => r._count.penghuni >= r.kapasitas).length;
+            const availableRooms = m.rooms.filter(r => r.status === 'Tersedia' && r._count.penghuni < r.kapasitas).length;
+
+            return {
+                id: m.id,
+                nama: m.nama,
+                totalCapacity,
+                currentOccupants,
+                occupancyRate: totalCapacity > 0 ? (currentOccupants / totalCapacity) * 100 : 0,
+                totalRooms,
+                fullRooms,
+                availableRooms
+            };
+        });
+
+        res.json(report);
+    } catch (error) {
+        res.status(500).json({ message: 'Gagal mengambil laporan okupansi', error });
+    }
+};
+
+export const getMaintenanceReport = async (req: Request, res: Response) => {
+    try {
+        const damageReports = await prisma.mess_damage_report.findMany({
+            include: {
+                room: {
+                    include: { mess: true }
+                }
+            },
+            orderBy: { tanggal_laporan: 'desc' }
+        });
+
+        const stats = {
+            total: damageReports.length,
+            dilaporkan: damageReports.filter(r => r.status === 'Dilaporkan').length,
+            proses: damageReports.filter(r => r.status === 'Proses').length,
+            selesai: damageReports.filter(r => r.status === 'Selesai').length,
+        };
+
+        res.json({ stats, details: damageReports });
+    } catch (error) {
+        res.status(500).json({ message: 'Gagal mengambil laporan pemeliharaan', error });
     }
 };

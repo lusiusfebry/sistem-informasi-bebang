@@ -21,6 +21,7 @@ import {
     DialogHeader,
     DialogTitle,
     DialogFooter,
+    DialogDescription,
 } from "@/components/ui/dialog";
 import {
     DropdownMenu,
@@ -130,7 +131,7 @@ export default function MessMasterPage() {
 
     const fetchAvailableFacilities = useCallback(async () => {
         try {
-            const response = await api.get('/mess/facilities/all');
+            const response = await api.get('/mess/facilities');
             setAvailableFacilities(response.data);
         } catch {
             toast.error('Gagal mengambil data fasilitas');
@@ -456,7 +457,12 @@ export default function MessMasterPage() {
             {/* MODALS */}
             <Dialog open={showMessModal} onOpenChange={setShowMessModal}>
                 <DialogContent>
-                    <DialogHeader><DialogTitle>{editingMess ? 'Edit Mess' : 'Tambah Mess Baru'}</DialogTitle></DialogHeader>
+                    <DialogHeader>
+                        <DialogTitle>{editingMess ? 'Edit Mess' : 'Tambah Mess Baru'}</DialogTitle>
+                        <DialogDescription>
+                            Lengkapi informasi dasar gedung mess, termasuk kode unik dan lokasi kerja.
+                        </DialogDescription>
+                    </DialogHeader>
                     <div className="space-y-4 py-4">
                         <div className="grid grid-cols-2 gap-4">
                             <div className="space-y-1"><label className="text-xs font-bold uppercase">Kode</label><Input value={messForm.code} onChange={e => setMessForm({ ...messForm, code: e.target.value })} /></div>
@@ -480,7 +486,12 @@ export default function MessMasterPage() {
 
             <Dialog open={showRoomModal} onOpenChange={setShowRoomModal}>
                 <DialogContent>
-                    <DialogHeader><DialogTitle>{editingRoom ? 'Edit Kamar' : 'Tambah Kamar'}</DialogTitle></DialogHeader>
+                    <DialogHeader>
+                        <DialogTitle>{editingRoom ? 'Edit Kamar' : 'Tambah Kamar'}</DialogTitle>
+                        <DialogDescription>
+                            Atur detail kamar seperti nomor, kapasitas, tipe, dan fasilitas yang tersedia.
+                        </DialogDescription>
+                    </DialogHeader>
                     <div className="space-y-4 py-4">
                         <div className="grid grid-cols-2 gap-4">
                             <div className="space-y-1"><label className="text-xs font-bold uppercase">Nomor Kamar</label><Input value={roomForm.nomor_kamar} onChange={e => setRoomForm({ ...roomForm, nomor_kamar: e.target.value })} /></div>
@@ -540,7 +551,12 @@ export default function MessMasterPage() {
 
             <Dialog open={showAssignModal} onOpenChange={setShowAssignModal}>
                 <DialogContent className="max-w-md">
-                    <DialogHeader><DialogTitle>Pilih Karyawan</DialogTitle></DialogHeader>
+                    <DialogHeader>
+                        <DialogTitle>Pilih Karyawan</DialogTitle>
+                        <DialogDescription>
+                            Cari dan pilih karyawan yang akan ditempatkan di kamar ini.
+                        </DialogDescription>
+                    </DialogHeader>
                     <div className="relative mb-4"><Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" /><Input placeholder="Cari karyawan..." className="pl-9" value={karyawanSearch} onChange={e => setKaryawanSearch(e.target.value)} /></div>
                     <div className="space-y-2 max-h-[400px] overflow-y-auto pr-2">
                         {karyawanList.map(k => (

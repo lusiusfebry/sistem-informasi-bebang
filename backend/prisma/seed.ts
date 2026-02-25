@@ -162,11 +162,22 @@ async function main() {
         ];
 
         for (const data of karyawanData) {
-            await prisma.karyawan.upsert({
+            const karyawan = await prisma.karyawan.upsert({
                 where: { nomor_induk_karyawan: data.nomor_induk_karyawan },
                 update: data,
                 create: data,
             });
+
+            if (data.mess_room_id) {
+                await prisma.mess_assignment.create({
+                    data: {
+                        karyawan_id: karyawan.id,
+                        room_id: data.mess_room_id,
+                        tanggal_masuk: new Date(),
+                        status: 'Aktif'
+                    }
+                });
+            }
         }
     }
 
