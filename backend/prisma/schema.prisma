@@ -115,6 +115,7 @@ model lokasi_kerja {
   updated_at          DateTime      @updatedAt
   karyawan            karyawan[]
   karyawan_hr_sebelum karyawan_hr[] @relation("LokasiSebelumnya")
+  mess                mess[]
 }
 
 model status_karyawan {
@@ -166,6 +167,8 @@ model karyawan {
   saudara              karyawan_saudara[]
   tags                 karyawan_tag[]
   users                users[]
+  mess_assignments     mess_assignment[]
+  mess_petugas         mess_petugas[]
 }
 
 model karyawan_tag {
@@ -324,28 +327,94 @@ model users {
 }
 
 model mess {
-  id         Int         @id @default(autoincrement())
-  code       String      @unique
-  nama       String
-  lokasi     String?
-  keterangan String?
-  status     String      @default("Aktif")
-  created_at DateTime    @default(now())
-  updated_at DateTime    @updatedAt
-  rooms      mess_room[]
+  id              Int            @id @default(autoincrement())
+  code            String         @unique
+  nama            String
+  lokasi_kerja_id Int?
+  blok            String?
+  lantai          String?
+  keterangan      String?
+  status          String         @default("Aktif")
+  created_at      DateTime       @default(now())
+  updated_at      DateTime       @updatedAt
+  lokasi_kerja    lokasi_kerja?  @relation(fields: [lokasi_kerja_id], references: [id])
+  rooms           mess_room[]
+  petugas         mess_petugas[]
 }
 
 model mess_room {
-  id          Int        @id @default(autoincrement())
+  id                 Int                      @id @default(autoincrement())
+  mess_id            Int
+  nomor_kamar        String
+  kapasitas          Int                      @default(1)
+  tipe               String? // Single, Double, VIP
+  status             String                   @default("Tersedia") // Tersedia, Penuh, Rusak, Dibersihkan
+  created_at         DateTime                 @default(now())
+  updated_at         DateTime                 @updatedAt
+  mess               mess                     @relation(fields: [mess_id], references: [id], onDelete: Cascade)
+  assignments        mess_assignment[]
+  facilities         mess_facility_on_room[]
+  damage_reports     mess_damage_report[]
+  cleaning_schedules mess_cleaning_schedule[]
+  penghuni           karyawan[]
+}
+
+model mess_facility {
+  id         Int                     @id @default(autoincrement())
+  nama       String                  @unique
+  keterangan String?
+  rooms      mess_facility_on_room[]
+}
+
+model mess_facility_on_room {
+  room_id     Int
+  facility_id Int
+  room        mess_room     @relation(fields: [room_id], references: [id], onDelete: Cascade)
+  facility    mess_facility @relation(fields: [facility_id], references: [id], onDelete: Cascade)
+
+  @@id([room_id, facility_id])
+}
+
+model mess_petugas {
+  id          Int      @id @default(autoincrement())
   mess_id     Int
-  nomor_kamar String
-  kapasitas   Int        @default(1)
-  fasilitas   String?
-  status      String     @default("Tersedia")
-  created_at  DateTime   @default(now())
-  updated_at  DateTime   @updatedAt
-  penghuni    karyawan[]
-  mess        mess       @relation(fields: [mess_id], references: [id], onDelete: Cascade)
+  karyawan_id Int
+  shift       String?
+  mess        mess     @relation(fields: [mess_id], references: [id], onDelete: Cascade)
+  karyawan    karyawan @relation(fields: [karyawan_id], references: [id])
+}
+
+model mess_assignment {
+  id             Int       @id @default(autoincrement())
+  room_id        Int
+  karyawan_id    Int
+  tanggal_masuk  DateTime  @default(now())
+  tanggal_keluar DateTime?
+  status         String    @default("Aktif") // Aktif, Selesai, Booking
+  keterangan     String?
+  room           mess_room @relation(fields: [room_id], references: [id], onDelete: Cascade)
+  karyawan       karyawan  @relation(fields: [karyawan_id], references: [id])
+}
+
+model mess_damage_report {
+  id              Int       @id @default(autoincrement())
+  room_id         Int
+  kategori        String? // AC, Lampu, Plumbing
+  deskripsi       String
+  foto_kerusakan  String?
+  status          String    @default("Dilaporkan") // Dilaporkan, Proses, Selesai
+  tanggal_laporan DateTime  @default(now())
+  tanggal_selesai DateTime?
+  room            mess_room @relation(fields: [room_id], references: [id], onDelete: Cascade)
+}
+
+model mess_cleaning_schedule {
+  id             Int       @id @default(autoincrement())
+  room_id        Int
+  tanggal_jadwal DateTime
+  status         String    @default("Terjadwal") // Terjadwal, Selesai
+  catatan        String?
+  room           mess_room @relation(fields: [room_id], references: [id], onDelete: Cascade)
 }
 
 model karyawan_dokumen {

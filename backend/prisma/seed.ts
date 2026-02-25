@@ -90,37 +90,85 @@ async function main() {
         data: [
             { code: "lok-HO", nama: "Head Office", alamat: "Jakarta" },
             { code: "lok-SITE", nama: "Site Office", alamat: "Kalimantan" },
+            { code: "lok-TBI", nama: "Site Taliabu", alamat: "Pulau Taliabu" },
         ],
         skipDuplicates: true,
     });
 
-    // 10. Status Karyawan
-    await prisma.status_karyawan.createMany({
-        data: [
-            { code: "stk-AKTIF", nama: "Aktif" },
-            { code: "stk-RESIGN", nama: "Resign" },
-        ],
-        skipDuplicates: true,
-    });
+    const lokTaliabu = await prisma.lokasi_kerja.findUnique({ where: { code: "lok-TBI" } });
+    const stkAktif = await prisma.status_karyawan.findUnique({ where: { code: "stk-AKTIF" } });
 
-    // 11. Checklist Templates
-    await prisma.checklist_template.createMany({
-        data: [
-            // Onboarding
-            { kategori: "Onboarding", urutan: 1, tugas: "Penyerahan Dokumen Fisik", deskripsi: "KTP, KK, Ijazah Asli (Verifikasi)" },
-            { kategori: "Onboarding", urutan: 2, tugas: "Pengambilan Foto ID Card", deskripsi: "Sesi foto untuk kartu identitas" },
-            { kategori: "Onboarding", urutan: 3, tugas: "Kelengkapan Safety (PPE)", deskripsi: "Seragam, Sepatu Safety, Helm" },
-            { kategori: "Onboarding", urutan: 4, tugas: "Induksi HR & K3", deskripsi: "Pengenalan peraturan perusahaan dan keselamatan kerja" },
-            { kategori: "Onboarding", urutan: 5, tugas: "Penempatan Mess", deskripsi: "Serah terima kunci dan fasilitas mess" },
-            // Offboarding
-            { kategori: "Offboarding", urutan: 1, tugas: "Exit Interview", deskripsi: "Wawancara pengunduran diri dengan HR" },
-            { kategori: "Offboarding", urutan: 2, tugas: "Pengembalian ID Card", deskripsi: "Menyerahkan kembali kartu identitas" },
-            { kategori: "Offboarding", urutan: 3, tugas: "Pengembalian Inventaris", deskripsi: "Laptop, Alat Kerja, Kunci Ruangan" },
-            { kategori: "Offboarding", urutan: 4, tugas: "Checkout Mess", deskripsi: "Penyelesaian administrasi dan kunci mess" },
-            { kategori: "Offboarding", urutan: 5, tugas: "Deaktivasi Akun", deskripsi: "Penonaktifan akses sistem & email" },
-        ],
-        skipDuplicates: true,
-    });
+    // 12. Mess
+    if (lokTaliabu) {
+        await prisma.mess.createMany({
+            data: [
+                { code: "MSS-CMA", nama: "Mess Cemara", lokasi_kerja_id: lokTaliabu.id, blok: "A", lantai: "1" },
+                { code: "MSS-PNS", nama: "Mess Pinus", lokasi_kerja_id: lokTaliabu.id, blok: "B", lantai: "1" },
+            ],
+            skipDuplicates: true,
+        });
+    }
+
+    const messCemara = await prisma.mess.findUnique({ where: { code: "MSS-CMA" } });
+    const messPinus = await prisma.mess.findUnique({ where: { code: "MSS-PNS" } });
+
+    // 13. Mess Rooms
+    if (messCemara && messPinus) {
+        await prisma.mess_room.createMany({
+            data: [
+                { mess_id: messCemara.id, nomor_kamar: "101", kapasitas: 1, tipe: "VIP", status: "Tersedia" },
+                { mess_id: messCemara.id, nomor_kamar: "102", kapasitas: 2, tipe: "Standard", status: "Tersedia" },
+                { mess_id: messPinus.id, nomor_kamar: "201", kapasitas: 4, tipe: "Economy", status: "Tersedia" },
+            ],
+            skipDuplicates: true,
+        });
+    }
+
+    const room101 = await prisma.mess_room.findFirst({ where: { nomor_kamar: "101" } });
+
+    // 14. Karyawan
+    if (lokTaliabu && stkAktif) {
+        const karyawanData = [
+            {
+                nama_lengkap: "Budi Santoso",
+                nomor_induk_karyawan: "20240001",
+                email_perusahaan: "budi.santoso@bebang.co.id",
+                nomor_handphone: "081234567890",
+                lokasi_kerja_id: lokTaliabu.id,
+                status_karyawan_id: stkAktif.id,
+                divisi_id: ops?.id,
+                department_id: depIt?.id,
+                mess_room_id: room101?.id
+            },
+            {
+                nama_lengkap: "Siti Aminah",
+                nomor_induk_karyawan: "20240002",
+                email_perusahaan: "siti.aminah@bebang.co.id",
+                nomor_handphone: "081234567891",
+                lokasi_kerja_id: lokTaliabu.id,
+                status_karyawan_id: stkAktif.id,
+                divisi_id: hrd?.id,
+                department_id: (await prisma.department.findUnique({ where: { code: "dep-REC" } }))?.id,
+            },
+            {
+                nama_lengkap: "Agus Setiawan",
+                nomor_induk_karyawan: "20240003",
+                email_perusahaan: "agus.setiawan@bebang.co.id",
+                nomor_handphone: "081234567892",
+                lokasi_kerja_id: lokTaliabu.id,
+                status_karyawan_id: stkAktif.id,
+                divisi_id: ops?.id,
+            }
+        ];
+
+        for (const data of karyawanData) {
+            await prisma.karyawan.upsert({
+                where: { nomor_induk_karyawan: data.nomor_induk_karyawan },
+                update: data,
+                create: data,
+            });
+        }
+    }
 
     console.log("Seeding completed successfully.");
 }

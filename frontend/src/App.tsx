@@ -2,6 +2,8 @@ import { Routes, Route, Navigate } from 'react-router-dom'
 import LoginPage from './pages/LoginPage'
 import WelcomePage from './pages/WelcomePage'
 import HRLayout from './layouts/HRLayout'
+import MessLayout from './layouts/MessLayout'
+import AccessLayout from './layouts/AccessLayout'
 import HRDashboard from './pages/hr/HRDashboard'
 import ProtectedRoute from './components/ProtectedRoute'
 import { DirectoriKaryawan } from './pages/karyawan/DirectoriKaryawan'
@@ -22,7 +24,12 @@ import StatusKaryawanPage from './pages/hr/master/StatusKaryawanPage'
 import LokasiKerjaPage from './pages/hr/master/LokasiKerjaPage'
 import TagPage from './pages/hr/master/TagPage'
 import UserManagementPage from './pages/hr/UserManagementPage'
-import MessManagementPage from './pages/hr/MessManagementPage'
+
+// Mess Module Pages
+import MessDashboard from './pages/mess/MessDashboard'
+import MessMasterPage from './pages/mess/MessMasterPage'
+import MessOperationalPage from './pages/mess/MessOperationalPage'
+import MessMaintenancePage from './pages/mess/MessMaintenancePage'
 
 function App() {
   return (
@@ -45,14 +52,30 @@ function App() {
           <Route path="master/status-karyawan" element={<StatusKaryawanPage />} />
           <Route path="master/lokasi-kerja" element={<LokasiKerjaPage />} />
           <Route path="master/tag" element={<TagPage />} />
-          <Route path="users" element={<UserManagementPage />} />
-          <Route path="mess" element={<MessManagementPage />} />
           <Route path="onboarding" element={<OnboardingTracker />} />
           <Route path="offboarding" element={<OffboardingTracker />} />
           <Route path="karyawan" element={<DirectoriKaryawan />} />
           <Route path="karyawan/tambah" element={<FormKaryawan mode="add" />} />
           <Route path="karyawan/:id" element={<ProfilKaryawan />} />
           <Route path="karyawan/:id/edit" element={<FormKaryawan mode="edit" />} />
+        </Route>
+      </Route>
+
+      {/* Mess Management Module */}
+      <Route path="/mess" element={<ProtectedRoute />}>
+        <Route element={<MessLayout />}>
+          <Route index element={<MessDashboard />} />
+          <Route path="gedung" element={<MessMasterPage />} />
+          <Route path="operasional" element={<MessOperationalPage />} />
+          <Route path="perawatan" element={<MessMaintenancePage />} />
+        </Route>
+      </Route>
+
+      {/* Access Management Module */}
+      <Route path="/access" element={<ProtectedRoute />}>
+        <Route element={<AccessLayout />}>
+          <Route index element={<Navigate to="/access/users" replace />} />
+          <Route path="users" element={<UserManagementPage />} />
         </Route>
       </Route>
     </Routes>
