@@ -14,7 +14,8 @@ import {
     Loader2,
     X,
     Trash2,
-    UserMinus
+    UserMinus,
+    Home
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -473,6 +474,12 @@ export const DirectoriKaryawan = () => {
                                         <MapPin className="w-3 h-3 text-slate-400" />
                                         <p className="text-[10px] font-bold text-slate-500 line-clamp-1">{it.divisi?.nama || 'Tanpa Divisi'}</p>
                                     </div>
+                                    {it.mess_room && (
+                                        <div className="flex items-center gap-2">
+                                            <Home className="w-3 h-3 text-primary/60" />
+                                            <p className="text-[10px] font-black text-primary/80 line-clamp-1 italic">{it.mess_room.mess.nama} - {it.mess_room.nomor_kamar}</p>
+                                        </div>
+                                    )}
                                 </div>
 
                                 <div className="w-full flex flex-wrap gap-1 mt-auto">

@@ -29,6 +29,12 @@ export interface KaryawanListItem {
             warna: string;
         };
     }>;
+    mess_room?: {
+        nomor_kamar: string;
+        mess: {
+            nama: string;
+        };
+    } | null;
 }
 
 export interface KaryawanPersonal {

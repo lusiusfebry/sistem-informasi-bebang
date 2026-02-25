@@ -69,7 +69,8 @@ export const getAll = async (req: Request, res: Response) => {
                     posisi_jabatan: true,
                     status_karyawan: true,
                     lokasi_kerja: true,
-                    tags: { include: { tag: true } }
+                    tags: { include: { tag: true } },
+                    mess_room: { include: { mess: true } }
                 },
                 skip: (p - 1) * l,
                 take: l,

@@ -69,7 +69,7 @@ export default function MessCleaningPage() {
                 const allRooms: Room[] = [];
                 for (const m of messRes.data) {
                     const roomRes = await api.get(`/mess/${m.id}/rooms`);
-                    allRooms.push(...roomRes.data.map((r: any) => ({ ...r, mess: { nama: m.nama } })));
+                    allRooms.push(...roomRes.data.map((r: { id: number; nomor_kamar: string }) => ({ ...r, mess: { nama: m.nama } })));
                 }
                 setRooms(allRooms);
             } catch {

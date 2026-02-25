@@ -1,8 +1,17 @@
 import { useState, useEffect, useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Wrench, Calendar, AlertCircle, Plus, Info } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import {
+    Dialog,
+    DialogContent,
+    DialogHeader,
+    DialogTitle,
+    DialogFooter,
+} from "@/components/ui/dialog";
+import { Input } from '@/components/ui/input';
 import { toast } from 'sonner';
 import api from '@/lib/api';
 
@@ -24,26 +33,58 @@ interface CleaningSchedule {
 }
 
 export default function MessMaintenancePage() {
+    const navigate = useNavigate();
     const [damageReports, setDamageReports] = useState<DamageReport[]>([]);
     const [cleaningSchedules, setCleaningSchedules] = useState<CleaningSchedule[]>([]);
+    const [rooms, setRooms] = useState<{ id: number; nomor_kamar: string; mess: { nama: string } }[]>([]);
+    const [showReportModal, setShowReportModal] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
+
+    const [reportForm, setReportForm] = useState({
+        room_id: 0,
+        kategori: '',
+        deskripsi: '',
+        foto_kerusakan: ''
+    });
 
     const fetchData = useCallback(async () => {
         try {
-            const [damageRes, cleaningRes] = await Promise.all([
+            const [damageRes, cleaningRes, roomsRes] = await Promise.all([
                 api.get('/mess/damage-reports/all'),
-                api.get('/mess/cleaning/schedules')
+                api.get('/mess/cleaning/schedules'),
+                api.get('/mess/rooms/all')
             ]);
             setDamageReports(damageRes.data);
             setCleaningSchedules(cleaningRes.data);
+            setRooms(roomsRes.data);
         } catch {
             toast.error('Gagal mengambil data perawatan');
         }
     }, []);
 
     useEffect(() => {
-        // eslint-disable-next-line react-hooks/set-state-in-effect
         fetchData();
     }, [fetchData]);
+
+    const handleCreateReport = async () => {
+        if (!reportForm.room_id || !reportForm.deskripsi) {
+            toast.error('Kamar dan Deskripsi harus diisi');
+            return;
+        }
+
+        setIsLoading(true);
+        try {
+            await api.post('/mess/damage-reports', reportForm);
+            toast.success('Laporan kerusakan berhasil dikirim');
+            setShowReportModal(false);
+            setReportForm({ room_id: 0, kategori: '', deskripsi: '', foto_kerusakan: '' });
+            fetchData();
+        } catch {
+            toast.error('Gagal mengirim laporan');
+        } finally {
+            setIsLoading(false);
+        }
+    };
 
     const updateDamageStatus = async (id: number, status: string) => {
         try {
@@ -76,10 +117,10 @@ export default function MessMaintenancePage() {
                     <p className="text-muted-foreground text-sm font-medium">Pengelolaan kerusakan fasilitas dan jadwal sanitasi.</p>
                 </div>
                 <div className="flex gap-2">
-                    <Button size="sm" variant="outline" className="border-primary text-primary hover:bg-primary/5 font-bold">
+                    <Button size="sm" variant="outline" className="border-primary text-primary hover:bg-primary/5 font-bold" onClick={() => setShowReportModal(true)}>
                         <Plus className="w-4 h-4 mr-2" /> Laporan Baru
                     </Button>
-                    <Button size="sm" className="font-bold">
+                    <Button size="sm" className="font-bold" onClick={() => navigate('/mess/cleaning')}>
                         <Calendar className="w-4 h-4 mr-2" /> Buat Jadwal
                     </Button>
                 </div>
@@ -174,6 +215,62 @@ export default function MessMaintenancePage() {
                     </CardContent>
                 </Card>
             </div>
+
+            <Dialog open={showReportModal} onOpenChange={setShowReportModal}>
+                <DialogContent>
+                    <DialogHeader>
+                        <DialogTitle>Laporan Kerusakan Baru</DialogTitle>
+                    </DialogHeader>
+                    <div className="space-y-4 py-4">
+                        <div className="space-y-1">
+                            <label className="text-xs font-bold uppercase">Kamar</label>
+                            <select
+                                className="w-full h-10 px-3 rounded-md border border-input bg-background text-sm"
+                                value={reportForm.room_id}
+                                onChange={e => setReportForm({ ...reportForm, room_id: Number(e.target.value) })}
+                            >
+                                <option value={0}>Pilih Kamar</option>
+                                {rooms.map(r => <option key={r.id} value={r.id}>{r.mess.nama} - {r.nomor_kamar}</option>)}
+                            </select>
+                        </div>
+                        <div className="space-y-1">
+                            <label className="text-xs font-bold uppercase">Kategori</label>
+                            <select
+                                className="w-full h-10 px-3 rounded-md border border-input bg-background text-sm"
+                                value={reportForm.kategori}
+                                onChange={e => setReportForm({ ...reportForm, kategori: e.target.value })}
+                            >
+                                <option value="">Pilih Kategori</option>
+                                <option value="AC">AC</option>
+                                <option value="Lampu/Listrik">Lampu/Listrik</option>
+                                <option value="Plumbing/Air">Plumbing/Air</option>
+                                <option value="Furnitur">Furnitur</option>
+                                <option value="Lainnya">Lainnya</option>
+                            </select>
+                        </div>
+                        <div className="space-y-1">
+                            <label className="text-xs font-bold uppercase">Deskripsi Kerusakan</label>
+                            <Input
+                                placeholder="Jelaskan detail kerusakan..."
+                                value={reportForm.deskripsi}
+                                onChange={e => setReportForm({ ...reportForm, deskripsi: e.target.value })}
+                            />
+                        </div>
+                        <div className="space-y-1">
+                            <label className="text-xs font-bold uppercase">Foto (Optional)</label>
+                            <Input
+                                type="file"
+                                accept="image/*"
+                                onChange={() => toast.info('Fitur upload foto segera hadir!')}
+                            />
+                        </div>
+                    </div>
+                    <DialogFooter>
+                        <Button variant="outline" onClick={() => setShowReportModal(false)} disabled={isLoading}>Batal</Button>
+                        <Button onClick={handleCreateReport} disabled={isLoading}>Kirim Laporan</Button>
+                    </DialogFooter>
+                </DialogContent>
+            </Dialog>
         </div>
     );
 }

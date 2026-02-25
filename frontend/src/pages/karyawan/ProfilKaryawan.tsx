@@ -31,11 +31,19 @@ import {
     PlayCircle,
     Flag,
     Check,
-    UserMinus
+    UserMinus,
+    Home,
+    ArrowRightLeft
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import {
+    Dialog,
+    DialogContent,
+    DialogHeader,
+    DialogTitle,
+} from '@/components/ui/dialog';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import api from '@/lib/api';
 import type { KaryawanDetail } from '@/types/karyawan';
@@ -44,6 +52,22 @@ import { format } from 'date-fns';
 import { id } from 'date-fns/locale';
 import { ModalCetakIDCard } from '@/components/ModalCetakIDCard';
 import ModernDeleteDialog from '@/components/master/ModernDeleteDialog';
+
+// Types for Mess Transfer
+interface MessTransferItem {
+    id: number;
+    nama: string;
+    lokasi_kerja?: { nama: string };
+}
+
+interface RoomTransferItem {
+    id: number;
+    nomor_kamar: string;
+    tipe: string;
+    kapasitas: number;
+    penghuni: { id: number }[];
+    status: string;
+}
 
 export const ProfilKaryawan = () => {
     const { id: empId } = useParams();
@@ -67,6 +91,13 @@ export const ProfilKaryawan = () => {
     const setActiveTab = (tab: string) => setSearchParams({ tab }, { replace: true });
     const [isRefreshing, setIsRefreshing] = useState(false);
     const dataRef = useRef(data);
+
+    // Mess Transfer State
+    const [showTransferModal, setShowTransferModal] = useState(false);
+    const [transferMessList, setTransferMessList] = useState<MessTransferItem[]>([]);
+    const [transferRooms, setTransferRooms] = useState<RoomTransferItem[]>([]);
+    const [selectedTransferMess, setSelectedTransferMess] = useState<number | null>(null);
+    const [isTransferring, setIsTransferring] = useState(false);
 
     useEffect(() => {
         dataRef.current = data;
@@ -112,6 +143,25 @@ export const ProfilKaryawan = () => {
         if (empId) fetchQrCode();
     }, [empId]);
 
+
+    const fetchTransferMess = async () => {
+        try {
+            const response = await api.get('/mess');
+            setTransferMessList(response.data);
+        } catch {
+            toast.error('Gagal mengambil data mess');
+        }
+    };
+
+    const fetchTransferRooms = async (messId: number) => {
+        try {
+            const response = await api.get(`/mess/${messId}/rooms`);
+            setTransferRooms(response.data.filter((r: RoomTransferItem) => r.status === 'Tersedia'));
+        } catch {
+            toast.error('Gagal mengambil data kamar');
+        }
+    };
+
     if (isLoading && !data) {
         return (
             <div className="h-[60vh] flex items-center justify-center">
@@ -124,6 +174,27 @@ export const ProfilKaryawan = () => {
     }
 
     if (!data) return null;
+
+    const handleTransfer = async (roomId: number) => {
+        if (!data) return;
+        setIsTransferring(true);
+        try {
+            await api.post('/mess/assign', { roomId, karyawanId: data.id });
+            toast.success('Penempatan mess berhasil diperbarui');
+            setShowTransferModal(false);
+            fetchDetail(); // Refresh data
+        } catch (error: unknown) {
+            let message = 'Gagal memindahkan mess';
+            if (axios.isAxiosError(error) && error.response?.data?.message) {
+                message = error.response.data.message;
+            } else if (error instanceof Error) {
+                message = error.message;
+            }
+            toast.error(message);
+        } finally {
+            setIsTransferring(false);
+        }
+    };
 
     const formatDate = (dateStr: string | null | undefined) => {
         if (!dateStr) return '-';
@@ -314,6 +385,11 @@ export const ProfilKaryawan = () => {
                                 { label: 'Divisi', value: data.divisi?.nama, icon: Building2 },
                                 { label: 'Departemen', value: data.department?.nama, icon: Layers },
                                 { label: 'Site', value: data.lokasi_kerja?.nama, icon: MapPin },
+                                ...(data.mess_room ? [{
+                                    label: 'Mess',
+                                    value: `${data.mess_room.mess.nama} - ${data.mess_room.nomor_kamar}`,
+                                    icon: Home
+                                }] : [])
                             ].map((item, idx) => (
                                 <div key={idx} className="flex flex-col p-3 rounded-xl bg-slate-50/50 dark:bg-slate-800/30 border border-slate-100 dark:border-slate-700/30 transition-all hover:bg-slate-100/50 dark:hover:bg-slate-800/50">
                                     <span className="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider mb-1.5 flex items-center gap-1 text-xs">
@@ -381,6 +457,15 @@ export const ProfilKaryawan = () => {
                                     >
                                         <Trash2 className="w-4 h-4 mr-2" />
                                         Hapus
+                                    </Button>
+                                    <Button
+                                        variant="ghost"
+                                        size="sm"
+                                        className="flex-1 h-9 font-bold text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-900/30 hover:bg-emerald-100 dark:hover:bg-emerald-900/50 rounded-lg transition-all"
+                                        onClick={() => { fetchTransferMess(); setShowTransferModal(true); }}
+                                    >
+                                        <ArrowRightLeft className="w-4 h-4 mr-2" />
+                                        Mess
                                     </Button>
                                 </div>
                             </div>
@@ -1430,6 +1515,56 @@ export const ProfilKaryawan = () => {
                     />
                 )
             }
+
+            <Dialog open={showTransferModal} onOpenChange={setShowTransferModal}>
+                <DialogContent>
+                    <DialogHeader>
+                        <DialogTitle>{data?.mess_room ? 'Pindahkan Karyawan' : 'Tempatkan Karyawan'} ke Mess</DialogTitle>
+                    </DialogHeader>
+                    <div className="space-y-4 py-4">
+                        <div className="space-y-1">
+                            <label className="text-xs font-bold uppercase">Pilih Gedung Mess</label>
+                            <select
+                                className="w-full h-10 px-3 rounded-md border border-input bg-background text-sm"
+                                value={selectedTransferMess || ''}
+                                onChange={(e) => {
+                                    const id = Number(e.target.value);
+                                    setSelectedTransferMess(id);
+                                    fetchTransferRooms(id);
+                                }}
+                            >
+                                <option value="">Pilih Mess</option>
+                                {transferMessList.map(m => (
+                                    <option key={m.id} value={m.id}>{m.nama} ({m.lokasi_kerja?.nama})</option>
+                                ))}
+                            </select>
+                        </div>
+
+                        {selectedTransferMess && (
+                            <div className="space-y-2">
+                                <label className="text-xs font-bold uppercase">Pilih Kamar Tersedia</label>
+                                <div className="grid grid-cols-2 gap-2 max-h-[200px] overflow-y-auto p-2 border rounded-md bg-slate-50 dark:bg-slate-900/50">
+                                    {transferRooms.map(r => (
+                                        <Button
+                                            key={r.id}
+                                            variant="outline"
+                                            className="justify-start h-auto py-2 px-3 flex flex-col items-start bg-white dark:bg-slate-900"
+                                            disabled={isTransferring}
+                                            onClick={() => handleTransfer(r.id)}
+                                        >
+                                            <span className="font-bold text-sm">Kamar {r.nomor_kamar}</span>
+                                            <span className="text-[10px] text-muted-foreground uppercase">{r.tipe} • Sisa {r.kapasitas - r.penghuni.length} Slot</span>
+                                        </Button>
+                                    ))}
+                                    {transferRooms.length === 0 && (
+                                        <p className="text-xs text-muted-foreground italic col-span-2 text-center py-4">Tidak ada kamar tersedia di mess ini.</p>
+                                    )}
+                                </div>
+                            </div>
+                        )}
+                    </div>
+                </DialogContent>
+            </Dialog>
         </div>
     );
 };

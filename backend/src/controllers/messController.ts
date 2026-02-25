@@ -128,14 +128,20 @@ export const getRoomsByMess = async (req: Request, res: Response) => {
 export const createRoom = async (req: Request, res: Response) => {
     try {
         const { messId } = req.params;
-        const { nomor_kamar, kapasitas, tipe, status } = req.body;
+        const { nomor_kamar, kapasitas, tipe, status, facility_ids } = req.body;
         const data = await prisma.mess_room.create({
             data: {
                 mess_id: Number(messId),
                 nomor_kamar,
                 kapasitas: Number(kapasitas),
                 tipe,
-                status
+                status,
+                facilities: facility_ids && Array.isArray(facility_ids) ? {
+                    create: facility_ids.map((fid: number) => ({ facility_id: fid }))
+                } : undefined
+            },
+            include: {
+                facilities: { include: { facility: true } }
             }
         });
         res.json(data);
@@ -147,16 +153,47 @@ export const createRoom = async (req: Request, res: Response) => {
 export const updateRoom = async (req: Request, res: Response) => {
     try {
         const { id } = req.params;
-        const { nomor_kamar, kapasitas, tipe, status } = req.body;
-        const data = await prisma.mess_room.update({
-            where: { id: Number(id) },
-            data: {
-                nomor_kamar,
-                kapasitas: Number(kapasitas),
-                tipe,
-                status
+        const { nomor_kamar, kapasitas, tipe, status, facility_ids } = req.body;
+
+        // Use transaction to update room and facilities
+        const data = await prisma.$transaction(async (tx) => {
+            // Update room basic info
+            await tx.mess_room.update({
+                where: { id: Number(id) },
+                data: {
+                    nomor_kamar,
+                    kapasitas: Number(kapasitas),
+                    tipe,
+                    status
+                }
+            });
+
+            // If facility_ids is provided, update facilities
+            if (facility_ids && Array.isArray(facility_ids)) {
+                // Delete existing facilities
+                await tx.mess_facility_on_room.deleteMany({
+                    where: { room_id: Number(id) }
+                });
+
+                // Create new facilities
+                if (facility_ids.length > 0) {
+                    await tx.mess_facility_on_room.createMany({
+                        data: facility_ids.map((fid: number) => ({
+                            room_id: Number(id),
+                            facility_id: fid
+                        }))
+                    });
+                }
             }
+
+            return tx.mess_room.findUnique({
+                where: { id: Number(id) },
+                include: {
+                    facilities: { include: { facility: true } }
+                }
+            });
         });
+
         res.json(data);
     } catch (error) {
         res.status(500).json({ message: 'Gagal memperbarui kamar', error });
@@ -193,14 +230,27 @@ export const assignKaryawan = async (req: Request, res: Response) => {
         }
 
         // Use transaction to ensure data consistency
-        const result = await prisma.$transaction([
-            // Update current occupant
-            prisma.karyawan.update({
+        const result = await prisma.$transaction(async (tx) => {
+            // 1. Close active assignment if exists
+            await tx.mess_assignment.updateMany({
+                where: {
+                    karyawan_id: Number(karyawanId),
+                    status: 'Aktif'
+                },
+                data: {
+                    tanggal_keluar: tanggal_masuk ? new Date(tanggal_masuk) : new Date(),
+                    status: 'Selesai'
+                }
+            });
+
+            // 2. Update current room in karyawan record
+            const updatedKaryawan = await tx.karyawan.update({
                 where: { id: Number(karyawanId) },
                 data: { mess_room_id: Number(roomId) }
-            }),
-            // Create assignment record
-            prisma.mess_assignment.create({
+            });
+
+            // 3. Create new assignment record
+            await tx.mess_assignment.create({
                 data: {
                     room_id: Number(roomId),
                     karyawan_id: Number(karyawanId),
@@ -208,10 +258,12 @@ export const assignKaryawan = async (req: Request, res: Response) => {
                     keterangan,
                     status: 'Aktif'
                 }
-            })
-        ]);
+            });
 
-        res.json({ message: 'Karyawan berhasil ditempatkan', data: result[0] });
+            return updatedKaryawan;
+        });
+
+        res.json({ message: 'Karyawan berhasil ditempatkan', data: result });
     } catch (error) {
         res.status(500).json({ message: 'Gagal menempatkan karyawan', error });
     }

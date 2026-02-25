@@ -1,6 +1,8 @@
 import { useState, useEffect, useCallback } from 'react';
-import { ClipboardList, Building2 } from 'lucide-react';
+import { ClipboardList, Building2, Plus } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
 import api from '@/lib/api';
 
@@ -21,6 +23,7 @@ interface Room {
 export default function MessOperationalPage() {
     const [messList, setMessList] = useState<Mess[]>([]);
     const [rooms, setRooms] = useState<Room[]>([]);
+    const navigate = useNavigate();
 
     const fetchData = useCallback(async () => {
         try {
@@ -42,12 +45,21 @@ export default function MessOperationalPage() {
 
     return (
         <div className="space-y-6">
-            <div>
-                <h1 className="text-2xl font-black tracking-tight flex items-center gap-2 uppercase">
-                    <ClipboardList className="w-6 h-6 text-primary" />
-                    Okupansi & Penempatan
-                </h1>
-                <p className="text-muted-foreground text-sm font-medium">Monitoring ketersediaan dan hunian kamar secara real-time.</p>
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                <div>
+                    <h1 className="text-2xl font-black tracking-tight flex items-center gap-2 uppercase">
+                        <ClipboardList className="w-6 h-6 text-primary" />
+                        Okupansi & Penempatan
+                    </h1>
+                    <p className="text-muted-foreground text-sm font-medium">Monitoring ketersediaan dan hunian kamar secara real-time.</p>
+                </div>
+                <Button
+                    className="w-full md:w-auto font-black uppercase tracking-widest italic flex items-center gap-2 shadow-lg shadow-primary/20"
+                    onClick={() => navigate('/mess/gedung?action=add')}
+                >
+                    <Plus className="w-4 h-4" />
+                    Tambah Mess Baru
+                </Button>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -58,8 +70,12 @@ export default function MessOperationalPage() {
                     const persentase = totalKapasitas > 0 ? (totalPenghuni / totalKapasitas) * 100 : 0;
 
                     return (
-                        <Card key={m.id} className="border-none shadow-md overflow-hidden bg-white dark:bg-slate-900 transition-all hover:scale-[1.02]">
-                            <CardHeader className="bg-slate-50 dark:bg-slate-800/50 pb-4">
+                        <Card
+                            key={m.id}
+                            className="border-none shadow-md overflow-hidden bg-white dark:bg-slate-900 transition-all hover:scale-[1.02] cursor-pointer hover:ring-2 hover:ring-primary/20 group"
+                            onClick={() => navigate(`/mess/gedung?id=${m.id}`)}
+                        >
+                            <CardHeader className="bg-slate-50 dark:bg-slate-800/50 pb-4 group-hover:bg-primary/5 transition-colors">
                                 <div className="flex items-center gap-3">
                                     <div className="p-2 bg-primary rounded-lg shadow-sm">
                                         <Building2 className="w-4 h-4 text-white" />

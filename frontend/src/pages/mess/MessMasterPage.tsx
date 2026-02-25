@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import {
     Plus,
     Search,
@@ -8,6 +9,7 @@ import {
     MoreVertical,
     UserPlus,
     UserMinus,
+    MoveRight
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -49,7 +51,7 @@ interface Room {
     kapasitas: number;
     tipe: string | null;
     status: string;
-    facilities: { facility: { nama: string } }[];
+    facilities: { facility: { id: number; nama: string } }[];
     penghuni: {
         id: number;
         nama_lengkap: string;
@@ -61,6 +63,12 @@ interface Karyawan {
     id: number;
     nama_lengkap: string;
     nomor_induk_karyawan: string;
+    mess_room?: {
+        nomor_kamar: string;
+        mess: {
+            nama: string;
+        };
+    } | null;
 }
 
 export default function MessMasterPage() {
@@ -78,6 +86,7 @@ export default function MessMasterPage() {
     const [karyawanSearch, setKaryawanSearch] = useState('');
     const [lokasiKerja, setLokasiKerja] = useState<{ id: number; nama: string }[]>([]);
     const [availableFacilities, setAvailableFacilities] = useState<{ id: number; nama: string }[]>([]);
+    const [searchParams, setSearchParams] = useSearchParams();
 
     const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
     const [deleteTarget, setDeleteTarget] = useState<{ type: 'mess' | 'room' | 'unassign'; id: number; name: string } | null>(null);
@@ -121,7 +130,7 @@ export default function MessMasterPage() {
 
     const fetchAvailableFacilities = useCallback(async () => {
         try {
-            const response = await api.get('/mess/facilities');
+            const response = await api.get('/mess/facilities/all');
             setAvailableFacilities(response.data);
         } catch {
             toast.error('Gagal mengambil data fasilitas');
@@ -149,7 +158,28 @@ export default function MessMasterPage() {
     useEffect(() => {
         fetchMess();
         fetchLokasiKerja();
-    }, [fetchMess, fetchLokasiKerja]);
+        fetchAvailableFacilities();
+    }, [fetchMess, fetchLokasiKerja, fetchAvailableFacilities]);
+
+    useEffect(() => {
+        const messId = searchParams.get('id');
+        const action = searchParams.get('action');
+
+        if (messList.length > 0) {
+            if (messId) {
+                const mess = messList.find(m => m.id === Number(messId));
+                if (mess) {
+                    setSelectedMess(mess);
+                    // Clear search params to avoid re-triggering on refresh if user changes mess
+                    setSearchParams({}, { replace: true });
+                }
+            }
+            if (action === 'add') {
+                setShowMessModal(true);
+                setSearchParams({}, { replace: true });
+            }
+        }
+    }, [messList, searchParams, setSearchParams]);
 
     useEffect(() => {
         if (selectedMess) {
@@ -336,7 +366,7 @@ export default function MessMasterPage() {
                                 </div>
                                 <Button size="sm" onClick={() => {
                                     setEditingRoom(null);
-                                    setRoomForm({ nomor_kamar: '', kapasitas: 1, tipe: 'Single', status: 'Tersedia' });
+                                    setRoomForm({ nomor_kamar: '', kapasitas: 1, tipe: 'Single', status: 'Tersedia', facility_ids: [] });
                                     setShowRoomModal(true);
                                 }}>
                                     <Plus className="w-4 h-4 mr-2" /> Tambah Kamar
@@ -357,7 +387,17 @@ export default function MessMasterPage() {
                                                         </Button>
                                                     </DropdownMenuTrigger>
                                                     <DropdownMenuContent align="end">
-                                                        <DropdownMenuItem onClick={() => { setEditingRoom(room); setRoomForm({ nomor_kamar: room.nomor_kamar, kapasitas: room.kapasitas, tipe: room.tipe || 'Single', status: room.status }); setShowRoomModal(true); }}>
+                                                        <DropdownMenuItem onClick={() => {
+                                                            setEditingRoom(room);
+                                                            setRoomForm({
+                                                                nomor_kamar: room.nomor_kamar,
+                                                                kapasitas: room.kapasitas,
+                                                                tipe: room.tipe || 'Single',
+                                                                status: room.status,
+                                                                facility_ids: room.facilities?.map(f => f.facility.id) || []
+                                                            });
+                                                            setShowRoomModal(true);
+                                                        }}>
                                                             <Edit className="w-3 h-3 mr-2" /> Edit Kamar
                                                         </DropdownMenuItem>
                                                         <DropdownMenuItem className="text-destructive font-bold" onClick={() => handleDeleteRoom(room.id, room.nomor_kamar)}>
@@ -373,6 +413,15 @@ export default function MessMasterPage() {
                                                 <Badge variant={room.status === 'Tersedia' ? 'success' : room.status === 'Penuh' ? 'destructive' : 'outline'} className="text-[9px]">{room.status}</Badge>
                                                 <span className="text-[10px] font-bold text-muted-foreground">{room.penghuni.length} / {room.kapasitas}</span>
                                             </div>
+                                            {room.facilities && room.facilities.length > 0 && (
+                                                <div className="flex flex-wrap gap-1 mb-3">
+                                                    {room.facilities.map(f => (
+                                                        <Badge key={f.facility.id} variant="secondary" className="text-[7px] px-1 py-0 uppercase bg-muted/40 font-bold whitespace-nowrap">
+                                                            {f.facility.nama}
+                                                        </Badge>
+                                                    ))}
+                                                </div>
+                                            )}
                                             <div className="h-1.5 w-full bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden mb-4">
                                                 <div className={`h-full transition-all duration-500 ${room.penghuni.length === room.kapasitas ? 'bg-rose-500' : 'bg-primary'}`} style={{ width: `${(room.penghuni.length / room.kapasitas) * 100}%` }} />
                                             </div>
@@ -446,6 +495,43 @@ export default function MessMasterPage() {
                                     <option value="VIP">VIP</option>
                                 </select>
                             </div>
+                            <div className="space-y-1">
+                                <label className="text-xs font-bold uppercase">Status</label>
+                                <select className="w-full h-10 px-3 rounded-md border border-input bg-background text-sm" value={roomForm.status} onChange={e => setRoomForm({ ...roomForm, status: e.target.value })}>
+                                    <option value="Tersedia">Tersedia</option>
+                                    <option value="Penuh">Penuh</option>
+                                    <option value="Rusak">Rusak</option>
+                                    <option value="Dibersihkan">Dibersihkan</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div className="space-y-2">
+                            <label className="text-xs font-bold uppercase">Fasilitas Kamar</label>
+                            <div className="grid grid-cols-2 gap-2 max-h-[150px] overflow-y-auto p-2 border rounded-md bg-muted/5 shadow-inner">
+                                {availableFacilities.map(f => (
+                                    <div key={f.id} className="flex items-center gap-2 hover:bg-muted/30 p-1 rounded-md transition-colors">
+                                        <input
+                                            type="checkbox"
+                                            id={`facility-modal-${f.id}`}
+                                            checked={roomForm.facility_ids.includes(f.id)}
+                                            onChange={(e) => {
+                                                const ids = e.target.checked
+                                                    ? [...roomForm.facility_ids, f.id]
+                                                    : roomForm.facility_ids.filter(id => id !== f.id);
+                                                setRoomForm({ ...roomForm, facility_ids: ids });
+                                            }}
+                                            className="w-3.5 h-3.5 rounded border-muted-foreground/30 text-primary focus:ring-primary/30"
+                                        />
+                                        <label htmlFor={`facility-modal-${f.id}`} className="text-[11px] font-bold uppercase cursor-pointer select-none">
+                                            {f.nama}
+                                        </label>
+                                    </div>
+                                ))}
+                                {availableFacilities.length === 0 && (
+                                    <p className="text-[10px] text-muted-foreground italic col-span-2 p-2 text-center">Tidak ada fasilitas master tersedia.</p>
+                                )}
+                            </div>
                         </div>
                     </div>
                     <DialogFooter><Button onClick={handleSaveRoom}>Simpan Kamar</Button></DialogFooter>
@@ -459,8 +545,16 @@ export default function MessMasterPage() {
                     <div className="space-y-2 max-h-[400px] overflow-y-auto pr-2">
                         {karyawanList.map(k => (
                             <div key={k.id} className="flex items-center justify-between p-3 rounded-xl border border-slate-100 hover:bg-muted/50 cursor-pointer" onClick={() => handleAssign(k.id)}>
-                                <div><p className="text-sm font-bold">{k.nama_lengkap}</p><p className="text-xs text-muted-foreground">{k.nomor_induk_karyawan}</p></div>
-                                <Plus className="w-4 h-4 text-primary" />
+                                <div>
+                                    <p className="text-sm font-bold">{k.nama_lengkap}</p>
+                                    <p className="text-xs text-muted-foreground">{k.nomor_induk_karyawan}</p>
+                                    {k.mess_room && (
+                                        <p className="text-[10px] text-amber-600 font-bold uppercase mt-1">
+                                            Saat ini: {k.mess_room.mess.nama} ({k.mess_room.nomor_kamar})
+                                        </p>
+                                    )}
+                                </div>
+                                {k.mess_room ? <MoveRight className="w-4 h-4 text-amber-500" /> : <Plus className="w-4 h-4 text-primary" />}
                             </div>
                         ))}
                     </div>
