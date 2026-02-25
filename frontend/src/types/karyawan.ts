@@ -55,6 +55,8 @@ export interface KaryawanPersonal {
     status_pernikahan: string | null;
     nama_pasangan: string | null;
     tanggal_menikah: string | null;
+    tanggal_cerai: string | null;
+    tanggal_wafat_pasangan: string | null;
     pekerjaan_pasangan: string | null;
     jumlah_anak?: number | null;
     nomor_rekening: string | null;
@@ -63,6 +65,7 @@ export interface KaryawanPersonal {
     cabang_bank: string | null;
     nama_ayah: string | null;
     nama_ibu: string | null;
+    nomor_handphone_1?: string | null; // Placeholder for UI reference
 }
 
 export interface KaryawanHR {
@@ -77,6 +80,8 @@ export interface KaryawanHR {
     nama_sekolah: string | null;
     kota_sekolah: string | null;
     status_kelulusan: string | null;
+    keterangan_pendidikan: string | null;
+    no_dana_pensiun: string | null;
     emergency_nama_1: string | null;
     emergency_nomor_1: string | null;
     emergency_hubungan_1: string | null;
@@ -96,6 +101,9 @@ export interface KaryawanHR {
     golongan: { nama: string } | null;
     sub_golongan: { nama: string } | null;
     lokasi_sebelumnya: { nama: string } | null;
+    assign: string | null;
+    actual: string | null;
+    costing: string | null;
 }
 
 export interface KaryawanAnak {
@@ -235,6 +243,7 @@ export const karyawanPersonalSchema = z.object({
     cabang_bank: z.string().optional().nullable(),
     nama_ayah: z.string().optional().nullable(),
     nama_ibu: z.string().optional().nullable(),
+    nomor_handphone_1: z.string().optional().nullable(),
 });
 
 export const karyawanHRSchema = z.object({

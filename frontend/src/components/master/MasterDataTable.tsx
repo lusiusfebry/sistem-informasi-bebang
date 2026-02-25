@@ -10,6 +10,8 @@ import {
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Skeleton } from '@/components/ui/skeleton';
+import { useState } from 'react';
+import ModernDeleteDialog from './ModernDeleteDialog';
 
 export interface Column<T> {
     header: string;
@@ -33,6 +35,9 @@ interface MasterDataTableProps<T> {
     pageSize: number;
     onPageChange: (page: number) => void;
     addLabel: string;
+    deleteTitle?: string;
+    deleteDescription?: string;
+    itemNameAccessor?: keyof T;
 }
 
 const MasterDataTable = <T extends { id: string | number }>({
@@ -50,8 +55,14 @@ const MasterDataTable = <T extends { id: string | number }>({
     totalItems,
     pageSize,
     onPageChange,
-    addLabel
+    addLabel,
+    deleteTitle,
+    deleteDescription,
+    itemNameAccessor
 }: MasterDataTableProps<T>) => {
+    const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+    const [itemToDelete, setItemToDelete] = useState<T | null>(null);
+
     const totalPages = Math.ceil(totalItems / pageSize);
     const from = (page - 1) * pageSize + 1;
     const to = Math.min(page * pageSize, totalItems);
@@ -148,7 +159,10 @@ const MasterDataTable = <T extends { id: string | number }>({
                                                 <Button
                                                     variant="ghost"
                                                     size="icon"
-                                                    onClick={() => onDelete(item)}
+                                                    onClick={() => {
+                                                        setItemToDelete(item);
+                                                        setIsDeleteDialogOpen(true);
+                                                    }}
                                                     className="h-9 w-9 rounded-lg hover:bg-rose-100 hover:text-rose-600 dark:hover:bg-rose-900/30"
                                                 >
                                                     <Trash2 className="w-4 h-4" />
@@ -194,6 +208,20 @@ const MasterDataTable = <T extends { id: string | number }>({
                     </div>
                 </div>
             </div>
+
+            <ModernDeleteDialog
+                open={isDeleteDialogOpen}
+                onOpenChange={setIsDeleteDialogOpen}
+                onConfirm={() => {
+                    if (itemToDelete) {
+                        onDelete(itemToDelete);
+                        setIsDeleteDialogOpen(false);
+                    }
+                }}
+                title={deleteTitle}
+                description={deleteDescription}
+                itemName={itemToDelete && itemNameAccessor ? String(itemToDelete[itemNameAccessor]) : undefined}
+            />
         </div>
     );
 };

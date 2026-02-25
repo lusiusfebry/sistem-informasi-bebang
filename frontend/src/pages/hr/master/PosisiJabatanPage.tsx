@@ -97,7 +97,6 @@ export default function PosisiJabatanPage() {
     };
 
     const handleDelete = async (item: PosisiJabatan) => {
-        if (!confirm(`Hapus posisi ${item.nama}?`)) return;
         try {
             await api.delete(`/master/posisi-jabatan/${item.id}`);
             toast.success('Posisi jabatan berhasil dihapus');
@@ -175,6 +174,9 @@ export default function PosisiJabatanPage() {
                 pageSize={10}
                 onPageChange={setPage}
                 addLabel="Tambah Posisi"
+                deleteTitle="Hapus Posisi Jabatan"
+                deleteDescription="Apakah Anda yakin ingin menghapus posisi jabatan ini? Pastikan tidak ada karyawan yang masih terhubung ke posisi ini."
+                itemNameAccessor="nama"
             />
 
             <MasterFormModal

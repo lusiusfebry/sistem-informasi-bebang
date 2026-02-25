@@ -30,6 +30,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { toast } from 'sonner';
 import api from '@/lib/api';
+import ModernDeleteDialog from '@/components/master/ModernDeleteDialog';
 
 interface Mess {
     id: number;
@@ -79,6 +80,11 @@ export default function MessManagementPage() {
     const [selectedRoomForAssign, setSelectedRoomForAssign] = useState<Room | null>(null);
     const [assignmentLoading, setAssignmentLoading] = useState(false);
     const [karyawanSearch, setKaryawanSearch] = useState('');
+
+    // Delete Modal state
+    const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+    const [deleteTarget, setDeleteTarget] = useState<{ type: 'mess' | 'room' | 'unassign'; id: number; name: string } | null>(null);
+    const [isDeleting, setIsDeleting] = useState(false);
 
     const [messForm, setMessForm] = useState({
         code: '',
@@ -180,27 +186,19 @@ export default function MessManagementPage() {
         }
     };
 
-    const handleDeleteMess = async (id: number) => {
-        if (!confirm('Hapus mess ini beserta seluruh data kamarnya?')) return;
-        try {
-            await api.delete(`/mess/${id}`);
-            toast.success('Mess berhasil dihapus');
-            if (selectedMess?.id === id) setSelectedMess(null);
-            fetchMess();
-        } catch {
-            toast.error('Gagal menghapus mess');
-        }
+    const handleDeleteMess = (id: number, nama: string) => {
+        setDeleteTarget({ type: 'mess', id, name: nama });
+        setIsDeleteDialogOpen(true);
     };
 
-    const handleDeleteRoom = async (id: number) => {
-        if (!confirm('Hapus kamar ini?')) return;
-        try {
-            await api.delete(`/mess/rooms/${id}`);
-            toast.success('Kamar berhasil dihapus');
-            if (selectedMess) fetchRooms(selectedMess.id);
-        } catch {
-            toast.error('Gagal menghapus kamar');
-        }
+    const handleDeleteRoom = (id: number, nomor: string) => {
+        setDeleteTarget({ type: 'room', id, name: `Kamar ${nomor}` });
+        setIsDeleteDialogOpen(true);
+    };
+
+    const handleUnassignClick = (id: number, nama: string) => {
+        setDeleteTarget({ type: 'unassign', id, name: nama });
+        setIsDeleteDialogOpen(true);
     };
 
     const handleAssign = async (karyawanId: number) => {
@@ -222,14 +220,29 @@ export default function MessManagementPage() {
         }
     };
 
-    const handleUnassign = async (karyawanId: number) => {
-        if (!confirm('Keluarkan karyawan ini dari mess?')) return;
+    const executeDelete = async () => {
+        if (!deleteTarget) return;
+        setIsDeleting(true);
         try {
-            await api.post('/mess/unassign', { karyawanId });
-            toast.success('Karyawan berhasil dikeluarkan');
-            if (selectedMess) fetchRooms(selectedMess.id);
+            if (deleteTarget.type === 'mess') {
+                await api.delete(`/mess/${deleteTarget.id}`);
+                toast.success('Mess berhasil dihapus');
+                if (selectedMess?.id === deleteTarget.id) setSelectedMess(null);
+                fetchMess();
+            } else if (deleteTarget.type === 'room') {
+                await api.delete(`/mess/rooms/${deleteTarget.id}`);
+                toast.success('Kamar berhasil dihapus');
+                if (selectedMess) fetchRooms(selectedMess.id);
+            } else if (deleteTarget.type === 'unassign') {
+                await api.post('/mess/unassign', { karyawanId: deleteTarget.id });
+                toast.success('Karyawan berhasil dikeluarkan');
+                if (selectedMess) fetchRooms(selectedMess.id);
+            }
+            setIsDeleteDialogOpen(false);
         } catch {
-            toast.error('Gagal mengeluarkan karyawan');
+            toast.error(`Gagal menghapus ${deleteTarget.type === 'mess' ? 'mess' : deleteTarget.type === 'room' ? 'kamar' : 'penghuni'}`);
+        } finally {
+            setIsDeleting(false);
         }
     };
 
@@ -299,7 +312,7 @@ export default function MessManagementPage() {
                                             </Button>
                                             <Button size="icon" variant="ghost" className="h-6 w-6 text-destructive" onClick={(e) => {
                                                 e.stopPropagation();
-                                                handleDeleteMess(m.id);
+                                                handleDeleteMess(m.id, m.nama);
                                             }}>
                                                 <Trash2 className="w-3 h-3" />
                                             </Button>
@@ -366,7 +379,7 @@ export default function MessManagementPage() {
                                                                 }}>
                                                                     <Edit className="w-3 h-3 mr-2" /> Edit Kamar
                                                                 </DropdownMenuItem>
-                                                                <DropdownMenuItem className="text-destructive" onClick={() => handleDeleteRoom(room.id)}>
+                                                                <DropdownMenuItem className="text-destructive font-bold" onClick={() => handleDeleteRoom(room.id, room.nomor_kamar)}>
                                                                     <Trash2 className="w-3 h-3 mr-2" /> Hapus Kamar
                                                                 </DropdownMenuItem>
                                                                 <DropdownMenuItem onClick={() => {
@@ -411,7 +424,7 @@ export default function MessManagementPage() {
                                                                     size="icon"
                                                                     variant="ghost"
                                                                     className="h-5 w-5 text-muted-foreground hover:text-destructive"
-                                                                    onClick={() => handleUnassign(p.id)}
+                                                                    onClick={() => handleUnassignClick(p.id, p.nama_lengkap)}
                                                                 >
                                                                     <UserMinus className="w-3 h-3" />
                                                                 </Button>
@@ -554,6 +567,23 @@ export default function MessManagementPage() {
                     </div>
                 </DialogContent>
             </Dialog>
+
+            <ModernDeleteDialog
+                open={isDeleteDialogOpen}
+                onOpenChange={setIsDeleteDialogOpen}
+                onConfirm={executeDelete}
+                isLoading={isDeleting}
+                title={
+                    deleteTarget?.type === 'mess' ? 'Hapus Mess' :
+                        deleteTarget?.type === 'room' ? 'Hapus Kamar' : 'Keluarkan Penghuni'
+                }
+                description={
+                    deleteTarget?.type === 'mess' ? `Apakah Anda yakin ingin menghapus mess "${deleteTarget?.name}" beserta seluruh data kamarnya?` :
+                        deleteTarget?.type === 'room' ? `Apakah Anda yakin ingin menghapus "${deleteTarget?.name}"?` :
+                            `Apakah Anda yakin ingin mengeluarkan "${deleteTarget?.name}" dari kamar?`
+                }
+                itemName={deleteTarget?.name || ''}
+            />
         </div>
     );
 }

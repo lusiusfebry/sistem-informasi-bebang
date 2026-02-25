@@ -82,7 +82,6 @@ export default function LokasiKerjaPage() {
     };
 
     const handleDelete = async (item: LokasiKerja) => {
-        if (!confirm(`Hapus lokasi ${item.nama}?`)) return;
         try {
             await api.delete(`/master/lokasi-kerja/${item.id}`);
             toast.success('Lokasi kerja berhasil dihapus');
@@ -151,6 +150,9 @@ export default function LokasiKerjaPage() {
                 pageSize={10}
                 onPageChange={setPage}
                 addLabel="Tambah Lokasi"
+                deleteTitle="Hapus Lokasi Kerja"
+                deleteDescription="Apakah Anda yakin ingin menghapus lokasi kerja ini?"
+                itemNameAccessor="nama"
             />
 
             <MasterFormModal

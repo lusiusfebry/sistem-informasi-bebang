@@ -19,6 +19,7 @@ router.get('/:id', karyawanController.getById);
 router.put('/:id', karyawanController.update);
 router.post('/:id/foto', uploadFoto.single('foto'), karyawanController.uploadFoto);
 router.get('/:id/qrcode', karyawanController.getQrCode);
+router.delete('/:id', karyawanController.remove);
 
 // Dokumen Karyawan
 router.post('/:id/dokumen', uploadDokumen.single('file'), karyawanController.uploadDokumen);

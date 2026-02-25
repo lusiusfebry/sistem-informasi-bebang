@@ -37,6 +37,7 @@ import {
 import { Badge } from '@/components/ui/badge';
 import { toast } from 'sonner';
 import api from '@/lib/api';
+import ModernDeleteDialog from '@/components/master/ModernDeleteDialog';
 
 interface User {
     id: number;
@@ -61,6 +62,11 @@ export default function UserManagementPage() {
     const [showModal, setShowModal] = useState(false);
     const [editingUser, setEditingUser] = useState<User | null>(null);
     const [formLoading, setFormLoading] = useState(false);
+
+    // Delete Modal state
+    const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+    const [userToDelete, setUserToDelete] = useState<{ id: number; name: string } | null>(null);
+    const [isDeleting, setIsDeleting] = useState(false);
 
     const [formData, setFormData] = useState({
         nik: '',
@@ -110,15 +116,24 @@ export default function UserManagementPage() {
         }
     };
 
-    const handleDelete = async (id: number) => {
-        if (!confirm('Anda yakin ingin menghapus user ini?')) return;
+    const handleDelete = (id: number, nama: string) => {
+        setUserToDelete({ id, name: nama });
+        setIsDeleteDialogOpen(true);
+    };
+
+    const executeDelete = async () => {
+        if (!userToDelete) return;
+        setIsDeleting(true);
         try {
-            await api.delete(`/users/${id}`);
+            await api.delete(`/users/${userToDelete.id}`);
             toast.success('User berhasil dihapus');
             const response = await api.get(`/users?search=${search}`);
             setUsers(response.data);
+            setIsDeleteDialogOpen(false);
         } catch {
             toast.error('Gagal menghapus user');
+        } finally {
+            setIsDeleting(false);
         }
     };
 
@@ -309,7 +324,7 @@ export default function UserManagementPage() {
                                                 </DropdownMenuItem>
                                                 <div className="h-px bg-slate-50 my-2" />
                                                 <DropdownMenuItem
-                                                    onClick={() => handleDelete(user.id)}
+                                                    onClick={() => handleDelete(user.id, user.nama)}
                                                     className="rounded-xl p-3 focus:bg-rose-50 focus:text-rose-600 group cursor-pointer"
                                                 >
                                                     <Trash2 className="w-4 h-4 mr-3" />
@@ -423,6 +438,16 @@ export default function UserManagementPage() {
                     </form>
                 </DialogContent>
             </Dialog>
+
+            <ModernDeleteDialog
+                open={isDeleteDialogOpen}
+                onOpenChange={setIsDeleteDialogOpen}
+                onConfirm={executeDelete}
+                isLoading={isDeleting}
+                title="Hapus Akses Pengguna"
+                description={`Apakah Anda yakin ingin menghapus user "${userToDelete?.name}"? Tindakan ini akan mencabut akses personil tersebut dari sistem.`}
+                itemName={userToDelete?.name}
+            />
         </div>
     );
 }

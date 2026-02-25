@@ -704,3 +704,63 @@ export const getDashboardStats = async (req: Request, res: Response) => {
         return res.status(500).json({ message: 'Terjadi kesalahan saat mengambil statistik dashboard' });
     }
 };
+
+export const remove = async (req: Request, res: Response) => {
+    try {
+        const { id } = req.params;
+        const karyawanId = Number(id);
+
+        const karyawan = await prisma.karyawan.findUnique({
+            where: { id: karyawanId },
+            include: { dokumen: true }
+        });
+
+        if (!karyawan) return res.status(404).json({ message: 'Data tidak ditemukan' });
+
+        await prisma.$transaction(async (tx) => {
+            // 1. Hapus file dokumen secara fisik
+            for (const doc of karyawan.dokumen) {
+                const docPath = path.resolve(doc.file_path);
+                if (fs.existsSync(docPath)) {
+                    try {
+                        fs.unlinkSync(docPath);
+                    } catch (err) {
+                        console.error(`Gagal menghapus file dokumen: ${docPath}`, err);
+                    }
+                }
+            }
+
+            // 2. Hapus foto profil secara fisik
+            if (karyawan.foto_karyawan) {
+                const fotoPath = path.resolve(karyawan.foto_karyawan);
+                if (fs.existsSync(fotoPath)) {
+                    try {
+                        fs.unlinkSync(fotoPath);
+                    } catch (err) {
+                        console.error(`Gagal menghapus file foto: ${fotoPath}`, err);
+                    }
+                }
+            }
+
+            // 3. Hapus Akun User terkait
+            await tx.users.deleteMany({ where: { karyawan_id: karyawanId } });
+
+            // 4. Lepas jabatan manager di department jika ada
+            await tx.department.updateMany({
+                where: { manager_id: karyawanId },
+                data: { manager_id: null }
+            });
+
+            // 5. Hapus Tag Karyawan
+            await tx.karyawan_tag.deleteMany({ where: { karyawan_id: karyawanId } });
+
+            // 6. Hapus Record Utama (Trigger Cascade Delete untuk Personal, HR, Keluarga, Anak, Saudara)
+            await tx.karyawan.delete({ where: { id: karyawanId } });
+        });
+
+        return res.json({ message: 'Karyawan berhasil dihapus' });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ message: 'Terjadi kesalahan saat menghapus data karyawan' });
+    }
+};

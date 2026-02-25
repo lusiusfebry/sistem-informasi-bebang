@@ -81,7 +81,6 @@ export default function SubGolonganPage() {
     };
 
     const handleDelete = async (item: SubGolongan) => {
-        if (!confirm(`Hapus sub golongan ${item.nama}?`)) return;
         try {
             await api.delete(`/master/sub-golongan/${item.id}`);
             toast.success('Sub golongan berhasil dihapus');
@@ -149,6 +148,9 @@ export default function SubGolonganPage() {
                 pageSize={10}
                 onPageChange={setPage}
                 addLabel="Tambah Sub Golongan"
+                deleteTitle="Hapus Sub Golongan"
+                deleteDescription="Apakah Anda yakin ingin menghapus sub golongan ini?"
+                itemNameAccessor="nama"
             />
 
             <MasterFormModal

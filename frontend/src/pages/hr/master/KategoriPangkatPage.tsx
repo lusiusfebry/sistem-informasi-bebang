@@ -81,7 +81,6 @@ export default function KategoriPangkatPage() {
     };
 
     const handleDelete = async (item: KategoriPangkat) => {
-        if (!confirm(`Hapus kategori ${item.nama}?`)) return;
         try {
             await api.delete(`/master/kategori-pangkat/${item.id}`);
             toast.success('Kategori pangkat berhasil dihapus');
@@ -149,6 +148,9 @@ export default function KategoriPangkatPage() {
                 pageSize={10}
                 onPageChange={setPage}
                 addLabel="Tambah Kategori"
+                deleteTitle="Hapus Kategori Pangkat"
+                deleteDescription="Apakah Anda yakin ingin menghapus kategori pangkat ini?"
+                itemNameAccessor="nama"
             />
 
             <MasterFormModal

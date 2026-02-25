@@ -81,7 +81,6 @@ export default function StatusKaryawanPage() {
     };
 
     const handleDelete = async (item: StatusKaryawan) => {
-        if (!confirm(`Hapus status ${item.nama}?`)) return;
         try {
             await api.delete(`/master/status-karyawan/${item.id}`);
             toast.success('Status karyawan berhasil dihapus');
@@ -149,6 +148,9 @@ export default function StatusKaryawanPage() {
                 pageSize={10}
                 onPageChange={setPage}
                 addLabel="Tambah Status"
+                deleteTitle="Hapus Status Karyawan"
+                deleteDescription="Apakah Anda yakin ingin menghapus status karyawan ini?"
+                itemNameAccessor="nama"
             />
 
             <MasterFormModal

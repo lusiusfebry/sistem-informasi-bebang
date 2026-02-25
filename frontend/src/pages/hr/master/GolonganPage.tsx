@@ -81,7 +81,6 @@ export default function GolonganPage() {
     };
 
     const handleDelete = async (item: Golongan) => {
-        if (!confirm(`Hapus golongan ${item.nama}?`)) return;
         try {
             await api.delete(`/master/golongan/${item.id}`);
             toast.success('Golongan berhasil dihapus');
@@ -149,6 +148,9 @@ export default function GolonganPage() {
                 pageSize={10}
                 onPageChange={setPage}
                 addLabel="Tambah Golongan"
+                deleteTitle="Hapus Golongan"
+                deleteDescription="Apakah Anda yakin ingin menghapus golongan ini? Tindakan ini akan menghapus data permanen."
+                itemNameAccessor="nama"
             />
 
             <MasterFormModal

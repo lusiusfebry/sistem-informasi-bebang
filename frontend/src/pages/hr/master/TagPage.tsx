@@ -83,7 +83,6 @@ export default function TagPage() {
     };
 
     const handleDelete = async (item: Tag) => {
-        if (!confirm(`Hapus tag ${item.nama}?`)) return;
         try {
             await api.delete(`/master/tag/${item.id}`);
             toast.success('Tag berhasil dihapus');
@@ -166,6 +165,9 @@ export default function TagPage() {
                 pageSize={10}
                 onPageChange={setPage}
                 addLabel="Tambah Tag"
+                deleteTitle="Hapus Tag"
+                deleteDescription="Apakah Anda yakin ingin menghapus tag ini?"
+                itemNameAccessor="nama"
             />
 
             <MasterFormModal

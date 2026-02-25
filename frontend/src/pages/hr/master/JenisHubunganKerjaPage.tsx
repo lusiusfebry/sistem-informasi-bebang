@@ -81,7 +81,6 @@ export default function JenisHubunganKerjaPage() {
     };
 
     const handleDelete = async (item: JenisHubunganKerja) => {
-        if (!confirm(`Hapus jenis ${item.nama}?`)) return;
         try {
             await api.delete(`/master/jenis-hubungan-kerja/${item.id}`);
             toast.success('Jenis hubungan kerja berhasil dihapus');
@@ -149,6 +148,9 @@ export default function JenisHubunganKerjaPage() {
                 pageSize={10}
                 onPageChange={setPage}
                 addLabel="Tambah Jenis"
+                deleteTitle="Hapus Jenis Hubungan Kerja"
+                deleteDescription="Apakah Anda yakin ingin menghapus jenis hubungan kerja ini? Data yang terikat mungkin akan terdampak."
+                itemNameAccessor="nama"
             />
 
             <MasterFormModal

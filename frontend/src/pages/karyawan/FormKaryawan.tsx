@@ -291,7 +291,7 @@ export const FormKaryawan = ({ mode = 'add' }: { mode?: 'add' | 'edit' }) => {
     }
 
     return (
-        <form onSubmit={handleSubmit(onSubmit as any)} className="space-y-8 pb-20 max-w-5xl mx-auto">
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-8 pb-20 max-w-5xl mx-auto">
             {/* Header Sticky */}
             <div className="sticky top-0 z-20 bg-slate-50/80 backdrop-blur-md py-4 flex items-center justify-between border-b border-slate-200 -mx-4 px-4 sm:-mx-8 sm:px-8">
                 <div className="flex items-center gap-4">
@@ -479,9 +479,11 @@ export const FormKaryawan = ({ mode = 'add' }: { mode?: 'add' | 'edit' }) => {
                                         </SelectTrigger>
                                         <SelectContent>
                                             <SelectItem value="null">Tanpa Manager</SelectItem>
-                                            {master?.karyawan.filter(k => k.id.toString() !== id).map(it => (
-                                                <SelectItem key={it.id} value={it.id.toString()}>{it.nama_lengkap} ({it.nomor_induk_karyawan})</SelectItem>
-                                            ))}
+                                            {master?.karyawan
+                                                .filter(k => k.id.toString() !== id)
+                                                .map(it => (
+                                                    <SelectItem key={it.id} value={it.id.toString()}>{it.nama_lengkap} ({it.nomor_induk_karyawan})</SelectItem>
+                                                ))}
                                         </SelectContent>
                                     </Select>
                                 </div>
@@ -494,9 +496,11 @@ export const FormKaryawan = ({ mode = 'add' }: { mode?: 'add' | 'edit' }) => {
                                         </SelectTrigger>
                                         <SelectContent>
                                             <SelectItem value="null">Tanpa Atasan</SelectItem>
-                                            {master?.karyawan.filter(k => k.id.toString() !== id).map(it => (
-                                                <SelectItem key={it.id} value={it.id.toString()}>{it.nama_lengkap} ({it.nomor_induk_karyawan})</SelectItem>
-                                            ))}
+                                            {master?.karyawan
+                                                .filter(k => k.id.toString() !== id)
+                                                .map(it => (
+                                                    <SelectItem key={it.id} value={it.id.toString()}>{it.nama_lengkap} ({it.nomor_induk_karyawan})</SelectItem>
+                                                ))}
                                         </SelectContent>
                                     </Select>
                                 </div>

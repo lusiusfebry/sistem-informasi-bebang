@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import {
     Search,
     FileDown,
@@ -11,7 +12,8 @@ import {
     MapPin,
     Briefcase,
     Loader2,
-    X
+    X,
+    Trash2
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -32,6 +34,7 @@ import { ModalImportKaryawan } from '@/components/ModalImportKaryawan';
 import type { KaryawanListItem } from '@/types/karyawan';
 import api from '@/lib/api';
 import { toast } from 'sonner';
+import ModernDeleteDialog from '@/components/master/ModernDeleteDialog';
 
 interface MasterItem {
     id: number;
@@ -73,6 +76,12 @@ export const DirectoriKaryawan = () => {
     const [selectedIds, setSelectedIds] = useState<Set<number>>(new Set());
     const [showCetakModal, setShowCetakModal] = useState(false);
     const [showImportModal, setShowImportModal] = useState(false);
+
+    // Delete Modal state
+    const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+    const [deleteType, setDeleteType] = useState<'single' | 'bulk'>('single');
+    const [itemToDelete, setItemToDelete] = useState<{ id: number; nama: string } | null>(null);
+    const [isDeleting, setIsDeleting] = useState(false);
 
     // Initial Fetch (Master Data)
     useEffect(() => {
@@ -179,6 +188,45 @@ export const DirectoriKaryawan = () => {
 
     const getSelectedKaryawan = () => {
         return data.filter(k => selectedIds.has(k.id));
+    };
+
+    const handleDelete = (id: number, nama: string) => {
+        setItemToDelete({ id, nama });
+        setDeleteType('single');
+        setIsDeleteDialogOpen(true);
+    };
+
+    const handleBulkDelete = () => {
+        setDeleteType('bulk');
+        setIsDeleteDialogOpen(true);
+    };
+
+    const executeDelete = async () => {
+        setIsDeleting(true);
+        try {
+            if (deleteType === 'single' && itemToDelete) {
+                await api.delete(`/karyawan/${itemToDelete.id}`);
+                toast.success(`Karyawan ${itemToDelete.nama} berhasil dihapus`);
+            } else if (deleteType === 'bulk') {
+                const count = selectedIds.size;
+                for (const id of Array.from(selectedIds)) {
+                    await api.delete(`/karyawan/${id}`);
+                }
+                toast.success(`${count} karyawan berhasil dihapus`);
+            }
+            setSelectedIds(new Set());
+            setIsDeleteDialogOpen(false);
+            fetchData();
+        } catch (error: unknown) {
+            console.error('Delete failed', error);
+            let message = 'Gagal menghapus karyawan';
+            if (axios.isAxiosError(error) && error.response?.data?.message) {
+                message = error.response.data.message;
+            }
+            toast.error(message);
+        } finally {
+            setIsDeleting(false);
+        }
     };
 
     return (
@@ -310,10 +358,18 @@ export const DirectoriKaryawan = () => {
                         <div className="flex items-center gap-2">
                             <Button
                                 onClick={() => setShowCetakModal(true)}
-                                className="h-10 rounded-xl px-6 font-black uppercase tracking-widest bg-primary hover:shadow-lg hover:shadow-primary/25 transition-all"
+                                className="h-10 rounded-xl px-4 font-black uppercase tracking-widest bg-primary hover:shadow-lg hover:shadow-primary/25 transition-all"
                             >
                                 <Printer className="w-4 h-4 mr-2" />
-                                Cetak ID Card Massal
+                                Cetak ID
+                            </Button>
+                            <Button
+                                onClick={handleBulkDelete}
+                                variant="destructive"
+                                className="h-10 rounded-xl px-4 font-black uppercase tracking-widest hover:shadow-lg hover:shadow-red-500/25 transition-all"
+                            >
+                                <Trash2 className="w-4 h-4 mr-2" />
+                                Hapus Terpilih
                             </Button>
                             <Button
                                 variant="ghost"
@@ -450,6 +506,17 @@ export const DirectoriKaryawan = () => {
                                     <Printer className="w-3 h-3 mr-1" />
                                     Cetak ID
                                 </Button>
+                                <Button
+                                    variant="ghost"
+                                    size="sm"
+                                    className="h-8 rounded-xl px-2 text-slate-400 hover:text-red-500 hover:bg-red-50 transition-all"
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        handleDelete(it.id, it.nama_lengkap);
+                                    }}
+                                >
+                                    <Trash2 className="w-3.5 h-3.5" />
+                                </Button>
                             </div>
                         </div>
                     ))
@@ -511,6 +578,19 @@ export const DirectoriKaryawan = () => {
                 open={showCetakModal}
                 onClose={() => setShowCetakModal(false)}
                 karyawanList={getSelectedKaryawan()}
+            />
+
+            <ModernDeleteDialog
+                open={isDeleteDialogOpen}
+                onOpenChange={setIsDeleteDialogOpen}
+                onConfirm={executeDelete}
+                title={deleteType === 'single' ? "Hapus Karyawan" : "Hapus Massal Karyawan"}
+                description={
+                    deleteType === 'single'
+                        ? `Apakah Anda yakin ingin menghapus data karyawan "${itemToDelete?.nama}" secara permanen? Seluruh dokumen dan foto terkait juga akan dihapus.`
+                        : `Apakah Anda yakin ingin menghapus ${selectedIds.size} karyawan terpilih secara permanen? Tindakan ini tidak dapat dibatalkan.`
+                }
+                isLoading={isDeleting}
             />
         </div>
     );

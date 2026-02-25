@@ -97,7 +97,6 @@ export default function DepartemenPage() {
     };
 
     const handleDelete = async (item: Department) => {
-        if (!confirm(`Hapus departemen ${item.nama}?`)) return;
         try {
             await api.delete(`/master/department/${item.id}`);
             toast.success('Departemen berhasil dihapus');
@@ -174,6 +173,9 @@ export default function DepartemenPage() {
                 pageSize={10}
                 onPageChange={setPage}
                 addLabel="Tambah Departemen"
+                deleteTitle="Hapus Departemen"
+                deleteDescription="Apakah Anda yakin ingin menghapus departemen ini? Pastikan tidak ada jabatan atau karyawan yang masih terhubung ke departemen ini."
+                itemNameAccessor="nama"
             />
 
             <MasterFormModal

@@ -81,7 +81,6 @@ export default function DivisiPage() {
     };
 
     const handleDelete = async (item: Divisi) => {
-        if (!confirm(`Hapus divisi ${item.nama}?`)) return;
         try {
             await api.delete(`/master/divisi/${item.id}`);
             toast.success('Divisi berhasil dihapus');
@@ -145,6 +144,9 @@ export default function DivisiPage() {
                 pageSize={10}
                 onPageChange={setPage}
                 addLabel="Tambah Divisi"
+                deleteTitle="Hapus Divisi"
+                deleteDescription="Apakah Anda yakin ingin menghapus divisi ini? Semua departemen di bawahnya mungkin akan terdampak atau tidak dapat dihapus jika masih digunakan."
+                itemNameAccessor="nama"
             />
 
             <MasterFormModal
