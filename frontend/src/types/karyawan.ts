@@ -22,6 +22,7 @@ export interface KaryawanListItem {
     lokasi_kerja: {
         nama: string;
     };
+    status_proses: string | null;
     tags: Array<{
         tag: {
             nama: string;
@@ -159,10 +160,17 @@ export interface KaryawanDokumen {
 
 export interface KaryawanChecklist {
     id: number;
-    tasks: string;
-    kategori: string;
-    is_completed: boolean;
-    completed_at: string | null;
+    karyawan_id: number;
+    template_id: number;
+    is_selesai: boolean;
+    tanggal_selesai: string | null;
+    catatan: string | null;
+    template: {
+        tugas: string;
+        deskripsi: string | null;
+        kategori: string;
+        urutan: number;
+    };
 }
 
 export interface KaryawanDetail extends KaryawanListItem {

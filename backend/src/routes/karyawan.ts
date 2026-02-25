@@ -30,7 +30,7 @@ router.delete('/dokumen/:docId', karyawanController.deleteDokumen);
 // Onboarding & Offboarding
 router.get('/onboarding/list', onboardingController.getOnboardingList);
 router.get('/onboarding/checklist/:id', onboardingController.getEmployeeChecklist);
-router.put('/onboarding/checklist/:id/toggle', onboardingController.updateChecklistItem);
+router.put('/onboarding/checklist/:id/toggle', onboardingController.toggleChecklistItem);
 router.post('/onboarding/init/:id', onboardingController.initOnboarding);
 router.post('/onboarding/finalize/:id', onboardingController.finalizeOnboarding);
 

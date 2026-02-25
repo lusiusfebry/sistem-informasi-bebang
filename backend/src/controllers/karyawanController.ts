@@ -36,7 +36,10 @@ const includeFull = {
     atasan_langsung: true,
     mess_room: { include: { mess: true } },
     dokumen: { orderBy: { created_at: 'desc' as const } },
-    checklists: { orderBy: { id: 'asc' as const } }
+    checklists: {
+        include: { template: true },
+        orderBy: { id: 'asc' as const }
+    }
 };
 
 export const getAll = async (req: Request, res: Response) => {

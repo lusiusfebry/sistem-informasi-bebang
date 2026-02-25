@@ -83,6 +83,34 @@ export const getEmployeeChecklist = async (req: Request, res: Response) => {
     }
 };
 
+export const toggleChecklistItem = async (req: any, res: Response) => {
+    try {
+        const { id } = req.params; // karyawan_checklist.id
+
+        const current = await prisma.karyawan_checklist.findUnique({
+            where: { id: Number(id) }
+        });
+
+        if (!current) return res.status(404).json({ message: 'Item checklist tidak ditemukan' });
+
+        const is_selesai = !current.is_selesai;
+
+        const result = await prisma.karyawan_checklist.update({
+            where: { id: Number(id) },
+            data: {
+                is_selesai,
+                tanggal_selesai: is_selesai ? new Date() : null,
+                user_pemeriksa_id: req.user?.id
+            }
+        });
+
+        return res.json(result);
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ message: 'Terjadi kesalahan saat toggle item checklist' });
+    }
+};
+
 export const updateChecklistItem = async (req: any, res: Response) => {
     try {
         const { id } = req.params; // karyawan_checklist.id

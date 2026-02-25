@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, useSearchParams } from 'react-router-dom';
 import {
     Printer,
     Edit3,
@@ -62,9 +62,15 @@ export const ProfilKaryawan = () => {
     const [deleteType, setDeleteType] = useState<'employee' | 'document'>('employee');
     const [docToDelete, setDocToDelete] = useState<{ id: number; name: string } | null>(null);
     const [isDeleting, setIsDeleting] = useState(false);
+    const [searchParams, setSearchParams] = useSearchParams();
+    const activeTab = searchParams.get('tab') || 'personal';
+    const setActiveTab = (tab: string) => setSearchParams({ tab }, { replace: true });
+    const [isRefreshing, setIsRefreshing] = useState(false);
 
     const fetchDetail = useCallback(async () => {
-        setIsLoading(true);
+        if (!data) setIsLoading(true);
+        else setIsRefreshing(true);
+
         try {
             const response = await api.get(`/karyawan/${empId}`);
             setData(response.data);
@@ -74,8 +80,9 @@ export const ProfilKaryawan = () => {
             navigate('/hr/karyawan');
         } finally {
             setIsLoading(false);
+            setIsRefreshing(false);
         }
-    }, [empId, navigate]);
+    }, [empId, navigate, data]);
 
     useEffect(() => {
         if (empId) fetchDetail();
@@ -100,7 +107,7 @@ export const ProfilKaryawan = () => {
         if (empId) fetchQrCode();
     }, [empId]);
 
-    if (isLoading) {
+    if (isLoading && !data) {
         return (
             <div className="h-[60vh] flex items-center justify-center">
                 <div className="flex flex-col items-center gap-4">
@@ -243,7 +250,7 @@ export const ProfilKaryawan = () => {
             </nav>
 
             {/* Employee Header Card & Content wrapped in Tabs */}
-            <Tabs defaultValue="personal" className="w-full space-y-6">
+            <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full space-y-6">
                 <div className="bg-white dark:bg-[#1A2633] rounded-xl shadow-sm border border-slate-200 dark:border-slate-800 p-6 relative overflow-hidden">
                     {/* Background decorative element */}
                     <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none" />
@@ -271,7 +278,10 @@ export const ProfilKaryawan = () => {
                         {/* Info Block */}
                         <div className="flex-1 min-w-0">
                             <div className="flex flex-col gap-1 mb-3">
-                                <h1 className="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white leading-tight uppercase">{data.nama_lengkap}</h1>
+                                <div className="flex items-center gap-3">
+                                    <h1 className="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white leading-tight uppercase">{data.nama_lengkap}</h1>
+                                    {isRefreshing && <Loader2 className="w-5 h-5 text-primary animate-spin" />}
+                                </div>
                                 <div className="flex items-center gap-2 text-slate-500 dark:text-slate-400 text-sm font-medium">
                                     <CreditCard className="w-4 h-4" />
                                     <span>NIK: {data.nomor_induk_karyawan}</span>
@@ -287,125 +297,125 @@ export const ProfilKaryawan = () => {
                                     </Badge>
                                 </div>
                             </div>
-
-                            {/* Job Details Grid */}
-                            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 text-sm mt-4">
-                                <div className="flex flex-col bg-slate-50 dark:bg-slate-800/50 p-2.5 rounded-lg border border-slate-100 dark:border-slate-700/50">
-                                    <span className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-tight mb-1">Posisi</span>
-                                    <span className="font-semibold text-slate-800 dark:text-slate-200 truncate">{data.posisi_jabatan?.nama}</span>
-                                </div>
-                                <div className="flex flex-col bg-slate-50 dark:bg-slate-800/50 p-2.5 rounded-lg border border-slate-100 dark:border-slate-700/50">
-                                    <span className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-tight mb-1">Divisi</span>
-                                    <span className="font-semibold text-slate-800 dark:text-slate-200 truncate">{data.divisi?.nama}</span>
-                                </div>
-                                <div className="flex flex-col bg-slate-50 dark:bg-slate-800/50 p-2.5 rounded-lg border border-slate-100 dark:border-slate-700/50">
-                                    <span className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-tight mb-1">Departemen</span>
-                                    <span className="font-semibold text-slate-800 dark:text-slate-200 truncate">{data.department?.nama}</span>
-                                </div>
-                                <div className="flex flex-col bg-slate-50 dark:bg-slate-800/50 p-2.5 rounded-lg border border-slate-100 dark:border-slate-700/50">
-                                    <span className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-tight mb-1">Site</span>
-                                    <span className="font-semibold text-slate-800 dark:text-slate-200 truncate">{data.lokasi_kerja?.nama}</span>
-                                </div>
-                            </div>
                         </div>
 
-                        {/* QR Code & Actions */}
-                        <div className="flex flex-col items-center md:items-end gap-4 ml-auto min-w-[120px]">
-                            <div className="bg-white dark:bg-slate-900 p-2 rounded-lg border border-slate-200 dark:border-slate-700 shadow-sm">
-                                {qrCodeUrl ? (
-                                    <img src={qrCodeUrl} alt="QR Code" className="w-24 h-24" />
-                                ) : (
-                                    <div className="w-24 h-24 flex items-center justify-center bg-slate-100 dark:bg-slate-800 rounded">
-                                        <Loader2 className="w-6 h-6 animate-spin text-slate-300" />
-                                    </div>
-                                )}
+                        {/* Job Details Grid */}
+                        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 text-sm mt-4">
+                            <div className="flex flex-col bg-slate-50 dark:bg-slate-800/50 p-2.5 rounded-lg border border-slate-100 dark:border-slate-700/50">
+                                <span className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-tight mb-1">Posisi</span>
+                                <span className="font-semibold text-slate-800 dark:text-slate-200 truncate">{data.posisi_jabatan?.nama}</span>
                             </div>
-                            <div className="flex gap-2 w-full justify-end">
-                                <Button
-                                    variant="outline"
-                                    className="flex-1 md:flex-none h-10 px-4 font-bold text-primary bg-primary/10 hover:bg-primary/20 border-none rounded-lg transition-colors"
-                                    onClick={() => navigate(`/hr/karyawan/${empId}/edit`)}
-                                >
-                                    <Edit3 className="w-4 h-4 mr-2" />
-                                    Edit
-                                </Button>
-                                <Button
-                                    className="flex-1 md:flex-none h-10 px-4 font-bold text-slate-600 dark:text-slate-300 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 rounded-lg transition-colors"
-                                    onClick={() => setShowCetakModal(true)}
-                                >
-                                    <Printer className="w-4 h-4 mr-2" />
-                                    Cetak
-                                </Button>
-                                {data.status_karyawan?.nama === 'Aktif' && !data.status_proses && (
-                                    <Button
-                                        variant="outline"
-                                        className="flex-1 md:flex-none h-10 px-4 font-bold text-rose-600 bg-rose-50 hover:bg-rose-100 border-none rounded-lg transition-colors"
-                                        onClick={() => handleInitializeChecklist('offboarding')}
-                                        disabled={isProcessing}
-                                    >
-                                        {isProcessing ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : <UserMinus className="w-4 h-4 mr-2" />}
-                                        Offboarding
-                                    </Button>
-                                )}
-                                <Button
-                                    variant="outline"
-                                    className="flex-1 md:flex-none h-10 px-4 font-bold text-red-500 bg-red-50 hover:bg-red-100 border-red-100 dark:bg-red-950/30 dark:border-red-900/50 dark:hover:bg-red-900/40 rounded-lg transition-colors"
-                                    onClick={handleDeleteEmployee}
-                                >
-                                    <Trash2 className="w-4 h-4 mr-2" />
-                                    Hapus
-                                </Button>
+                            <div className="flex flex-col bg-slate-50 dark:bg-slate-800/50 p-2.5 rounded-lg border border-slate-100 dark:border-slate-700/50">
+                                <span className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-tight mb-1">Divisi</span>
+                                <span className="font-semibold text-slate-800 dark:text-slate-200 truncate">{data.divisi?.nama}</span>
+                            </div>
+                            <div className="flex flex-col bg-slate-50 dark:bg-slate-800/50 p-2.5 rounded-lg border border-slate-100 dark:border-slate-700/50">
+                                <span className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-tight mb-1">Departemen</span>
+                                <span className="font-semibold text-slate-800 dark:text-slate-200 truncate">{data.department?.nama}</span>
+                            </div>
+                            <div className="flex flex-col bg-slate-50 dark:bg-slate-800/50 p-2.5 rounded-lg border border-slate-100 dark:border-slate-700/50">
+                                <span className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-tight mb-1">Site</span>
+                                <span className="font-semibold text-slate-800 dark:text-slate-200 truncate">{data.lokasi_kerja?.nama}</span>
                             </div>
                         </div>
                     </div>
 
-                    {/* Tabs Navigation */}
-                    <div className="mt-8 border-t border-slate-200 dark:border-slate-700 -mx-6 px-6">
-                        <TabsList className="bg-transparent h-auto p-0 flex gap-6 md:gap-8 overflow-x-auto">
-                            <TabsTrigger
-                                value="personal"
-                                className="pb-3 pt-4 rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:text-primary data-[state=active]:bg-transparent font-semibold text-sm whitespace-nowrap flex items-center gap-2 shadow-none transition-all"
-                            >
-                                <User className="w-4 h-4" />
-                                Personal Information
-                            </TabsTrigger>
-                            <TabsTrigger
-                                value="pekerjaan"
-                                className="pb-3 pt-4 rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:text-primary data-[state=active]:bg-transparent font-semibold text-sm whitespace-nowrap flex items-center gap-2 shadow-none transition-all"
-                            >
-                                <Briefcase className="w-4 h-4" />
-                                Informasi HR
-                            </TabsTrigger>
-                            <TabsTrigger
-                                value="keluarga"
-                                className="pb-3 pt-4 rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:text-primary data-[state=active]:bg-transparent font-semibold text-sm whitespace-nowrap flex items-center gap-2 shadow-none transition-all"
-                            >
-                                <Users className="w-4 h-4" />
-                                Informasi Keluarga
-                            </TabsTrigger>
-                            <TabsTrigger
-                                value="dokumen"
-                                className="pb-3 pt-4 rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:text-primary data-[state=active]:bg-transparent font-semibold text-sm whitespace-nowrap flex items-center gap-2 shadow-none transition-all"
-                            >
-                                <FileText className="w-4 h-4" />
-                                Dokumen
-                            </TabsTrigger>
-                            {(data.status_proses === 'Onboarding' || data.status_proses === 'Offboarding' || (data.checklists && data.checklists.length > 0)) && (
-                                <TabsTrigger
-                                    value="checklist"
-                                    className="pb-3 pt-4 rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:text-primary data-[state=active]:bg-transparent font-semibold text-sm whitespace-nowrap flex items-center gap-2 shadow-none transition-all"
-                                >
-                                    <CheckCircle2 className="w-4 h-4" />
-                                    Checklist
-                                    {data.checklists && data.checklists.length > 0 && (
-                                        <Badge className="h-4 min-w-4 p-0 flex items-center justify-center text-[10px] bg-primary text-white">
-                                            {data.checklists.filter(c => !c.is_completed).length}
-                                        </Badge>
-                                    )}
-                                </TabsTrigger>
+                    {/* QR Code & Actions */}
+                    <div className="flex flex-col items-center md:items-end gap-4 ml-auto min-w-[120px]">
+                        <div className="bg-white dark:bg-slate-900 p-2 rounded-lg border border-slate-200 dark:border-slate-700 shadow-sm">
+                            {qrCodeUrl ? (
+                                <img src={qrCodeUrl} alt="QR Code" className="w-24 h-24" />
+                            ) : (
+                                <div className="w-24 h-24 flex items-center justify-center bg-slate-100 dark:bg-slate-800 rounded">
+                                    <Loader2 className="w-6 h-6 animate-spin text-slate-300" />
+                                </div>
                             )}
-                        </TabsList>
+                        </div>
+                        <div className="flex gap-2 w-full justify-end">
+                            <Button
+                                variant="outline"
+                                className="flex-1 md:flex-none h-10 px-4 font-bold text-primary bg-primary/10 hover:bg-primary/20 border-none rounded-lg transition-colors"
+                                onClick={() => navigate(`/hr/karyawan/${empId}/edit`)}
+                            >
+                                <Edit3 className="w-4 h-4 mr-2" />
+                                Edit
+                            </Button>
+                            <Button
+                                className="flex-1 md:flex-none h-10 px-4 font-bold text-slate-600 dark:text-slate-300 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 rounded-lg transition-colors"
+                                onClick={() => setShowCetakModal(true)}
+                            >
+                                <Printer className="w-4 h-4 mr-2" />
+                                Cetak
+                            </Button>
+                            {data.status_karyawan?.nama === 'Aktif' && (!data.status_proses || data.status_proses === 'Aktif') && (
+                                <Button
+                                    variant="outline"
+                                    className="flex-1 md:flex-none h-10 px-4 font-bold text-rose-600 bg-rose-50 hover:bg-rose-100 border-none rounded-lg transition-colors"
+                                    onClick={() => handleInitializeChecklist('offboarding')}
+                                    disabled={isProcessing}
+                                >
+                                    {isProcessing ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : <UserMinus className="w-4 h-4 mr-2" />}
+                                    Offboarding
+                                </Button>
+                            )}
+                            <Button
+                                variant="outline"
+                                className="flex-1 md:flex-none h-10 px-4 font-bold text-red-500 bg-red-50 hover:bg-red-100 border-red-100 dark:bg-red-950/30 dark:border-red-900/50 dark:hover:bg-red-900/40 rounded-lg transition-colors"
+                                onClick={handleDeleteEmployee}
+                            >
+                                <Trash2 className="w-4 h-4 mr-2" />
+                                Hapus
+                            </Button>
+                        </div>
                     </div>
+                </div>
+
+                {/* Tabs Navigation */}
+                <div className="mt-8 border-t border-slate-200 dark:border-slate-700 -mx-6 px-6">
+                    <TabsList className="bg-transparent h-auto p-0 flex gap-6 md:gap-8 overflow-x-auto">
+                        <TabsTrigger
+                            value="personal"
+                            className="pb-3 pt-4 rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:text-primary data-[state=active]:bg-transparent font-semibold text-sm whitespace-nowrap flex items-center gap-2 shadow-none transition-all"
+                        >
+                            <User className="w-4 h-4" />
+                            Personal Information
+                        </TabsTrigger>
+                        <TabsTrigger
+                            value="pekerjaan"
+                            className="pb-3 pt-4 rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:text-primary data-[state=active]:bg-transparent font-semibold text-sm whitespace-nowrap flex items-center gap-2 shadow-none transition-all"
+                        >
+                            <Briefcase className="w-4 h-4" />
+                            Informasi HR
+                        </TabsTrigger>
+                        <TabsTrigger
+                            value="keluarga"
+                            className="pb-3 pt-4 rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:text-primary data-[state=active]:bg-transparent font-semibold text-sm whitespace-nowrap flex items-center gap-2 shadow-none transition-all"
+                        >
+                            <Users className="w-4 h-4" />
+                            Informasi Keluarga
+                        </TabsTrigger>
+                        <TabsTrigger
+                            value="dokumen"
+                            className="pb-3 pt-4 rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:text-primary data-[state=active]:bg-transparent font-semibold text-sm whitespace-nowrap flex items-center gap-2 shadow-none transition-all"
+                        >
+                            <FileText className="w-4 h-4" />
+                            Dokumen
+                        </TabsTrigger>
+                        {(data.status_proses === 'Onboarding' || data.status_proses === 'Offboarding' || (data.checklists && data.checklists.length > 0)) && (
+                            <TabsTrigger
+                                value="checklist"
+                                className="pb-3 pt-4 rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:text-primary data-[state=active]:bg-transparent font-semibold text-sm whitespace-nowrap flex items-center gap-2 shadow-none transition-all"
+                            >
+                                <CheckCircle2 className="w-4 h-4" />
+                                Checklist
+                                {data.checklists && data.checklists.length > 0 && (
+                                    <Badge className="h-4 min-w-4 p-0 flex items-center justify-center text-[10px] bg-primary text-white">
+                                        {data.checklists.filter(c => !c.is_selesai).length}
+                                    </Badge>
+                                )}
+                            </TabsTrigger>
+                        )}
+                    </TabsList>
                 </div>
 
                 <TabsContent value="personal" className="space-y-6 focus-visible:outline-none">
@@ -1328,9 +1338,9 @@ export const ProfilKaryawan = () => {
                             ) : (
                                 <div className="flex items-center gap-3">
                                     <Badge variant="outline" className="font-mono font-bold text-primary border-primary/20 bg-primary/5">
-                                        {data.checklists.filter(c => c.is_completed).length} / {data.checklists.length} Selesai
+                                        {data.checklists.filter(c => c.is_selesai).length} / {data.checklists.length} Selesai
                                     </Badge>
-                                    {data.checklists.every(c => c.is_completed) && (
+                                    {data.checklists.every(c => c.is_selesai) && (
                                         <Button
                                             onClick={(e) => { e.stopPropagation(); handleFinalizeProcess(data.status_proses === 'Onboarding' ? 'onboarding' : 'offboarding'); }}
                                             disabled={isProcessing}
@@ -1349,27 +1359,27 @@ export const ProfilKaryawan = () => {
                                 <div
                                     key={item.id}
                                     onClick={() => handleToggleChecklist(item.id)}
-                                    className={`flex items-center gap-4 p-4 rounded-xl border transition-all cursor-pointer group ${item.is_completed
+                                    className={`flex items-center gap-4 p-4 rounded-xl border transition-all cursor-pointer group ${item.is_selesai
                                         ? 'bg-slate-50 dark:bg-slate-800/50 border-emerald-100 dark:border-emerald-900/20 opacity-80'
                                         : 'bg-white dark:bg-slate-900 border-slate-100 dark:border-slate-800 hover:border-primary/50 hover:shadow-md'
                                         }`}
                                 >
-                                    <div className={`p-2 rounded-full transition-colors ${item.is_completed
+                                    <div className={`p-2 rounded-full transition-colors ${item.is_selesai
                                         ? 'bg-emerald-100 text-emerald-600'
                                         : 'bg-slate-100 text-slate-400 group-hover:bg-primary/10 group-hover:text-primary'
                                         }`}>
-                                        {item.is_completed ? <Check className="w-4 h-4" /> : <Circle className="w-4 h-4" />}
+                                        {item.is_selesai ? <Check className="w-4 h-4" /> : <Circle className="w-4 h-4" />}
                                     </div>
                                     <div className="flex-1">
-                                        <p className={`text-sm font-bold transition-all ${item.is_completed ? 'text-slate-500 line-through' : 'text-slate-900 dark:text-white'}`}>
-                                            {item.tasks}
+                                        <p className={`text-sm font-bold transition-all ${item.is_selesai ? 'text-slate-500 line-through' : 'text-slate-900 dark:text-white'}`}>
+                                            {item.template.tugas}
                                         </p>
-                                        <p className="text-[10px] font-bold text-slate-400 uppercase tracking-tight">{item.kategori}</p>
+                                        <p className="text-[10px] font-bold text-slate-400 uppercase tracking-tight">{item.template.kategori}</p>
                                     </div>
-                                    {item.completed_at && (
+                                    {item.tanggal_selesai && (
                                         <div className="text-right">
                                             <p className="text-[10px] font-bold text-emerald-600 uppercase">Selesai</p>
-                                            <p className="text-[10px] text-slate-400">{format(new Date(item.completed_at), 'dd MMM yyyy HH:mm', { locale: id })}</p>
+                                            <p className="text-[10px] text-slate-400">{format(new Date(item.tanggal_selesai), 'dd MMM yyyy HH:mm', { locale: id })}</p>
                                         </div>
                                     )}
                                 </div>
@@ -1393,13 +1403,15 @@ export const ProfilKaryawan = () => {
                 itemName={deleteType === 'employee' ? data?.nama_lengkap : docToDelete?.name}
             />
 
-            {data && (
-                <ModalCetakIDCard
-                    open={showCetakModal}
-                    onClose={() => setShowCetakModal(false)}
-                    karyawanList={[data]}
-                />
-            )}
+            {
+                data && (
+                    <ModalCetakIDCard
+                        open={showCetakModal}
+                        onClose={() => setShowCetakModal(false)}
+                        karyawanList={[data]}
+                    />
+                )
+            }
         </div>
     );
 };

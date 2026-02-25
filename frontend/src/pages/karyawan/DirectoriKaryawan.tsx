@@ -13,7 +13,8 @@ import {
     Briefcase,
     Loader2,
     X,
-    Trash2
+    Trash2,
+    UserMinus
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -82,6 +83,7 @@ export const DirectoriKaryawan = () => {
     const [deleteType, setDeleteType] = useState<'single' | 'bulk'>('single');
     const [itemToDelete, setItemToDelete] = useState<{ id: number; nama: string } | null>(null);
     const [isDeleting, setIsDeleting] = useState(false);
+    const [isProcessing, setIsProcessing] = useState(false);
 
     // Initial Fetch (Master Data)
     useEffect(() => {
@@ -148,10 +150,24 @@ export const DirectoriKaryawan = () => {
     };
 
     const toggleSelection = (id: number) => {
-        const next = new Set(selectedIds);
-        if (next.has(id)) next.delete(id);
-        else next.add(id);
-        setSelectedIds(next);
+        const newSelected = new Set(selectedIds);
+        if (newSelected.has(id)) newSelected.delete(id);
+        else newSelected.add(id);
+        setSelectedIds(newSelected);
+    };
+
+    const handleInitializeOffboarding = async (id: number) => {
+        setIsProcessing(true);
+        try {
+            const res = await api.post(`/karyawan/offboarding/init/${id}`);
+            toast.success(res.data.message);
+            fetchData(); // Refresh list
+        } catch (error) {
+            console.error(error);
+            toast.error('Gagal inisialisasi offboarding');
+        } finally {
+            setIsProcessing(false);
+        }
     };
 
     const handleExport = async () => {
@@ -493,6 +509,21 @@ export const DirectoriKaryawan = () => {
                                 >
                                     Lihat Profil
                                 </Button>
+                                {it.status_karyawan.nama === 'Aktif' && (!it.status_proses || it.status_proses === 'Aktif') && (
+                                    <Button
+                                        variant="secondary"
+                                        size="sm"
+                                        className="h-8 rounded-xl px-4 text-[9px] font-black uppercase tracking-widest bg-rose-50 text-rose-600 hover:bg-rose-100 transition-all border-none"
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            handleInitializeOffboarding(it.id);
+                                        }}
+                                        disabled={isProcessing}
+                                    >
+                                        {isProcessing ? <Loader2 className="w-3 h-3 animate-spin mr-1" /> : <UserMinus className="w-3 h-3 mr-1" />}
+                                        Offboarding
+                                    </Button>
+                                )}
                                 <Button
                                     variant="secondary"
                                     size="sm"

@@ -129,10 +129,10 @@ model status_karyawan {
 }
 
 model karyawan {
-  id                   Int                @id @default(autoincrement())
+  id                   Int                  @id @default(autoincrement())
   foto_karyawan        String?
   nama_lengkap         String
-  nomor_induk_karyawan String             @unique
+  nomor_induk_karyawan String               @unique
   divisi_id            Int?
   department_id        Int?
   manager_id           Int?
@@ -142,21 +142,21 @@ model karyawan {
   nomor_handphone      String?
   status_karyawan_id   Int?
   lokasi_kerja_id      Int?
-  status_proses        String             @default("Aktif") // Onboarding, Aktif, Offboarding, Selesai
-  created_at           DateTime           @default(now())
-  updated_at           DateTime           @updatedAt
+  created_at           DateTime             @default(now())
+  updated_at           DateTime             @updatedAt
   mess_room_id         Int?
-  managed_departments  department[]       @relation("DepartmentManager")
-  atasan_langsung      karyawan?          @relation("KaryawanAtasan", fields: [atasan_langsung_id], references: [id])
-  bawahan              karyawan[]         @relation("KaryawanAtasan")
-  department           department?        @relation("KaryawanDepartment", fields: [department_id], references: [id])
-  divisi               divisi?            @relation(fields: [divisi_id], references: [id])
-  lokasi_kerja         lokasi_kerja?      @relation(fields: [lokasi_kerja_id], references: [id])
-  manager              karyawan?          @relation("KaryawanManager", fields: [manager_id], references: [id])
-  managed_by           karyawan[]         @relation("KaryawanManager")
-  mess_room            mess_room?         @relation(fields: [mess_room_id], references: [id])
-  posisi_jabatan       posisi_jabatan?    @relation(fields: [posisi_jabatan_id], references: [id])
-  status_karyawan      status_karyawan?   @relation(fields: [status_karyawan_id], references: [id])
+  status_proses        String               @default("Aktif")
+  managed_departments  department[]         @relation("DepartmentManager")
+  atasan_langsung      karyawan?            @relation("KaryawanAtasan", fields: [atasan_langsung_id], references: [id])
+  bawahan              karyawan[]           @relation("KaryawanAtasan")
+  department           department?          @relation("KaryawanDepartment", fields: [department_id], references: [id])
+  divisi               divisi?              @relation(fields: [divisi_id], references: [id])
+  lokasi_kerja         lokasi_kerja?        @relation(fields: [lokasi_kerja_id], references: [id])
+  manager              karyawan?            @relation("KaryawanManager", fields: [manager_id], references: [id])
+  managed_by           karyawan[]           @relation("KaryawanManager")
+  mess_room            mess_room?           @relation(fields: [mess_room_id], references: [id])
+  posisi_jabatan       posisi_jabatan?      @relation(fields: [posisi_jabatan_id], references: [id])
+  status_karyawan      status_karyawan?     @relation(fields: [status_karyawan_id], references: [id])
   anak                 karyawan_anak[]
   checklists           karyawan_checklist[]
   dokumen              karyawan_dokumen[]
@@ -180,12 +180,10 @@ model karyawan_tag {
 model karyawan_personal {
   id                     Int       @id @default(autoincrement())
   karyawan_id            Int       @unique
-  nama_panggilan         String?
   jenis_kelamin          String?
   tempat_lahir           String?
   tanggal_lahir          DateTime?
   email_pribadi          String?
-  nomor_handphone_1      String?
   agama                  String?
   golongan_darah         String?
   nomor_kartu_keluarga   String?
@@ -216,6 +214,8 @@ model karyawan_personal {
   cabang_bank            String?
   nama_ayah              String?
   nama_ibu               String?
+  nama_panggilan         String?
+  nomor_handphone_1      String?
   karyawan               karyawan  @relation(fields: [karyawan_id], references: [id], onDelete: Cascade)
 }
 
@@ -361,15 +361,15 @@ model karyawan_dokumen {
 }
 
 model checklist_template {
-  id          Int                  @id @default(autoincrement())
-  kategori    String               // Onboarding, Offboarding
-  tugas       String
-  deskripsi   String?
-  urutan      Int                  @default(0)
-  is_wajib    Boolean              @default(true)
-  created_at  DateTime             @default(now())
-  updated_at  DateTime             @updatedAt
-  checklists  karyawan_checklist[]
+  id         Int                  @id @default(autoincrement())
+  kategori   String
+  tugas      String
+  deskripsi  String?
+  urutan     Int                  @default(0)
+  is_wajib   Boolean              @default(true)
+  created_at DateTime             @default(now())
+  updated_at DateTime             @updatedAt
+  checklists karyawan_checklist[]
 }
 
 model karyawan_checklist {
