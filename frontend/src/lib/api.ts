@@ -12,4 +12,22 @@ api.interceptors.request.use((config) => {
     return config;
 });
 
+api.interceptors.response.use(
+    (response) => response,
+    (error) => {
+        if (error.response && error.response.status === 401) {
+            localStorage.removeItem('token');
+            sessionStorage.removeItem('token');
+            localStorage.removeItem('user');
+            sessionStorage.removeItem('user');
+
+            // Avoid infinite redirect if already on login page
+            if (window.location.pathname !== '/login') {
+                window.location.href = '/login';
+            }
+        }
+        return Promise.reject(error);
+    }
+);
+
 export default api;

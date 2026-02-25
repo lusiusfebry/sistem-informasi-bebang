@@ -26,6 +26,12 @@ import {
     Tags,
     PhoneCall,
     Target,
+    CheckCircle2,
+    Circle,
+    PlayCircle,
+    Flag,
+    Check,
+    UserMinus
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -49,6 +55,7 @@ export const ProfilKaryawan = () => {
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
     const [qrCodeUrl, setQrCodeUrl] = useState<string | null>(null);
     const [showCetakModal, setShowCetakModal] = useState(false);
+    const [isProcessing, setIsProcessing] = useState(false);
 
     // Delete Modal state
     const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
@@ -186,6 +193,44 @@ export const ProfilKaryawan = () => {
         }
     };
 
+    const handleToggleChecklist = async (checklistId: number) => {
+        try {
+            await api.put(`/karyawan/onboarding/checklist/${checklistId}/toggle`);
+            fetchDetail();
+        } catch (error) {
+            console.error(error);
+            toast.error('Gagal memperbarui checklist');
+        }
+    };
+
+    const handleInitializeChecklist = async (type: 'onboarding' | 'offboarding') => {
+        setIsProcessing(true);
+        try {
+            const res = await api.post(`/karyawan/${type}/init/${empId}`);
+            toast.success(res.data.message);
+            fetchDetail();
+        } catch (error) {
+            console.error(error);
+            toast.error('Gagal inisialisasi checklist');
+        } finally {
+            setIsProcessing(false);
+        }
+    };
+
+    const handleFinalizeProcess = async (type: 'onboarding' | 'offboarding') => {
+        setIsProcessing(true);
+        try {
+            const res = await api.post(`/karyawan/${type}/finalize/${empId}`);
+            toast.success(res.data.message);
+            fetchDetail();
+        } catch (error) {
+            console.error(error);
+            toast.error('Gagal menyelesaikan proses');
+        } finally {
+            setIsProcessing(false);
+        }
+    };
+
     return (
         <div className="space-y-8 pb-20 animate-in fade-in duration-500">
             {/* Breadcrumbs */}
@@ -291,6 +336,17 @@ export const ProfilKaryawan = () => {
                                     <Printer className="w-4 h-4 mr-2" />
                                     Cetak
                                 </Button>
+                                {data.status_karyawan?.nama === 'Aktif' && !data.status_proses && (
+                                    <Button
+                                        variant="outline"
+                                        className="flex-1 md:flex-none h-10 px-4 font-bold text-rose-600 bg-rose-50 hover:bg-rose-100 border-none rounded-lg transition-colors"
+                                        onClick={() => handleInitializeChecklist('offboarding')}
+                                        disabled={isProcessing}
+                                    >
+                                        {isProcessing ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : <UserMinus className="w-4 h-4 mr-2" />}
+                                        Offboarding
+                                    </Button>
+                                )}
                                 <Button
                                     variant="outline"
                                     className="flex-1 md:flex-none h-10 px-4 font-bold text-red-500 bg-red-50 hover:bg-red-100 border-red-100 dark:bg-red-950/30 dark:border-red-900/50 dark:hover:bg-red-900/40 rounded-lg transition-colors"
@@ -334,6 +390,20 @@ export const ProfilKaryawan = () => {
                                 <FileText className="w-4 h-4" />
                                 Dokumen
                             </TabsTrigger>
+                            {(data.status_proses === 'Onboarding' || data.status_proses === 'Offboarding' || (data.checklists && data.checklists.length > 0)) && (
+                                <TabsTrigger
+                                    value="checklist"
+                                    className="pb-3 pt-4 rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:text-primary data-[state=active]:bg-transparent font-semibold text-sm whitespace-nowrap flex items-center gap-2 shadow-none transition-all"
+                                >
+                                    <CheckCircle2 className="w-4 h-4" />
+                                    Checklist
+                                    {data.checklists && data.checklists.length > 0 && (
+                                        <Badge className="h-4 min-w-4 p-0 flex items-center justify-center text-[10px] bg-primary text-white">
+                                            {data.checklists.filter(c => !c.is_completed).length}
+                                        </Badge>
+                                    )}
+                                </TabsTrigger>
+                            )}
                         </TabsList>
                     </div>
                 </div>
@@ -1233,6 +1303,80 @@ export const ProfilKaryawan = () => {
                         </div>
                     </div>
                 </TabsContent>
+
+                <TabsContent value="checklist" className="space-y-6 focus-visible:outline-none">
+                    <div className="bg-white dark:bg-[#1A2633] rounded-xl shadow-sm border border-slate-200 dark:border-slate-800 p-6">
+                        <div className="flex items-center justify-between mb-8 pb-4 border-b border-slate-100 dark:border-slate-700/50">
+                            <div className="flex items-center gap-3">
+                                <div className={`p-2 rounded-lg ${data.status_proses === 'Onboarding' ? 'bg-blue-50 text-blue-600' : 'bg-rose-50 text-rose-600'}`}>
+                                    <CheckCircle2 className="w-5 h-5" />
+                                </div>
+                                <div>
+                                    <h3 className="text-lg font-bold text-slate-900 dark:text-white">Checklist {data.status_proses}</h3>
+                                    <p className="text-xs text-slate-500">Kelola tugas rutin untuk proses {data.status_proses?.toLowerCase()}</p>
+                                </div>
+                            </div>
+                            {(!data.checklists || data.checklists.length === 0) ? (
+                                <Button
+                                    onClick={(e) => { e.stopPropagation(); handleInitializeChecklist(data.status_proses === 'Onboarding' ? 'onboarding' : 'offboarding'); }}
+                                    disabled={isProcessing}
+                                    className="rounded-xl font-bold"
+                                >
+                                    {isProcessing ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : <PlayCircle className="w-4 h-4 mr-2" />}
+                                    Mulai Proses
+                                </Button>
+                            ) : (
+                                <div className="flex items-center gap-3">
+                                    <Badge variant="outline" className="font-mono font-bold text-primary border-primary/20 bg-primary/5">
+                                        {data.checklists.filter(c => c.is_completed).length} / {data.checklists.length} Selesai
+                                    </Badge>
+                                    {data.checklists.every(c => c.is_completed) && (
+                                        <Button
+                                            onClick={(e) => { e.stopPropagation(); handleFinalizeProcess(data.status_proses === 'Onboarding' ? 'onboarding' : 'offboarding'); }}
+                                            disabled={isProcessing}
+                                            className={`rounded-xl font-bold ${data.status_proses === 'Onboarding' ? 'bg-emerald-600 hover:bg-emerald-700' : 'bg-rose-600 hover:bg-rose-700'}`}
+                                        >
+                                            {isProcessing ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : <Flag className="w-4 h-4 mr-2" />}
+                                            Selesaikan {data.status_proses}
+                                        </Button>
+                                    )}
+                                </div>
+                            )}
+                        </div>
+
+                        <div className="grid gap-3">
+                            {data.checklists?.map((item) => (
+                                <div
+                                    key={item.id}
+                                    onClick={() => handleToggleChecklist(item.id)}
+                                    className={`flex items-center gap-4 p-4 rounded-xl border transition-all cursor-pointer group ${item.is_completed
+                                        ? 'bg-slate-50 dark:bg-slate-800/50 border-emerald-100 dark:border-emerald-900/20 opacity-80'
+                                        : 'bg-white dark:bg-slate-900 border-slate-100 dark:border-slate-800 hover:border-primary/50 hover:shadow-md'
+                                        }`}
+                                >
+                                    <div className={`p-2 rounded-full transition-colors ${item.is_completed
+                                        ? 'bg-emerald-100 text-emerald-600'
+                                        : 'bg-slate-100 text-slate-400 group-hover:bg-primary/10 group-hover:text-primary'
+                                        }`}>
+                                        {item.is_completed ? <Check className="w-4 h-4" /> : <Circle className="w-4 h-4" />}
+                                    </div>
+                                    <div className="flex-1">
+                                        <p className={`text-sm font-bold transition-all ${item.is_completed ? 'text-slate-500 line-through' : 'text-slate-900 dark:text-white'}`}>
+                                            {item.tasks}
+                                        </p>
+                                        <p className="text-[10px] font-bold text-slate-400 uppercase tracking-tight">{item.kategori}</p>
+                                    </div>
+                                    {item.completed_at && (
+                                        <div className="text-right">
+                                            <p className="text-[10px] font-bold text-emerald-600 uppercase">Selesai</p>
+                                            <p className="text-[10px] text-slate-400">{format(new Date(item.completed_at), 'dd MMM yyyy HH:mm', { locale: id })}</p>
+                                        </div>
+                                    )}
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </TabsContent>
             </Tabs>
 
             <ModernDeleteDialog
@@ -1248,6 +1392,14 @@ export const ProfilKaryawan = () => {
                 }
                 itemName={deleteType === 'employee' ? data?.nama_lengkap : docToDelete?.name}
             />
+
+            {data && (
+                <ModalCetakIDCard
+                    open={showCetakModal}
+                    onClose={() => setShowCetakModal(false)}
+                    karyawanList={[data]}
+                />
+            )}
         </div>
     );
 };

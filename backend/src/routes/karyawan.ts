@@ -1,5 +1,7 @@
 import { Router } from 'express';
 import * as karyawanController from '../controllers/karyawanController';
+import * as onboardingController from '../controllers/onboardingController';
+import * as offboardingController from '../controllers/offboardingController';
 import { authMiddleware } from '../middleware/auth';
 import { uploadFoto, uploadExcel, uploadDokumen } from '../middleware/upload';
 
@@ -24,5 +26,16 @@ router.delete('/:id', karyawanController.remove);
 // Dokumen Karyawan
 router.post('/:id/dokumen', uploadDokumen.single('file'), karyawanController.uploadDokumen);
 router.delete('/dokumen/:docId', karyawanController.deleteDokumen);
+
+// Onboarding & Offboarding
+router.get('/onboarding/list', onboardingController.getOnboardingList);
+router.get('/onboarding/checklist/:id', onboardingController.getEmployeeChecklist);
+router.put('/onboarding/checklist/:id/toggle', onboardingController.updateChecklistItem);
+router.post('/onboarding/init/:id', onboardingController.initOnboarding);
+router.post('/onboarding/finalize/:id', onboardingController.finalizeOnboarding);
+
+router.get('/offboarding/list', offboardingController.getOffboardingList);
+router.post('/offboarding/init/:id', offboardingController.initOffboarding);
+router.post('/offboarding/finalize/:id', offboardingController.finalizeOffboarding);
 
 export default router;

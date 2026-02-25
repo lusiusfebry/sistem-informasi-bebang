@@ -41,6 +41,7 @@ export interface KaryawanPersonal {
     nomor_ktp: string | null;
     nomor_npwp: string | null;
     nomor_bpjs: string | null;
+    nomor_bpjs_ketenagakerjaan: string | null;
     no_nik_kk: string | null;
     status_pajak: string | null;
     alamat_domisili: string | null;
@@ -156,9 +157,18 @@ export interface KaryawanDokumen {
     created_at: string;
 }
 
+export interface KaryawanChecklist {
+    id: number;
+    tasks: string;
+    kategori: string;
+    is_completed: boolean;
+    completed_at: string | null;
+}
+
 export interface KaryawanDetail extends KaryawanListItem {
     email_perusahaan: string | null;
     nomor_handphone: string | null;
+    status_proses: string;
     manager: { nama_lengkap: string; nomor_induk_karyawan: string } | null;
     atasan_langsung: { nama_lengkap: string; nomor_induk_karyawan: string } | null;
     personal: KaryawanPersonal | null;
@@ -167,6 +177,7 @@ export interface KaryawanDetail extends KaryawanListItem {
     saudara: KaryawanSaudara[];
     dokumen: KaryawanDokumen[];
     keluarga: KaryawanKeluarga | null;
+    checklists?: KaryawanChecklist[];
     mess_room?: {
         nomor_kamar: string;
         mess: {
@@ -219,6 +230,7 @@ export const karyawanPersonalSchema = z.object({
     nomor_ktp: z.string().optional().nullable(),
     nomor_npwp: z.string().optional().nullable(),
     nomor_bpjs: z.string().optional().nullable(),
+    nomor_bpjs_ketenagakerjaan: z.string().optional().nullable(),
     no_nik_kk: z.string().optional().nullable(),
     status_pajak: z.string().optional().nullable(),
     alamat_domisili: z.string().optional().nullable(),

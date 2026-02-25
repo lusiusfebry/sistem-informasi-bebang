@@ -13,7 +13,16 @@ import {
     Plus,
     Trash2,
     Loader2,
-    Camera
+    Camera,
+    MapPin,
+    CreditCard,
+    GraduationCap,
+    Truck,
+    Phone,
+    Users,
+    Users2,
+    Baby,
+    Info
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -543,7 +552,7 @@ export const FormKaryawan = ({ mode = 'add' }: { mode?: 'add' | 'edit' }) => {
                         <CardHeader className="bg-slate-50/50 border-b border-slate-50 px-8 py-6">
                             <CardTitle className="text-sm font-black uppercase tracking-widest text-primary flex items-center gap-2">
                                 <FileText className="w-4 h-4" />
-                                Data Biodata & Kontak Pribadi
+                                Biodata & Kontak Pribadi
                             </CardTitle>
                         </CardHeader>
                         <CardContent className="p-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -570,28 +579,28 @@ export const FormKaryawan = ({ mode = 'add' }: { mode?: 'add' | 'edit' }) => {
                                 <Input {...register('personal.email_pribadi')} className="h-12 rounded-xl" />
                             </div>
                             <div className="space-y-2">
+                                <Label className="text-[10px] font-black uppercase tracking-widest text-slate-500">No HP 1</Label>
+                                <Input {...register('personal.nomor_handphone_1')} className="h-12 rounded-xl" />
+                            </div>
+                            <div className="space-y-2">
+                                <Label className="text-[10px] font-black uppercase tracking-widest text-slate-500">No HP 2</Label>
+                                <Input {...register('personal.nomor_handphone_2')} className="h-12 rounded-xl" />
+                            </div>
+                            <div className="space-y-2">
+                                <Label className="text-[10px] font-black uppercase tracking-widest text-slate-500">Telp Rumah 1</Label>
+                                <Input {...register('personal.nomor_telepon_rumah_1')} className="h-12 rounded-xl" />
+                            </div>
+                            <div className="space-y-2">
+                                <Label className="text-[10px] font-black uppercase tracking-widest text-slate-500">Telp Rumah 2</Label>
+                                <Input {...register('personal.nomor_telepon_rumah_2')} className="h-12 rounded-xl" />
+                            </div>
+                            <div className="space-y-2">
                                 <Label className="text-[10px] font-black uppercase tracking-widest text-slate-500">Agama</Label>
                                 <Input {...register('personal.agama')} className="h-12 rounded-xl" />
                             </div>
                             <div className="space-y-2">
                                 <Label className="text-[10px] font-black uppercase tracking-widest text-slate-500">Golongan Darah</Label>
                                 <Input {...register('personal.golongan_darah')} className="h-12 rounded-xl" />
-                            </div>
-                            <div className="space-y-2">
-                                <Label className="text-[10px] font-black uppercase tracking-widest text-slate-500">No. Kartu Keluarga</Label>
-                                <Input {...register('personal.nomor_kartu_keluarga')} className="h-12 rounded-xl" />
-                            </div>
-                            <div className="space-y-2">
-                                <Label className="text-[10px] font-black uppercase tracking-widest text-slate-500">No. KTP</Label>
-                                <Input {...register('personal.nomor_ktp')} className="h-12 rounded-xl" />
-                            </div>
-                            <div className="space-y-2">
-                                <Label className="text-[10px] font-black uppercase tracking-widest text-slate-500">No. NPWP</Label>
-                                <Input {...register('personal.nomor_npwp')} className="h-12 rounded-xl" />
-                            </div>
-                            <div className="space-y-2">
-                                <Label className="text-[10px] font-black uppercase tracking-widest text-slate-500">No. BPJS</Label>
-                                <Input {...register('personal.nomor_bpjs')} className="h-12 rounded-xl" />
                             </div>
                             <div className="space-y-2">
                                 <Label className="text-[10px] font-black uppercase tracking-widest text-slate-500">Status Pernikahan</Label>
@@ -605,19 +614,20 @@ export const FormKaryawan = ({ mode = 'add' }: { mode?: 'add' | 'edit' }) => {
                                     </SelectContent>
                                 </Select>
                             </div>
+                        </CardContent>
+
+                        <CardHeader className="bg-slate-50/50 border-y border-slate-50 px-8 py-6">
+                            <CardTitle className="text-sm font-black uppercase tracking-widest text-primary flex items-center gap-2">
+                                <MapPin className="w-4 h-4" />
+                                Data Alamat
+                            </CardTitle>
+                        </CardHeader>
+                        <CardContent className="p-8 space-y-6">
                             <div className="space-y-2">
-                                <Label className="text-[10px] font-black uppercase tracking-widest text-slate-500">Nama Ayah Kandung</Label>
-                                <Input {...register('personal.nama_ayah')} className="h-12 rounded-xl" />
-                            </div>
-                            <div className="space-y-2">
-                                <Label className="text-[10px] font-black uppercase tracking-widest text-slate-500">Nama Ibu Kandung</Label>
-                                <Input {...register('personal.nama_ibu')} className="h-12 rounded-xl" />
-                            </div>
-                            <div className="space-y-2 col-span-full">
                                 <Label className="text-[10px] font-black uppercase tracking-widest text-slate-500">Alamat KTP</Label>
                                 <Input {...register('personal.alamat_ktp')} className="h-12 rounded-xl" />
                             </div>
-                            <div className="grid grid-cols-2 gap-4 col-span-full">
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
                                 <div className="space-y-2">
                                     <Label className="text-[10px] font-black uppercase tracking-widest text-slate-500">Kota KTP</Label>
                                     <Input {...register('personal.kota_ktp')} className="h-12 rounded-xl" />
@@ -627,76 +637,79 @@ export const FormKaryawan = ({ mode = 'add' }: { mode?: 'add' | 'edit' }) => {
                                     <Input {...register('personal.provinsi_ktp')} className="h-12 rounded-xl" />
                                 </div>
                             </div>
-                            <div className="space-y-2 col-span-full">
+                            <div className="space-y-2">
                                 <Label className="text-[10px] font-black uppercase tracking-widest text-slate-500">Alamat Domisili</Label>
                                 <Input {...register('personal.alamat_domisili')} className="h-12 rounded-xl" />
                             </div>
+                        </CardContent>
+
+                        <CardHeader className="bg-slate-50/50 border-y border-slate-50 px-8 py-6">
+                            <CardTitle className="text-sm font-black uppercase tracking-widest text-primary flex items-center gap-2">
+                                <CreditCard className="w-4 h-4" />
+                                Keuangan & Pajak
+                            </CardTitle>
+                        </CardHeader>
+                        <CardContent className="p-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
                             <div className="space-y-2">
-                                <Label className="text-[10px] font-black uppercase tracking-widest text-slate-500">Nama Bank</Label>
-                                <Input {...register('personal.nama_bank')} className="h-12 rounded-xl" />
-                            </div>
-                            <div className="space-y-2">
-                                <Label className="text-[10px] font-black uppercase tracking-widest text-slate-500">No. Rekening</Label>
+                                <Label className="text-[10px] font-black uppercase tracking-widest text-slate-500">Nomor Rekening</Label>
                                 <Input {...register('personal.nomor_rekening')} className="h-12 rounded-xl" />
                             </div>
                             <div className="space-y-2">
-                                <Label className="text-[10px] font-black uppercase tracking-widest text-slate-500">Nama Pemegang Rekening</Label>
+                                <Label className="text-[10px) font-black uppercase tracking-widest text-slate-500">Nama Pemegang Rekening</Label>
                                 <Input {...register('personal.nama_pemegang_rekening')} className="h-12 rounded-xl" />
                             </div>
                             <div className="space-y-2">
-                                <Label className="text-[10px] font-black uppercase tracking-widest text-slate-500">Cabang Bank</Label>
+                                <Label className="text-[10px) font-black uppercase tracking-widest text-slate-500">Nama Bank</Label>
+                                <Input {...register('personal.nama_bank')} className="h-12 rounded-xl" />
+                            </div>
+                            <div className="space-y-2">
+                                <Label className="text-[10px) font-black uppercase tracking-widest text-slate-500">Cabang Bank</Label>
                                 <Input {...register('personal.cabang_bank')} className="h-12 rounded-xl" />
                             </div>
-
-                            {/* Additional Information */}
-                            <div className="col-span-full border-t border-slate-100 pt-8 mt-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                                <div className="space-y-2">
-                                    <Label className="text-[10px] font-black uppercase tracking-widest text-slate-500">No. Nik di KK</Label>
-                                    <Input {...register('personal.no_nik_kk')} className="h-12 rounded-xl" />
-                                </div>
-                                <div className="space-y-2">
-                                    <Label className="text-[10px] font-black uppercase tracking-widest text-slate-500">Status Pajak</Label>
-                                    <Input {...register('personal.status_pajak')} className="h-12 rounded-xl" />
-                                </div>
-                                <div className="space-y-2">
-                                    <Label className="text-[10px] font-black uppercase tracking-widest text-slate-500">No. HP 2</Label>
-                                    <Input {...register('personal.nomor_handphone_2')} className="h-12 rounded-xl" />
-                                </div>
-                                <div className="space-y-2">
-                                    <Label className="text-[10px] font-black uppercase tracking-widest text-slate-500">Telp Rumah 1</Label>
-                                    <Input {...register('personal.nomor_telepon_rumah_1')} className="h-12 rounded-xl" />
-                                </div>
-                                <div className="space-y-2">
-                                    <Label className="text-[10px] font-black uppercase tracking-widest text-slate-500">Telp Rumah 2</Label>
-                                    <Input {...register('personal.nomor_telepon_rumah_2')} className="h-12 rounded-xl" />
-                                </div>
+                            <div className="space-y-2">
+                                <Label className="text-[10px) font-black uppercase tracking-widest text-slate-500">No. Kartu Keluarga</Label>
+                                <Input {...register('personal.nomor_kartu_keluarga')} className="h-12 rounded-xl" />
                             </div>
+                            <div className="space-y-2">
+                                <Label className="text-[10px) font-black uppercase tracking-widest text-slate-500">No. KTP / NIK</Label>
+                                <Input {...register('personal.nomor_ktp')} className="h-12 rounded-xl" />
+                            </div>
+                            <div className="space-y-2">
+                                <Label className="text-[10px) font-black uppercase tracking-widest text-slate-500">NPWP</Label>
+                                <Input {...register('personal.nomor_npwp')} className="h-12 rounded-xl" />
+                            </div>
+                            <div className="space-y-2">
+                                <Label className="text-[10px) font-black uppercase tracking-widest text-slate-500">No. BPJS Kesehatan</Label>
+                                <Input {...register('personal.nomor_bpjs')} className="h-12 rounded-xl" />
+                            </div>
+                            <div className="space-y-2">
+                                <Label className="text-[10px) font-black uppercase tracking-widest text-slate-500">No. BPJS Ketenagakerjaan</Label>
+                                <Input {...register('personal.nomor_bpjs_ketenagakerjaan')} className="h-12 rounded-xl" />
+                            </div>
+                            <div className="space-y-2">
+                                <Label className="text-[10px) font-black uppercase tracking-widest text-slate-500">No. NIK di KK</Label>
+                                <Input {...register('personal.no_nik_kk')} className="h-12 rounded-xl" />
+                            </div>
+                            <div className="space-y-2">
+                                <Label className="text-[10px) font-black uppercase tracking-widest text-slate-500">Status Pajak</Label>
+                                <Input {...register('personal.status_pajak')} className="h-12 rounded-xl" />
+                            </div>
+                        </CardContent>
 
-                            <div className="col-span-full border-t border-slate-100 pt-8 mt-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-                                <div className="space-y-2">
-                                    <Label className="text-[10px] font-black uppercase tracking-widest text-slate-500">Nama Pasangan</Label>
-                                    <Input {...register('personal.nama_pasangan')} className="h-12 rounded-xl" />
-                                </div>
-                                <div className="space-y-2">
-                                    <Label className="text-[10px] font-black uppercase tracking-widest text-slate-500">Tgl Menikah</Label>
-                                    <Input type="date" {...register('personal.tanggal_menikah')} className="h-12 rounded-xl" />
-                                </div>
-                                <div className="space-y-2">
-                                    <Label className="text-[10px] font-black uppercase tracking-widest text-slate-500">Tgl Cerai</Label>
-                                    <Input type="date" {...register('personal.tanggal_cerai')} className="h-12 rounded-xl" />
-                                </div>
-                                <div className="space-y-2">
-                                    <Label className="text-[10px] font-black uppercase tracking-widest text-slate-500">Pasangan Wafat</Label>
-                                    <Input type="date" {...register('personal.tanggal_wafat_pasangan')} className="h-12 rounded-xl" />
-                                </div>
-                                <div className="space-y-2">
-                                    <Label className="text-[10px] font-black uppercase tracking-widest text-slate-500">Pekerjaan Pasangan</Label>
-                                    <Input {...register('personal.pekerjaan_pasangan')} className="h-12 rounded-xl" />
-                                </div>
-                                <div className="space-y-2">
-                                    <Label className="text-[10px] font-black uppercase tracking-widest text-slate-500">Jumlah Anak</Label>
-                                    <Input type="number" {...register('personal.jumlah_anak')} className="h-12 rounded-xl" />
-                                </div>
+                        <CardHeader className="bg-slate-50/50 border-y border-slate-50 px-8 py-6">
+                            <CardTitle className="text-sm font-black uppercase tracking-widest text-primary flex items-center gap-2">
+                                <User className="w-4 h-4" />
+                                Orang Tua Kandung
+                            </CardTitle>
+                        </CardHeader>
+                        <CardContent className="p-8 grid grid-cols-1 sm:grid-cols-2 gap-8">
+                            <div className="space-y-2">
+                                <Label className="text-[10px) font-black uppercase tracking-widest text-slate-500">Nama Ayah Kandung</Label>
+                                <Input {...register('personal.nama_ayah')} className="h-12 rounded-xl" />
+                            </div>
+                            <div className="space-y-2">
+                                <Label className="text-[10px) font-black uppercase tracking-widest text-slate-500">Nama Ibu Kandung</Label>
+                                <Input {...register('personal.nama_ibu')} className="h-12 rounded-xl" />
                             </div>
                         </CardContent>
                     </Card>
@@ -725,6 +738,18 @@ export const FormKaryawan = ({ mode = 'add' }: { mode?: 'add' | 'edit' }) => {
                                 <Input type="date" {...register('hr.tanggal_akhir_kontrak')} className="h-12 rounded-xl" />
                             </div>
                             <div className="space-y-2">
+                                <Label className="text-[10px] font-black uppercase tracking-widest text-slate-500">Tgl Permanent</Label>
+                                <Input type="date" {...register('hr.tanggal_permanent')} className="h-12 rounded-xl" />
+                            </div>
+                            <div className="space-y-2">
+                                <Label className="text-[10px] font-black uppercase tracking-widest text-slate-500">Tgl Kontrak</Label>
+                                <Input type="date" {...register('hr.tanggal_kontrak')} className="h-12 rounded-xl" />
+                            </div>
+                            <div className="space-y-2">
+                                <Label className="text-[10px] font-black uppercase tracking-widest text-slate-500">Tgl Berhenti</Label>
+                                <Input type="date" {...register('hr.tanggal_berhenti')} className="h-12 rounded-xl" />
+                            </div>
+                            <div className="space-y-2">
                                 <Label className="text-[10px] font-black uppercase tracking-widest text-slate-500">Hubungan Kerja</Label>
                                 <Select value={watch('hr.jenis_hubungan_kerja_id') || ''} onValueChange={(v: string) => setValue('hr.jenis_hubungan_kerja_id', v)}>
                                     <SelectTrigger className="h-12 rounded-xl"><SelectValue placeholder="Pilih Hub. Kerja" /></SelectTrigger>
@@ -743,6 +768,15 @@ export const FormKaryawan = ({ mode = 'add' }: { mode?: 'add' | 'edit' }) => {
                                 </Select>
                             </div>
                             <div className="space-y-2">
+                                <Label className="text-[10px] font-black uppercase tracking-widest text-slate-500">Sub Golongan</Label>
+                                <Select value={watch('hr.sub_golongan_id') || ''} onValueChange={(v: string) => setValue('hr.sub_golongan_id', v)}>
+                                    <SelectTrigger className="h-12 rounded-xl"><SelectValue placeholder="Pilih Sub Gol" /></SelectTrigger>
+                                    <SelectContent>
+                                        {master?.sub_golongan.map(it => <SelectItem key={it.id} value={it.id.toString()}>{it.nama}</SelectItem>)}
+                                    </SelectContent>
+                                </Select>
+                            </div>
+                            <div className="space-y-2">
                                 <Label className="text-[10px] font-black uppercase tracking-widest text-slate-500">Pangkat</Label>
                                 <Select value={watch('hr.kategori_pangkat_id') || ''} onValueChange={(v: string) => setValue('hr.kategori_pangkat_id', v)}>
                                     <SelectTrigger className="h-12 rounded-xl"><SelectValue placeholder="Pilih Pangkat" /></SelectTrigger>
@@ -751,6 +785,19 @@ export const FormKaryawan = ({ mode = 'add' }: { mode?: 'add' | 'edit' }) => {
                                     </SelectContent>
                                 </Select>
                             </div>
+                            <div className="space-y-2">
+                                <Label className="text-[10px] font-black uppercase tracking-widest text-slate-500">No. Dana Pensiun</Label>
+                                <Input {...register('hr.no_dana_pensiun')} className="h-12 rounded-xl" />
+                            </div>
+                        </CardContent>
+
+                        <CardHeader className="bg-slate-50/50 border-y border-slate-50 px-8 py-6">
+                            <CardTitle className="text-sm font-black uppercase tracking-widest text-primary flex items-center gap-2">
+                                <GraduationCap className="w-4 h-4" />
+                                Pendidikan & Sertifikasi
+                            </CardTitle>
+                        </CardHeader>
+                        <CardContent className="p-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
                             <div className="space-y-2">
                                 <Label className="text-[10px] font-black uppercase tracking-widest text-slate-500">Tingkat Pendidikan</Label>
                                 <Input {...register('hr.tingkat_pendidikan')} className="h-12 rounded-xl" />
@@ -778,81 +825,79 @@ export const FormKaryawan = ({ mode = 'add' }: { mode?: 'add' | 'edit' }) => {
                                     </SelectContent>
                                 </Select>
                             </div>
+                        </CardContent>
 
-                            <div className="col-span-full border-t border-slate-100 pt-8 mt-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                                <div className="space-y-2">
-                                    <Label className="text-[10px] font-black uppercase tracking-widest text-slate-500">Tgl Permanent</Label>
-                                    <Input type="date" {...register('hr.tanggal_permanent')} className="h-12 rounded-xl" />
-                                </div>
-                                <div className="space-y-2">
-                                    <Label className="text-[10px] font-black uppercase tracking-widest text-slate-500">Tgl Kontrak</Label>
-                                    <Input type="date" {...register('hr.tanggal_kontrak')} className="h-12 rounded-xl" />
-                                </div>
-                                <div className="space-y-2">
-                                    <Label className="text-[10px] font-black uppercase tracking-widest text-slate-500">Tgl Berhenti</Label>
-                                    <Input type="date" {...register('hr.tanggal_berhenti')} className="h-12 rounded-xl" />
-                                </div>
-                                <div className="space-y-2">
-                                    <Label className="text-[10px] font-black uppercase tracking-widest text-slate-500">Sub Golongan</Label>
-                                    <Select value={watch('hr.sub_golongan_id') || ''} onValueChange={(v: string) => setValue('hr.sub_golongan_id', v)}>
-                                        <SelectTrigger className="h-12 rounded-xl"><SelectValue placeholder="Pilih Sub Gol" /></SelectTrigger>
-                                        <SelectContent>
-                                            {master?.sub_golongan.map(it => <SelectItem key={it.id} value={it.id.toString()}>{it.nama}</SelectItem>)}
-                                        </SelectContent>
-                                    </Select>
-                                </div>
-                                <div className="space-y-2">
-                                    <Label className="text-[10px] font-black uppercase tracking-widest text-slate-500">No. Dana Pensiun</Label>
-                                    <Input {...register('hr.no_dana_pensiun')} className="h-12 rounded-xl" />
-                                </div>
-                                <div className="space-y-2">
-                                    <Label className="text-[10px] font-black uppercase tracking-widest text-slate-500">Point of Original</Label>
-                                    <Input {...register('hr.point_of_original')} className="h-12 rounded-xl" />
-                                </div>
-                                <div className="space-y-2">
-                                    <Label className="text-[10px] font-black uppercase tracking-widest text-slate-500">Point of Hire</Label>
-                                    <Input {...register('hr.point_of_hire')} className="h-12 rounded-xl" />
-                                </div>
-                                <div className="space-y-2">
-                                    <Label className="text-[10px] font-black uppercase tracking-widest text-slate-500">Ukuran Seragam</Label>
-                                    <Input {...register('hr.ukuran_seragam_kerja')} className="h-12 rounded-xl" />
-                                </div>
-                                <div className="space-y-2">
-                                    <Label className="text-[10px] font-black uppercase tracking-widest text-slate-500">Ukuran Sepatu</Label>
-                                    <Input {...register('hr.ukuran_sepatu_kerja')} className="h-12 rounded-xl" />
-                                </div>
-                                <div className="space-y-2">
-                                    <Label className="text-[10px] font-black uppercase tracking-widest text-slate-500">Lokasi Sebelumnya</Label>
-                                    <Select value={watch('hr.lokasi_sebelumnya_id') || ''} onValueChange={(v: string) => setValue('hr.lokasi_sebelumnya_id', v)}>
-                                        <SelectTrigger className="h-12 rounded-xl"><SelectValue placeholder="Pilih Lokasi" /></SelectTrigger>
-                                        <SelectContent>
-                                            {master?.lokasi_kerja.map(it => <SelectItem key={it.id} value={it.id.toString()}>{it.nama}</SelectItem>)}
-                                        </SelectContent>
-                                    </Select>
-                                </div>
-                                <div className="space-y-2">
-                                    <Label className="text-[10px] font-black uppercase tracking-widest text-slate-500">Tanggal Mutasi</Label>
-                                    <Input type="date" {...register('hr.tanggal_mutasi')} className="h-12 rounded-xl" />
-                                </div>
-                                <div className="space-y-2">
-                                    <Label className="text-[10px] font-black uppercase tracking-widest text-slate-500">Siklus Gaji</Label>
-                                    <Input {...register('hr.siklus_pembayaran_gaji')} className="h-12 rounded-xl" />
-                                </div>
-                                <div className="space-y-2">
-                                    <Label className="text-[10px] font-black uppercase tracking-widest text-slate-500">Costing</Label>
-                                    <Input {...register('hr.costing')} className="h-12 rounded-xl" />
-                                </div>
-                                <div className="space-y-2">
-                                    <Label className="text-[10px] font-black uppercase tracking-widest text-slate-500">Assign</Label>
-                                    <Input {...register('hr.assign')} className="h-12 rounded-xl" />
-                                </div>
-                                <div className="space-y-2">
-                                    <Label className="text-[10px] font-black uppercase tracking-widest text-slate-500">Actual</Label>
-                                    <Input {...register('hr.actual')} className="h-12 rounded-xl" />
-                                </div>
+                        <CardHeader className="bg-slate-50/50 border-y border-slate-50 px-8 py-6">
+                            <CardTitle className="text-sm font-black uppercase tracking-widest text-primary flex items-center gap-2">
+                                <Truck className="w-4 h-4" />
+                                Penempatan & Logistik
+                            </CardTitle>
+                        </CardHeader>
+                        <CardContent className="p-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                            <div className="space-y-2">
+                                <Label className="text-[10px] font-black uppercase tracking-widest text-slate-500">Point of Original</Label>
+                                <Input {...register('hr.point_of_original')} className="h-12 rounded-xl" />
                             </div>
+                            <div className="space-y-2">
+                                <Label className="text-[10px] font-black uppercase tracking-widest text-slate-500">Point of Hire</Label>
+                                <Input {...register('hr.point_of_hire')} className="h-12 rounded-xl" />
+                            </div>
+                            <div className="space-y-2">
+                                <Label className="text-[10px] font-black uppercase tracking-widest text-slate-500">Ukuran Seragam Kerja</Label>
+                                <Input {...register('hr.ukuran_seragam_kerja')} className="h-12 rounded-xl" />
+                            </div>
+                            <div className="space-y-2">
+                                <Label className="text-[10px] font-black uppercase tracking-widest text-slate-500">Ukuran Sepatu Kerja</Label>
+                                <Input {...register('hr.ukuran_sepatu_kerja')} className="h-12 rounded-xl" />
+                            </div>
+                            <div className="space-y-2">
+                                <Label className="text-[10px] font-black uppercase tracking-widest text-slate-500">Lokasi Kerja Sebelumnya</Label>
+                                <Select value={watch('hr.lokasi_sebelumnya_id') || ''} onValueChange={(v: string) => setValue('hr.lokasi_sebelumnya_id', v)}>
+                                    <SelectTrigger className="h-12 rounded-xl"><SelectValue placeholder="Pilih Lokasi" /></SelectTrigger>
+                                    <SelectContent>
+                                        {master?.lokasi_kerja.map(it => <SelectItem key={it.id} value={it.id.toString()}>{it.nama}</SelectItem>)}
+                                    </SelectContent>
+                                </Select>
+                            </div>
+                            <div className="space-y-2">
+                                <Label className="text-[10px] font-black uppercase tracking-widest text-slate-500">Tanggal Mutasi</Label>
+                                <Input type="date" {...register('hr.tanggal_mutasi')} className="h-12 rounded-xl" />
+                            </div>
+                        </CardContent>
 
-                            <div className="col-span-full border-t border-slate-100 pt-8 mt-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                        <CardHeader className="bg-slate-50/50 border-y border-slate-50 px-8 py-6">
+                            <CardTitle className="text-sm font-black uppercase tracking-widest text-primary flex items-center gap-2">
+                                <CreditCard className="w-4 h-4" />
+                                Administrasi Gaji
+                            </CardTitle>
+                        </CardHeader>
+                        <CardContent className="p-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                            <div className="space-y-2">
+                                <Label className="text-[10px] font-black uppercase tracking-widest text-slate-500">Siklus Pembayaran Gaji</Label>
+                                <Input {...register('hr.siklus_pembayaran_gaji')} className="h-12 rounded-xl" />
+                            </div>
+                            <div className="space-y-2">
+                                <Label className="text-[10px] font-black uppercase tracking-widest text-slate-500">Costing</Label>
+                                <Input {...register('hr.costing')} className="h-12 rounded-xl" />
+                            </div>
+                            <div className="space-y-2">
+                                <Label className="text-[10px] font-black uppercase tracking-widest text-slate-500">Assign</Label>
+                                <Input {...register('hr.assign')} className="h-12 rounded-xl" />
+                            </div>
+                            <div className="space-y-2">
+                                <Label className="text-[10px] font-black uppercase tracking-widest text-slate-500">Actual</Label>
+                                <Input {...register('hr.actual')} className="h-12 rounded-xl" />
+                            </div>
+                        </CardContent>
+
+                        <CardHeader className="bg-slate-50/50 border-y border-slate-50 px-8 py-6">
+                            <CardTitle className="text-sm font-black uppercase tracking-widest text-primary flex items-center gap-2">
+                                <Phone className="w-4 h-4" />
+                                Kontak Darurat
+                            </CardTitle>
+                        </CardHeader>
+                        <CardContent className="p-8 space-y-12">
+                            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
                                 <div className="space-y-2">
                                     <Label className="text-[10px] font-black uppercase tracking-widest text-slate-500">Kontak Darurat 1</Label>
                                     <Input {...register('hr.emergency_nama_1')} placeholder="Nama Lengkap" className="h-12 rounded-xl" />
@@ -869,6 +914,8 @@ export const FormKaryawan = ({ mode = 'add' }: { mode?: 'add' | 'edit' }) => {
                                     <Label className="text-[10px] font-black uppercase tracking-widest text-slate-500">Alamat Emg 1</Label>
                                     <Input {...register('hr.emergency_alamat_1')} className="h-12 rounded-xl" />
                                 </div>
+                            </div>
+                            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 pt-8 border-t border-slate-100">
                                 <div className="space-y-2">
                                     <Label className="text-[10px] font-black uppercase tracking-widest text-slate-500">Kontak Darurat 2</Label>
                                     <Input {...register('hr.emergency_nama_2')} placeholder="Nama Lengkap" className="h-12 rounded-xl" />
@@ -892,79 +939,97 @@ export const FormKaryawan = ({ mode = 'add' }: { mode?: 'add' | 'edit' }) => {
 
                 {/* Tab Keluarga */}
                 <TabsContent value="keluarga" className="focus-visible:outline-none space-y-6">
-                    {/* Section Info Tambahan Keluarga */}
                     <Card className="rounded-3xl border-slate-100 shadow-sm overflow-hidden mb-8">
                         <CardHeader className="bg-slate-50/50 border-b border-slate-50 px-8 py-6">
                             <CardTitle className="text-sm font-black uppercase tracking-widest text-primary flex items-center gap-2">
                                 <Heart className="w-4 h-4" />
-                                Detail Pasangan & Mertua
+                                Informasi Pasangan
                             </CardTitle>
                         </CardHeader>
-                        <CardContent className="p-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                        <CardContent className="p-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                            <div className="space-y-2">
+                                <Label className="text-[10px] font-black uppercase tracking-widest text-slate-500">Nama Pasangan</Label>
+                                <Input {...register('personal.nama_pasangan')} className="h-12 rounded-xl" />
+                            </div>
                             <div className="space-y-2">
                                 <Label className="text-[10px] font-black uppercase tracking-widest text-slate-500">Tgl Lahir Pasangan</Label>
                                 <Input type="date" {...register('keluarga.tanggal_lahir_pasangan')} className="h-12 rounded-xl" />
+                            </div>
+                            <div className="space-y-2">
+                                <Label className="text-[10px] font-black uppercase tracking-widest text-slate-500">Tgl Menikah</Label>
+                                <Input type="date" {...register('personal.tanggal_menikah')} className="h-12 rounded-xl" />
+                            </div>
+                            <div className="space-y-2">
+                                <Label className="text-[10px] font-black uppercase tracking-widest text-slate-500">Tgl Cerai</Label>
+                                <Input type="date" {...register('personal.tanggal_cerai')} className="h-12 rounded-xl" />
+                            </div>
+                            <div className="space-y-2">
+                                <Label className="text-[10px] font-black uppercase tracking-widest text-slate-500">Pasangan Wafat</Label>
+                                <Input type="date" {...register('personal.tanggal_wafat_pasangan')} className="h-12 rounded-xl" />
                             </div>
                             <div className="space-y-2">
                                 <Label className="text-[10px] font-black uppercase tracking-widest text-slate-500">Pendidikan Pasangan</Label>
                                 <Input {...register('keluarga.pendidikan_terakhir_pasangan')} className="h-12 rounded-xl" />
                             </div>
                             <div className="space-y-2">
+                                <Label className="text-[10px] font-black uppercase tracking-widest text-slate-500">Pekerjaan Pasangan</Label>
+                                <Input {...register('personal.pekerjaan_pasangan')} className="h-12 rounded-xl" />
+                            </div>
+                            <div className="space-y-2">
                                 <Label className="text-[10px] font-black uppercase tracking-widest text-slate-500">Keterangan Pasangan</Label>
                                 <Input {...register('keluarga.keterangan_pasangan')} className="h-12 rounded-xl" />
                             </div>
-                            <div className="space-y-2">
-                                <Label className="text-[10px] font-black uppercase tracking-widest text-slate-500">Anak Ke- (Karyawan)</Label>
-                                <Input type="number" {...register('keluarga.anak_ke')} className="h-12 rounded-xl" />
-                            </div>
-                            <div className="space-y-2">
-                                <Label className="text-[10px] font-black uppercase tracking-widest text-slate-500">Jml Saudara Kandung</Label>
-                                <Input type="number" {...register('keluarga.jumlah_saudara_kandung')} className="h-12 rounded-xl" />
-                            </div>
+                        </CardContent>
 
-                            <div className="col-span-full border-t border-slate-100 pt-8 mt-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-8">
-                                <div className="p-6 bg-slate-50/50 rounded-2xl border border-slate-100 space-y-4">
-                                    <h4 className="text-[10px] font-black uppercase tracking-widest text-primary">Informasi Ayah Mertua</h4>
-                                    <div className="space-y-2">
-                                        <Label className="text-[10px] font-black uppercase tracking-widest text-slate-500">Nama Ayah Mertua</Label>
-                                        <Input {...register('keluarga.nama_ayah_mertua')} className="h-11 rounded-xl bg-white" />
-                                    </div>
-                                    <div className="grid grid-cols-2 gap-4">
-                                        <div className="space-y-2">
-                                            <Label className="text-[10px] font-black uppercase tracking-widest text-slate-500">Tgl Lahir</Label>
-                                            <Input type="date" {...register('keluarga.tanggal_lahir_ayah_mertua')} className="h-11 rounded-xl bg-white" />
-                                        </div>
-                                        <div className="space-y-2">
-                                            <Label className="text-[10px] font-black uppercase tracking-widest text-slate-500">Pendidikan</Label>
-                                            <Input {...register('keluarga.pendidikan_terakhir_ayah_mertua')} className="h-11 rounded-xl bg-white" />
-                                        </div>
-                                        <div className="space-y-2">
-                                            <Label className="text-[10px] font-black uppercase tracking-widest text-slate-500">Pekerjaan</Label>
-                                            <Input {...register('keluarga.pekerjaan_ayah_mertua')} className="h-11 rounded-xl bg-white" />
-                                        </div>
-                                    </div>
+                        <CardHeader className="bg-slate-50/50 border-y border-slate-50 px-8 py-6">
+                            <CardTitle className="text-sm font-black uppercase tracking-widest text-primary flex items-center gap-2">
+                                <Users className="w-4 h-4" />
+                                Orang Tua Mertua
+                            </CardTitle>
+                        </CardHeader>
+                        <CardContent className="p-8 space-y-12">
+                            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                                <div className="space-y-2">
+                                    <Label className="text-[10px] font-black uppercase tracking-widest text-slate-500">Nama Ayah Mertua</Label>
+                                    <Input {...register('keluarga.nama_ayah_mertua')} className="h-12 rounded-xl" />
                                 </div>
-
-                                <div className="p-6 bg-slate-50/50 rounded-2xl border border-slate-100 space-y-4">
-                                    <h4 className="text-[10px] font-black uppercase tracking-widest text-primary">Informasi Ibu Mertua</h4>
-                                    <div className="space-y-2">
-                                        <Label className="text-[10px] font-black uppercase tracking-widest text-slate-500">Nama Ibu Mertua</Label>
-                                        <Input {...register('keluarga.nama_ibu_mertua')} className="h-11 rounded-xl bg-white" />
-                                    </div>
-                                    <div className="grid grid-cols-2 gap-4">
-                                        <div className="space-y-2">
-                                            <Label className="text-[10px] font-black uppercase tracking-widest text-slate-500">Tgl Lahir</Label>
-                                            <Input type="date" {...register('keluarga.tanggal_lahir_ibu_mertua')} className="h-11 rounded-xl bg-white" />
-                                        </div>
-                                        <div className="space-y-2">
-                                            <Label className="text-[10px] font-black uppercase tracking-widest text-slate-500">Pendidikan</Label>
-                                            <Input {...register('keluarga.pendidikan_terakhir_ibu_mertua')} className="h-11 rounded-xl bg-white" />
-                                        </div>
-                                        <div className="space-y-2">
-                                            <Label className="text-[10px] font-black uppercase tracking-widest text-slate-500">Pekerjaan</Label>
-                                            <Input {...register('keluarga.pekerjaan_ibu_mertua')} className="h-11 rounded-xl bg-white" />
-                                        </div>
-                                    </div>
+                                <div className="space-y-2">
+                                    <Label className="text-[10px] font-black uppercase tracking-widest text-slate-500">Tgl Lahir</Label>
+                                    <Input type="date" {...register('keluarga.tanggal_lahir_ayah_mertua')} className="h-12 rounded-xl" />
+                                </div>
+                                <div className="space-y-2">
+                                    <Label className="text-[10px] font-black uppercase tracking-widest text-slate-500">Pendidikan</Label>
+                                    <Input {...register('keluarga.pendidikan_terakhir_ayah_mertua')} className="h-12 rounded-xl" />
+                                </div>
+                                <div className="space-y-2">
+                                    <Label className="text-[10px] font-black uppercase tracking-widest text-slate-500">Pekerjaan</Label>
+                                    <Input {...register('keluarga.pekerjaan_ayah_mertua')} className="h-12 rounded-xl" />
+                                </div>
+                                <div className="space-y-2 col-span-full">
+                                    <Label className="text-[10px] font-black uppercase tracking-widest text-slate-500">Keterangan</Label>
+                                    <Input {...register('keluarga.keterangan_ayah_mertua')} className="h-12 rounded-xl" />
+                                </div>
+                            </div>
+                            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 pt-12 border-t border-slate-100">
+                                <div className="space-y-2">
+                                    <Label className="text-[10px] font-black uppercase tracking-widest text-slate-500">Nama Ibu Mertua</Label>
+                                    <Input {...register('keluarga.nama_ibu_mertua')} className="h-12 rounded-xl" />
+                                </div>
+                                <div className="space-y-2">
+                                    <Label className="text-[10px] font-black uppercase tracking-widest text-slate-500">Tgl Lahir</Label>
+                                    <Input type="date" {...register('keluarga.tanggal_lahir_ibu_mertua')} className="h-12 rounded-xl" />
+                                </div>
+                                <div className="space-y-2">
+                                    <Label className="text-[10px] font-black uppercase tracking-widest text-slate-500">Pendidikan</Label>
+                                    <Input {...register('keluarga.pendidikan_terakhir_ibu_mertua')} className="h-12 rounded-xl" />
+                                </div>
+                                <div className="space-y-2">
+                                    <Label className="text-[10px] font-black uppercase tracking-widest text-slate-500">Pekerjaan</Label>
+                                    <Input {...register('keluarga.pekerjaan_ibu_mertua')} className="h-12 rounded-xl" />
+                                </div>
+                                <div className="space-y-2 col-span-full">
+                                    <Label className="text-[10px] font-black uppercase tracking-widest text-slate-500">Keterangan</Label>
+                                    <Input {...register('keluarga.keterangan_ibu_mertua')} className="h-12 rounded-xl" />
                                 </div>
                             </div>
                         </CardContent>
@@ -974,34 +1039,38 @@ export const FormKaryawan = ({ mode = 'add' }: { mode?: 'add' | 'edit' }) => {
                     <Card className="rounded-3xl border-slate-100 shadow-sm overflow-hidden mb-8">
                         <CardHeader className="bg-slate-50/50 border-b border-slate-50 px-8 py-6 flex flex-row items-center justify-between">
                             <CardTitle className="text-sm font-black uppercase tracking-widest text-primary flex items-center gap-2">
-                                <Heart className="w-4 h-4" />
-                                Data Anak
+                                <Baby className="w-4 h-4" />
+                                Identitas Anak
                             </CardTitle>
                             <Button type="button" onClick={() => appendAnak({ nama_anak: '', jenis_kelamin: '', tanggal_lahir: '' })} variant="outline" size="sm" className="h-8 rounded-lg px-3 text-[9px] font-black uppercase tracking-widest">
                                 <Plus className="w-3 h-3 mr-1" /> Tambah Anak
                             </Button>
                         </CardHeader>
                         <CardContent className="p-8 space-y-4">
+                            <div className="mb-6 p-4 bg-orange-50/50 rounded-2xl border border-orange-100 flex items-center gap-3">
+                                <Info className="w-4 h-4 text-orange-500" />
+                                <p className="text-[10px] font-bold text-orange-700 uppercase tracking-widest">Masukkan data anak sesuai urutan kelahiran.</p>
+                            </div>
                             {fieldsAnak.length === 0 ? <p className="text-sm font-bold text-slate-400 italic">Belum ada data anak ditambahkan.</p> : (
                                 fieldsAnak.map((field, index) => (
-                                    <div key={field.id} className="grid grid-cols-1 md:grid-cols-12 gap-4 items-end p-6 bg-slate-50 rounded-2xl border border-slate-100 relative group">
+                                    <div key={field.id} className="grid grid-cols-1 md:grid-cols-12 gap-4 items-end p-6 bg-slate-50/50 rounded-2xl border border-slate-100 relative group transition-all hover:border-primary/20">
                                         <div className="md:col-span-5 space-y-2">
                                             <Label className="text-[10px] font-black uppercase tracking-widest text-slate-500">Nama Anak</Label>
-                                            <Input {...register(`anak.${index}.nama_anak`)} className="h-11 rounded-xl bg-white" />
+                                            <Input {...register(`anak.${index}.nama_anak`)} className="h-11 rounded-xl bg-white border-slate-200" />
                                         </div>
                                         <div className="md:col-span-3 space-y-2">
-                                            <Label className="text-[10px] font-black uppercase tracking-widest text-slate-500">J.K</Label>
+                                            <Label className="text-[10px] font-black uppercase tracking-widest text-slate-500">Jenis Kelamin</Label>
                                             <Select value={watch(`anak.${index}.jenis_kelamin`) || ''} onValueChange={(v: string) => setValue(`anak.${index}.jenis_kelamin`, v)}>
-                                                <SelectTrigger className="h-11 rounded-xl bg-white focus:ring-primary"><SelectValue placeholder="Pilih" /></SelectTrigger>
+                                                <SelectTrigger className="h-11 rounded-xl bg-white border-slate-200"><SelectValue placeholder="Pilih" /></SelectTrigger>
                                                 <SelectContent>
-                                                    <SelectItem value="Laki-laki">Laki-laki</SelectItem>
-                                                    <SelectItem value="Perempuan">Perempuan</SelectItem>
+                                                    <SelectItem value="L">Laki-laki</SelectItem>
+                                                    <SelectItem value="P">Perempuan</SelectItem>
                                                 </SelectContent>
                                             </Select>
                                         </div>
                                         <div className="md:col-span-3 space-y-2">
                                             <Label className="text-[10px] font-black uppercase tracking-widest text-slate-500">Tgl Lahir</Label>
-                                            <Input type="date" {...register(`anak.${index}.tanggal_lahir`)} className="h-11 rounded-xl bg-white" />
+                                            <Input type="date" {...register(`anak.${index}.tanggal_lahir`)} className="h-11 rounded-xl bg-white border-slate-200" />
                                         </div>
                                         <div className="md:col-span-1">
                                             <Button type="button" onClick={() => removeAnak(index)} variant="ghost" size="icon" className="h-11 w-11 text-red-400 hover:text-red-600 hover:bg-red-50 rounded-xl">
@@ -1018,38 +1087,54 @@ export const FormKaryawan = ({ mode = 'add' }: { mode?: 'add' | 'edit' }) => {
                     <Card className="rounded-3xl border-slate-100 shadow-sm overflow-hidden">
                         <CardHeader className="bg-slate-50/50 border-b border-slate-50 px-8 py-6 flex flex-row items-center justify-between">
                             <CardTitle className="text-sm font-black uppercase tracking-widest text-primary flex items-center gap-2">
-                                <Heart className="w-4 h-4" />
-                                Data Saudara Kandung
+                                <Users2 className="w-4 h-4" />
+                                Identitas Saudara Kandung
                             </CardTitle>
-                            <Button type="button" onClick={() => appendSaudara({ nama_saudara: '', jenis_kelamin: '', tanggal_lahir: '', pendidikan_terakhir: '', pekerjaan: '' })} variant="outline" size="sm" className="h-8 rounded-lg px-3 text-[9px] font-black uppercase tracking-widest">
-                                <Plus className="w-3 h-3 mr-1" /> Tambah Saudara
-                            </Button>
+                            <div className="flex items-center gap-4">
+                                <div className="flex items-center gap-2">
+                                    <Label className="text-[9px] font-black uppercase tracking-widest text-slate-400">Anak Ke-</Label>
+                                    <Input type="number" {...register('keluarga.anak_ke')} className="h-8 w-16 rounded-lg text-center font-bold" />
+                                </div>
+                                <div className="flex items-center gap-2">
+                                    <Label className="text-[9px] font-black uppercase tracking-widest text-slate-400">Total Saudara</Label>
+                                    <Input type="number" {...register('keluarga.jumlah_saudara_kandung')} className="h-8 w-16 rounded-lg text-center font-bold" />
+                                </div>
+                                {fieldsSaudara.length < 5 && (
+                                    <Button type="button" onClick={() => appendSaudara({ nama_saudara: '', jenis_kelamin: '', tanggal_lahir: '', pendidikan_terakhir: '', pekerjaan: '' })} variant="outline" size="sm" className="h-8 rounded-lg px-3 text-[9px] font-black uppercase tracking-widest">
+                                        <Plus className="w-3 h-3 mr-1" /> Tambah Saudara
+                                    </Button>
+                                )}
+                            </div>
                         </CardHeader>
                         <CardContent className="p-8 space-y-4">
                             {fieldsSaudara.length === 0 ? <p className="text-sm font-bold text-slate-400 italic">Belum ada data saudara ditambahkan.</p> : (
                                 fieldsSaudara.map((field, index) => (
-                                    <div key={field.id} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-4 items-end p-6 bg-slate-50 rounded-2xl border border-slate-100">
-                                        <div className="lg:col-span-4 space-y-2">
+                                    <div key={field.id} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-4 items-end p-6 bg-slate-50/50 rounded-2xl border border-slate-100 relative group transition-all hover:border-primary/20">
+                                        <div className="lg:col-span-3 space-y-2">
                                             <Label className="text-[10px] font-black uppercase tracking-widest text-slate-500">Nama Saudara</Label>
-                                            <Input {...register(`saudara.${index}.nama_saudara`)} className="h-11 rounded-xl bg-white" />
+                                            <Input {...register(`saudara.${index}.nama_saudara`)} className="h-11 rounded-xl bg-white border-slate-200" />
                                         </div>
                                         <div className="lg:col-span-2 space-y-2">
-                                            <Label className="text-[10px] font-black uppercase tracking-widest text-slate-500">J.K</Label>
+                                            <Label className="text-[10px] font-black uppercase tracking-widest text-slate-500">Jenis Kelamin</Label>
                                             <Select value={watch(`saudara.${index}.jenis_kelamin`) || ''} onValueChange={(v: string) => setValue(`saudara.${index}.jenis_kelamin`, v)}>
-                                                <SelectTrigger className="h-11 rounded-xl bg-white"><SelectValue placeholder="Pilih" /></SelectTrigger>
+                                                <SelectTrigger className="h-11 rounded-xl bg-white border-slate-200"><SelectValue placeholder="Pilih" /></SelectTrigger>
                                                 <SelectContent>
-                                                    <SelectItem value="Laki-laki">Laki-laki</SelectItem>
-                                                    <SelectItem value="Perempuan">Perempuan</SelectItem>
+                                                    <SelectItem value="L">Laki-laki</SelectItem>
+                                                    <SelectItem value="P">Perempuan</SelectItem>
                                                 </SelectContent>
                                             </Select>
                                         </div>
-                                        <div className="lg:col-span-3 space-y-2">
+                                        <div className="lg:col-span-2 space-y-2">
+                                            <Label className="text-[10px] font-black uppercase tracking-widest text-slate-500">Tgl Lahir</Label>
+                                            <Input type="date" {...register(`saudara.${index}.tanggal_lahir`)} className="h-11 rounded-xl bg-white border-slate-200" />
+                                        </div>
+                                        <div className="lg:col-span-2 space-y-2">
                                             <Label className="text-[10px] font-black uppercase tracking-widest text-slate-500">Pendidikan</Label>
-                                            <Input {...register(`saudara.${index}.pendidikan_terakhir`)} className="h-11 rounded-xl bg-white" />
+                                            <Input {...register(`saudara.${index}.pendidikan_terakhir`)} className="h-11 rounded-xl bg-white border-slate-200" />
                                         </div>
                                         <div className="lg:col-span-2 space-y-2">
                                             <Label className="text-[10px] font-black uppercase tracking-widest text-slate-500">Pekerjaan</Label>
-                                            <Input {...register(`saudara.${index}.pekerjaan`)} className="h-11 rounded-xl bg-white" />
+                                            <Input {...register(`saudara.${index}.pekerjaan`)} className="h-11 rounded-xl bg-white border-slate-200" />
                                         </div>
                                         <div className="lg:col-span-1">
                                             <Button type="button" onClick={() => removeSaudara(index)} variant="ghost" size="icon" className="h-11 w-11 text-red-400 hover:text-red-600 hover:bg-red-50 rounded-xl">

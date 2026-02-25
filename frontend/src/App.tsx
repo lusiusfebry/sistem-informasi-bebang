@@ -7,6 +7,8 @@ import ProtectedRoute from './components/ProtectedRoute'
 import { DirectoriKaryawan } from './pages/karyawan/DirectoriKaryawan'
 import { ProfilKaryawan } from './pages/karyawan/ProfilKaryawan'
 import { FormKaryawan } from './pages/karyawan/FormKaryawan'
+import OnboardingTracker from './pages/hr/OnboardingTracker'
+import OffboardingTracker from './pages/hr/OffboardingTracker'
 
 // Master Data Pages
 import DivisiPage from './pages/hr/master/DivisiPage'
@@ -45,6 +47,8 @@ function App() {
           <Route path="master/tag" element={<TagPage />} />
           <Route path="users" element={<UserManagementPage />} />
           <Route path="mess" element={<MessManagementPage />} />
+          <Route path="onboarding" element={<OnboardingTracker />} />
+          <Route path="offboarding" element={<OffboardingTracker />} />
           <Route path="karyawan" element={<DirectoriKaryawan />} />
           <Route path="karyawan/tambah" element={<FormKaryawan mode="add" />} />
           <Route path="karyawan/:id" element={<ProfilKaryawan />} />

@@ -6,6 +6,12 @@ import QRCode from 'qrcode';
 import ExcelJS from 'exceljs';
 import { parseImportRow, buildExportHeaders, buildExportRow } from '../utils/excelMapper';
 
+const parseDate = (dateStr: string | null | undefined) => {
+    if (!dateStr || dateStr === '') return null;
+    const date = new Date(dateStr);
+    return isNaN(date.getTime()) ? null : date;
+};
+
 const includeFull = {
     divisi: true,
     department: true,
@@ -29,7 +35,8 @@ const includeFull = {
     manager: true,
     atasan_langsung: true,
     mess_room: { include: { mess: true } },
-    dokumen: { orderBy: { created_at: 'desc' as const } }
+    dokumen: { orderBy: { created_at: 'desc' as const } },
+    checklists: { orderBy: { id: 'asc' as const } }
 };
 
 export const getAll = async (req: Request, res: Response) => {
@@ -116,8 +123,8 @@ export const create = async (req: Request, res: Response) => {
                     ...head,
                     divisi_id: head.divisi_id ? Number(head.divisi_id) : undefined,
                     department_id: head.department_id ? Number(head.department_id) : undefined,
-                    manager_id: head.manager_id ? Number(head.manager_id) : undefined,
-                    atasan_langsung_id: head.atasan_langsung_id ? Number(head.atasan_langsung_id) : undefined,
+                    manager_id: head.manager_id && head.manager_id !== 'null' ? Number(head.manager_id) : null,
+                    atasan_langsung_id: head.atasan_langsung_id && head.atasan_langsung_id !== 'null' ? Number(head.atasan_langsung_id) : null,
                     posisi_jabatan_id: head.posisi_jabatan_id ? Number(head.posisi_jabatan_id) : undefined,
                     status_karyawan_id: head.status_karyawan_id ? Number(head.status_karyawan_id) : undefined,
                     lokasi_kerja_id: head.lokasi_kerja_id ? Number(head.lokasi_kerja_id) : undefined,
@@ -126,7 +133,14 @@ export const create = async (req: Request, res: Response) => {
 
             if (personal) {
                 await tx.karyawan_personal.create({
-                    data: { ...personal, karyawan_id: karyawan.id }
+                    data: {
+                        ...personal,
+                        karyawan_id: karyawan.id,
+                        tanggal_lahir: parseDate(personal.tanggal_lahir),
+                        tanggal_menikah: parseDate(personal.tanggal_menikah),
+                        tanggal_cerai: parseDate(personal.tanggal_cerai),
+                        tanggal_wafat_pasangan: parseDate(personal.tanggal_wafat_pasangan),
+                    }
                 });
             }
 
@@ -140,25 +154,50 @@ export const create = async (req: Request, res: Response) => {
                         golongan_id: hr.golongan_id ? Number(hr.golongan_id) : undefined,
                         sub_golongan_id: hr.sub_golongan_id ? Number(hr.sub_golongan_id) : undefined,
                         lokasi_sebelumnya_id: hr.lokasi_sebelumnya_id ? Number(hr.lokasi_sebelumnya_id) : undefined,
+                        tanggal_masuk_group: parseDate(hr.tanggal_masuk_group),
+                        tanggal_masuk: parseDate(hr.tanggal_masuk),
+                        tanggal_permanent: parseDate(hr.tanggal_permanent),
+                        tanggal_kontrak: parseDate(hr.tanggal_kontrak),
+                        tanggal_akhir_kontrak: parseDate(hr.tanggal_akhir_kontrak),
+                        tanggal_berhenti: parseDate(hr.tanggal_berhenti),
+                        tanggal_mutasi: parseDate(hr.tanggal_mutasi),
                     }
                 });
             }
 
             if (keluarga) {
                 await tx.karyawan_keluarga.create({
-                    data: { ...keluarga, karyawan_id: karyawan.id }
+                    data: {
+                        ...keluarga,
+                        karyawan_id: karyawan.id,
+                        tanggal_lahir_pasangan: parseDate(keluarga.tanggal_lahir_pasangan),
+                        tanggal_lahir_ayah_mertua: parseDate(keluarga.tanggal_lahir_ayah_mertua),
+                        tanggal_lahir_ibu_mertua: parseDate(keluarga.tanggal_lahir_ibu_mertua),
+                        anak_ke: keluarga.anak_ke ? Number(keluarga.anak_ke) : null,
+                        jumlah_saudara_kandung: keluarga.jumlah_saudara_kandung ? Number(keluarga.jumlah_saudara_kandung) : null,
+                    }
                 });
             }
 
             if (anak && Array.isArray(anak)) {
                 await tx.karyawan_anak.createMany({
-                    data: anak.map((a: any, i: number) => ({ ...a, karyawan_id: karyawan.id, urutan: i + 1 }))
+                    data: anak.map((a: any, i: number) => ({
+                        ...a,
+                        karyawan_id: karyawan.id,
+                        urutan: i + 1,
+                        tanggal_lahir: parseDate(a.tanggal_lahir)
+                    }))
                 });
             }
 
             if (saudara && Array.isArray(saudara)) {
                 await tx.karyawan_saudara.createMany({
-                    data: saudara.map((s: any, i: number) => ({ ...s, karyawan_id: karyawan.id, urutan: i + 1 }))
+                    data: saudara.map((s: any, i: number) => ({
+                        ...s,
+                        karyawan_id: karyawan.id,
+                        urutan: i + 1,
+                        tanggal_lahir: parseDate(s.tanggal_lahir)
+                    }))
                 });
             }
 
@@ -192,8 +231,8 @@ export const update = async (req: Request, res: Response) => {
                         ...head,
                         divisi_id: head.divisi_id ? Number(head.divisi_id) : undefined,
                         department_id: head.department_id ? Number(head.department_id) : undefined,
-                        manager_id: head.manager_id ? Number(head.manager_id) : undefined,
-                        atasan_langsung_id: head.atasan_langsung_id ? Number(head.atasan_langsung_id) : undefined,
+                        manager_id: head.manager_id === 'null' ? null : (head.manager_id ? Number(head.manager_id) : undefined),
+                        atasan_langsung_id: head.atasan_langsung_id === 'null' ? null : (head.atasan_langsung_id ? Number(head.atasan_langsung_id) : undefined),
                         posisi_jabatan_id: head.posisi_jabatan_id ? Number(head.posisi_jabatan_id) : undefined,
                         status_karyawan_id: head.status_karyawan_id ? Number(head.status_karyawan_id) : undefined,
                         lokasi_kerja_id: head.lokasi_kerja_id ? Number(head.lokasi_kerja_id) : undefined,
@@ -202,10 +241,17 @@ export const update = async (req: Request, res: Response) => {
             }
 
             if (personal) {
+                const personalData = {
+                    ...personal,
+                    tanggal_lahir: parseDate(personal.tanggal_lahir),
+                    tanggal_menikah: parseDate(personal.tanggal_menikah),
+                    tanggal_cerai: parseDate(personal.tanggal_cerai),
+                    tanggal_wafat_pasangan: parseDate(personal.tanggal_wafat_pasangan),
+                };
                 await tx.karyawan_personal.upsert({
                     where: { karyawan_id: karyawanId },
-                    create: { ...personal, karyawan_id: karyawanId },
-                    update: personal
+                    create: { ...personalData, karyawan_id: karyawanId },
+                    update: personalData
                 });
             }
 
@@ -217,6 +263,13 @@ export const update = async (req: Request, res: Response) => {
                     golongan_id: hr.golongan_id ? Number(hr.golongan_id) : undefined,
                     sub_golongan_id: hr.sub_golongan_id ? Number(hr.sub_golongan_id) : undefined,
                     lokasi_sebelumnya_id: hr.lokasi_sebelumnya_id ? Number(hr.lokasi_sebelumnya_id) : undefined,
+                    tanggal_masuk_group: parseDate(hr.tanggal_masuk_group),
+                    tanggal_masuk: parseDate(hr.tanggal_masuk),
+                    tanggal_permanent: parseDate(hr.tanggal_permanent),
+                    tanggal_kontrak: parseDate(hr.tanggal_kontrak),
+                    tanggal_akhir_kontrak: parseDate(hr.tanggal_akhir_kontrak),
+                    tanggal_berhenti: parseDate(hr.tanggal_berhenti),
+                    tanggal_mutasi: parseDate(hr.tanggal_mutasi),
                 };
                 await tx.karyawan_hr.upsert({
                     where: { karyawan_id: karyawanId },
@@ -226,24 +279,42 @@ export const update = async (req: Request, res: Response) => {
             }
 
             if (keluarga) {
+                const keluargaData = {
+                    ...keluarga,
+                    tanggal_lahir_pasangan: parseDate(keluarga.tanggal_lahir_pasangan),
+                    tanggal_lahir_ayah_mertua: parseDate(keluarga.tanggal_lahir_ayah_mertua),
+                    tanggal_lahir_ibu_mertua: parseDate(keluarga.tanggal_lahir_ibu_mertua),
+                    anak_ke: keluarga.anak_ke ? Number(keluarga.anak_ke) : null,
+                    jumlah_saudara_kandung: keluarga.jumlah_saudara_kandung ? Number(keluarga.jumlah_saudara_kandung) : null,
+                };
                 await tx.karyawan_keluarga.upsert({
                     where: { karyawan_id: karyawanId },
-                    create: { ...keluarga, karyawan_id: karyawanId },
-                    update: keluarga
+                    create: { ...keluargaData, karyawan_id: karyawanId },
+                    update: keluargaData
                 });
             }
 
             if (anak && Array.isArray(anak)) {
                 await tx.karyawan_anak.deleteMany({ where: { karyawan_id: karyawanId } });
                 await tx.karyawan_anak.createMany({
-                    data: anak.map((a: any, i: number) => ({ ...a, karyawan_id: karyawanId, urutan: i + 1 }))
+                    data: anak.map((a: any, i: number) => ({
+                        ...a,
+                        karyawan_id: karyawanId,
+                        urutan: i + 1,
+                        tanggal_lahir: parseDate(a.tanggal_lahir)
+                    }))
                 });
             }
 
             if (saudara && Array.isArray(saudara)) {
                 await tx.karyawan_saudara.deleteMany({ where: { karyawan_id: karyawanId } });
                 await tx.karyawan_saudara.createMany({
-                    data: saudara.map((s: any, i: number) => ({ ...s, karyawan_id: karyawanId, urutan: i + 1 }))
+                    data: saudara.map((s: any, i: number) => ({
+                        ...s,
+                        karyawan_id: karyawanId,
+                        urutan: i + 1,
+                        tanggal_lahir: parseDate(s.tanggal_lahir)
+                    }))
                 });
             }
 
@@ -662,9 +733,27 @@ export const deleteDokumen = async (req: Request, res: Response) => {
 
 export const getDashboardStats = async (req: Request, res: Response) => {
     try {
+        const today = new Date();
+        const startOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+        const next60Days = new Date(today.getTime() + 60 * 24 * 60 * 60 * 1000);
+        const currentMonth = today.getMonth() + 1;
+
         const totalKaryawan = await prisma.karyawan.count();
         const activeKaryawan = await prisma.karyawan.count({
             where: { status_karyawan: { status: 'Aktif' } }
+        });
+
+        // Karyawan Baru Bulan Ini
+        const newKaryawanThisMonth = await prisma.karyawan.count({
+            where: { created_at: { gte: startOfMonth } }
+        });
+
+        // Onboarding & Offboarding
+        const onboardingCount = await prisma.karyawan.count({
+            where: { status_proses: 'Onboarding' }
+        });
+        const offboardingCount = await prisma.karyawan.count({
+            where: { status_proses: 'Offboarding' }
         });
 
         // Stats per Divisi
@@ -675,6 +764,27 @@ export const getDashboardStats = async (req: Request, res: Response) => {
                     select: { karyawan: true }
                 }
             }
+        });
+
+        // Gender Stats
+        const genderStatsRaw = await prisma.karyawan_personal.groupBy({
+            by: ['jenis_kelamin'],
+            _count: { jenis_kelamin: true }
+        });
+
+        // Employment Status Stats
+        const employmentStatsRaw = await prisma.karyawan_hr.findMany({
+            select: {
+                jenis_hubungan_kerja: {
+                    select: { nama: true }
+                }
+            }
+        });
+
+        const employmentStatsMap: Record<string, number> = {};
+        employmentStatsRaw.forEach(hr => {
+            const name = hr.jenis_hubungan_kerja?.nama || 'Unknown';
+            employmentStatsMap[name] = (employmentStatsMap[name] || 0) + 1;
         });
 
         // Recent Joined
@@ -690,14 +800,82 @@ export const getDashboardStats = async (req: Request, res: Response) => {
             }
         });
 
+        // Upcoming Birthdays (Bulan ini)
+        const allPersonal = await prisma.karyawan_personal.findMany({
+            where: {
+                tanggal_lahir: { not: null }
+            },
+            select: {
+                karyawan: {
+                    select: {
+                        id: true,
+                        nama_lengkap: true,
+                        foto_karyawan: true
+                    }
+                },
+                tanggal_lahir: true
+            }
+        });
+
+        const upcomingBirthdays = allPersonal
+            .filter(p => p.tanggal_lahir && new Date(p.tanggal_lahir).getMonth() + 1 === currentMonth)
+            .map(p => ({
+                id: p.karyawan.id,
+                nama: p.karyawan.nama_lengkap,
+                foto: p.karyawan.foto_karyawan,
+                tanggal: p.tanggal_lahir
+            }))
+            .sort((a, b) => new Date(a.tanggal!).getDate() - new Date(b.tanggal!).getDate())
+            .slice(0, 5);
+
+        // Expiring Contracts (60 hari kedepan)
+        const expiringContracts = await prisma.karyawan_hr.findMany({
+            where: {
+                tanggal_akhir_kontrak: {
+                    gte: today,
+                    lte: next60Days
+                }
+            },
+            take: 5,
+            orderBy: { tanggal_akhir_kontrak: 'asc' },
+            select: {
+                karyawan: {
+                    select: {
+                        id: true,
+                        nama_lengkap: true,
+                        nomor_induk_karyawan: true
+                    }
+                },
+                tanggal_akhir_kontrak: true
+            }
+        });
+
         return res.json({
             totalKaryawan,
             activeKaryawan,
+            newKaryawanThisMonth,
+            onboardingCount,
+            offboardingCount,
             karyawanPerDivisi: karyawanPerDivisi.map(d => ({
                 nama: d.nama,
                 jumlah: d._count.karyawan
             })),
-            recentKaryawan
+            genderStats: genderStatsRaw.map(g => ({
+                gender: g.jenis_kelamin || 'Tidak Diisi',
+                count: g._count.jenis_kelamin
+            })),
+            employmentStats: Object.entries(employmentStatsMap).map(([nama, jumlah]) => ({
+                nama,
+                jumlah
+            })),
+            recentKaryawan,
+            upcomingBirthdays,
+            expiringContracts: expiringContracts.map(c => ({
+                id: c.karyawan.id,
+                nama: c.karyawan.nama_lengkap,
+                nik: c.karyawan.nomor_induk_karyawan,
+                tanggal_berakhir: c.tanggal_akhir_kontrak
+            }))
         });
     } catch (error) {
         console.error(error);

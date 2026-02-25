@@ -142,6 +142,7 @@ model karyawan {
   nomor_handphone      String?
   status_karyawan_id   Int?
   lokasi_kerja_id      Int?
+  status_proses        String             @default("Aktif") // Onboarding, Aktif, Offboarding, Selesai
   created_at           DateTime           @default(now())
   updated_at           DateTime           @updatedAt
   mess_room_id         Int?
@@ -157,6 +158,7 @@ model karyawan {
   posisi_jabatan       posisi_jabatan?    @relation(fields: [posisi_jabatan_id], references: [id])
   status_karyawan      status_karyawan?   @relation(fields: [status_karyawan_id], references: [id])
   anak                 karyawan_anak[]
+  checklists           karyawan_checklist[]
   dokumen              karyawan_dokumen[]
   hr                   karyawan_hr?
   keluarga             karyawan_keluarga?
@@ -178,10 +180,12 @@ model karyawan_tag {
 model karyawan_personal {
   id                     Int       @id @default(autoincrement())
   karyawan_id            Int       @unique
+  nama_panggilan         String?
   jenis_kelamin          String?
   tempat_lahir           String?
   tanggal_lahir          DateTime?
   email_pribadi          String?
+  nomor_handphone_1      String?
   agama                  String?
   golongan_darah         String?
   nomor_kartu_keluarga   String?
@@ -354,4 +358,30 @@ model karyawan_dokumen {
   created_at   DateTime @default(now())
   updated_at   DateTime @updatedAt
   karyawan     karyawan @relation(fields: [karyawan_id], references: [id], onDelete: Cascade)
+}
+
+model checklist_template {
+  id          Int                  @id @default(autoincrement())
+  kategori    String               // Onboarding, Offboarding
+  tugas       String
+  deskripsi   String?
+  urutan      Int                  @default(0)
+  is_wajib    Boolean              @default(true)
+  created_at  DateTime             @default(now())
+  updated_at  DateTime             @updatedAt
+  checklists  karyawan_checklist[]
+}
+
+model karyawan_checklist {
+  id                Int                @id @default(autoincrement())
+  karyawan_id       Int
+  template_id       Int
+  is_selesai        Boolean            @default(false)
+  tanggal_selesai   DateTime?
+  catatan           String?
+  user_pemeriksa_id Int?
+  created_at        DateTime           @default(now())
+  updated_at        DateTime           @updatedAt
+  karyawan          karyawan           @relation(fields: [karyawan_id], references: [id], onDelete: Cascade)
+  template          checklist_template @relation(fields: [template_id], references: [id])
 }

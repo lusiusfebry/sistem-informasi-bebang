@@ -1,5 +1,4 @@
 import prisma from "../src/lib/prisma";
-import bcrypt from "bcryptjs";
 
 async function main() {
     console.log("Starting seeding...");
@@ -104,29 +103,23 @@ async function main() {
         skipDuplicates: true,
     });
 
-    // SEED ADMIN USER
-    const hashedAdminPassword = await bcrypt.hash("admin", 10);
-    await prisma.users.upsert({
-        where: { nik: "admin" },
-        update: { password: hashedAdminPassword },
-        create: {
-            nama: "Administrator",
-            nik: "admin",
-            password: hashedAdminPassword,
-            role: "admin",
-        },
-    });
-
-    const hashedPassword = await bcrypt.hash("admin123", 10);
-    await prisma.users.upsert({
-        where: { nik: "00-00001" },
-        update: {},
-        create: {
-            nama: "Administrator",
-            nik: "00-00001",
-            password: hashedPassword,
-            role: "admin",
-        },
+    // 11. Checklist Templates
+    await prisma.checklist_template.createMany({
+        data: [
+            // Onboarding
+            { kategori: "Onboarding", urutan: 1, tugas: "Penyerahan Dokumen Fisik", deskripsi: "KTP, KK, Ijazah Asli (Verifikasi)" },
+            { kategori: "Onboarding", urutan: 2, tugas: "Pengambilan Foto ID Card", deskripsi: "Sesi foto untuk kartu identitas" },
+            { kategori: "Onboarding", urutan: 3, tugas: "Kelengkapan Safety (PPE)", deskripsi: "Seragam, Sepatu Safety, Helm" },
+            { kategori: "Onboarding", urutan: 4, tugas: "Induksi HR & K3", deskripsi: "Pengenalan peraturan perusahaan dan keselamatan kerja" },
+            { kategori: "Onboarding", urutan: 5, tugas: "Penempatan Mess", deskripsi: "Serah terima kunci dan fasilitas mess" },
+            // Offboarding
+            { kategori: "Offboarding", urutan: 1, tugas: "Exit Interview", deskripsi: "Wawancara pengunduran diri dengan HR" },
+            { kategori: "Offboarding", urutan: 2, tugas: "Pengembalian ID Card", deskripsi: "Menyerahkan kembali kartu identitas" },
+            { kategori: "Offboarding", urutan: 3, tugas: "Pengembalian Inventaris", deskripsi: "Laptop, Alat Kerja, Kunci Ruangan" },
+            { kategori: "Offboarding", urutan: 4, tugas: "Checkout Mess", deskripsi: "Penyelesaian administrasi dan kunci mess" },
+            { kategori: "Offboarding", urutan: 5, tugas: "Deaktivasi Akun", deskripsi: "Penonaktifan akses sistem & email" },
+        ],
+        skipDuplicates: true,
     });
 
     console.log("Seeding completed successfully.");

@@ -20,7 +20,9 @@ import {
     HelpCircle,
     ChevronRight,
     UserCog,
-    Home
+    Home,
+    UserPlus,
+    UserMinus
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
@@ -41,6 +43,8 @@ const navItems = [
     { label: 'Tag', icon: Tag, path: '/hr/master/tag' },
     { type: 'section', label: 'MANAJEMEN' },
     { label: 'Karyawan', icon: Users, path: '/hr/karyawan' },
+    { label: 'Onboarding', icon: UserPlus, path: '/hr/onboarding' },
+    { label: 'Offboarding', icon: UserMinus, path: '/hr/offboarding' },
     { label: 'Manajemen User', icon: UserCog, path: '/hr/users', adminOnly: true },
     { label: 'Manajemen Mess', icon: Home, path: '/hr/mess' },
 ];
@@ -60,6 +64,8 @@ const pathMap: Record<string, string> = {
     'tag': 'Tag',
     'karyawan': 'Data Karyawan',
     'tambah': 'Tambah Karyawan',
+    'onboarding': 'Onboarding Tracker',
+    'offboarding': 'Offboarding Tracker',
     'users': 'Manajemen User',
     'mess': 'Manajemen Mess'
 };
