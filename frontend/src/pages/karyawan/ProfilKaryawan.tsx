@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import axios from 'axios';
 import { useParams, useNavigate, useSearchParams } from 'react-router-dom';
 import {
@@ -66,9 +66,14 @@ export const ProfilKaryawan = () => {
     const activeTab = searchParams.get('tab') || 'personal';
     const setActiveTab = (tab: string) => setSearchParams({ tab }, { replace: true });
     const [isRefreshing, setIsRefreshing] = useState(false);
+    const dataRef = useRef(data);
+
+    useEffect(() => {
+        dataRef.current = data;
+    }, [data]);
 
     const fetchDetail = useCallback(async () => {
-        if (!data) setIsLoading(true);
+        if (!dataRef.current) setIsLoading(true);
         else setIsRefreshing(true);
 
         try {
@@ -82,7 +87,7 @@ export const ProfilKaryawan = () => {
             setIsLoading(false);
             setIsRefreshing(false);
         }
-    }, [empId, navigate, data]);
+    }, [empId, navigate]);
 
     useEffect(() => {
         if (empId) fetchDetail();
@@ -255,117 +260,130 @@ export const ProfilKaryawan = () => {
                     {/* Background decorative element */}
                     <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none" />
 
-                    <div className="flex flex-col md:flex-row items-start md:items-center gap-6 relative z-10">
-                        {/* Avatar */}
-                        <div className="relative group">
-                            <div className="size-32 rounded-xl bg-slate-200 dark:bg-slate-700 overflow-hidden shadow-md ring-4 ring-white dark:ring-slate-800">
-                                {data.foto_karyawan ? (
-                                    <img src={data.foto_karyawan} alt={data.nama_lengkap} className="w-full h-full object-cover" />
-                                ) : (
-                                    <div className="w-full h-full flex items-center justify-center bg-primary/10 text-primary text-4xl font-black">
-                                        {data.nama_lengkap?.split(' ').map(n => n[0]).join('').substring(0, 2)}
-                                    </div>
-                                )}
-                            </div>
-                            <button
-                                className="absolute bottom-2 right-2 p-1.5 bg-white dark:bg-slate-800 rounded-full shadow-md text-slate-600 dark:text-slate-300 hover:text-primary transition-colors"
-                                onClick={() => navigate(`/hr/karyawan/${empId}/edit`)}
-                            >
-                                <Edit3 className="w-4 h-4" />
-                            </button>
-                        </div>
-
-                        {/* Info Block */}
-                        <div className="flex-1 min-w-0">
-                            <div className="flex flex-col gap-1 mb-3">
-                                <div className="flex items-center gap-3">
-                                    <h1 className="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white leading-tight uppercase">{data.nama_lengkap}</h1>
-                                    {isRefreshing && <Loader2 className="w-5 h-5 text-primary animate-spin" />}
+                    <div className="flex flex-col xl:flex-row gap-8 relative z-10">
+                        {/* Left Section: Avatar & Basic Info */}
+                        <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6">
+                            <div className="relative group shrink-0">
+                                <div className="size-32 rounded-2xl bg-slate-200 dark:bg-slate-700 overflow-hidden shadow-md ring-4 ring-white dark:ring-slate-800">
+                                    {data.foto_karyawan ? (
+                                        <img src={data.foto_karyawan} alt={data.nama_lengkap} className="w-full h-full object-cover" />
+                                    ) : (
+                                        <div className="w-full h-full flex items-center justify-center bg-primary/10 text-primary text-4xl font-black">
+                                            {data.nama_lengkap?.split(' ').map(n => n[0]).join('').substring(0, 2)}
+                                        </div>
+                                    )}
                                 </div>
-                                <div className="flex items-center gap-2 text-slate-500 dark:text-slate-400 text-sm font-medium">
-                                    <CreditCard className="w-4 h-4" />
-                                    <span>NIK: {data.nomor_induk_karyawan}</span>
-                                    <span className="w-1 h-1 rounded-full bg-slate-300 dark:bg-slate-600 mx-1" />
+                                <button
+                                    className="absolute -bottom-1 -right-1 p-2 bg-white dark:bg-slate-800 rounded-xl shadow-lg text-slate-600 dark:text-slate-300 hover:text-primary transition-all hover:scale-110 border border-slate-100 dark:border-slate-700"
+                                    onClick={() => navigate(`/hr/karyawan/${empId}/edit`)}
+                                >
+                                    <Edit3 className="w-4 h-4" />
+                                </button>
+                            </div>
+
+                            <div className="flex flex-col gap-2 min-w-0 text-center sm:text-left">
+                                <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3">
+                                    <h1 className="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white leading-tight uppercase truncate max-w-[400px]">
+                                        {data.nama_lengkap}
+                                    </h1>
+                                    {isRefreshing && <Loader2 className="w-5 h-5 text-primary animate-spin inline-block" />}
+                                </div>
+                                <div className="flex flex-wrap justify-center sm:justify-start items-center gap-2 text-slate-500 dark:text-slate-400 text-sm font-medium">
+                                    <span className="flex items-center gap-1.5 bg-slate-100 dark:bg-slate-800 px-2 py-1 rounded-md">
+                                        <CreditCard className="w-4 h-4" />
+                                        NIK: {data.nomor_induk_karyawan}
+                                    </span>
                                     <Badge
-                                        className="px-2 py-0.5 rounded-full text-xs font-semibold border-none"
+                                        className="px-3 py-1 rounded-full text-xs font-bold border-none"
                                         style={{
                                             backgroundColor: `${data.status_karyawan?.warna}20`,
                                             color: data.status_karyawan?.warna
                                         }}
                                     >
+                                        <span className="w-1.5 h-1.5 rounded-full bg-current mr-2" />
                                         {data.status_karyawan?.nama}
                                     </Badge>
                                 </div>
                             </div>
                         </div>
 
-                        {/* Job Details Grid */}
-                        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 text-sm mt-4">
-                            <div className="flex flex-col bg-slate-50 dark:bg-slate-800/50 p-2.5 rounded-lg border border-slate-100 dark:border-slate-700/50">
-                                <span className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-tight mb-1">Posisi</span>
-                                <span className="font-semibold text-slate-800 dark:text-slate-200 truncate">{data.posisi_jabatan?.nama}</span>
-                            </div>
-                            <div className="flex flex-col bg-slate-50 dark:bg-slate-800/50 p-2.5 rounded-lg border border-slate-100 dark:border-slate-700/50">
-                                <span className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-tight mb-1">Divisi</span>
-                                <span className="font-semibold text-slate-800 dark:text-slate-200 truncate">{data.divisi?.nama}</span>
-                            </div>
-                            <div className="flex flex-col bg-slate-50 dark:bg-slate-800/50 p-2.5 rounded-lg border border-slate-100 dark:border-slate-700/50">
-                                <span className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-tight mb-1">Departemen</span>
-                                <span className="font-semibold text-slate-800 dark:text-slate-200 truncate">{data.department?.nama}</span>
-                            </div>
-                            <div className="flex flex-col bg-slate-50 dark:bg-slate-800/50 p-2.5 rounded-lg border border-slate-100 dark:border-slate-700/50">
-                                <span className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-tight mb-1">Site</span>
-                                <span className="font-semibold text-slate-800 dark:text-slate-200 truncate">{data.lokasi_kerja?.nama}</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    {/* QR Code & Actions */}
-                    <div className="flex flex-col items-center md:items-end gap-4 ml-auto min-w-[120px]">
-                        <div className="bg-white dark:bg-slate-900 p-2 rounded-lg border border-slate-200 dark:border-slate-700 shadow-sm">
-                            {qrCodeUrl ? (
-                                <img src={qrCodeUrl} alt="QR Code" className="w-24 h-24" />
-                            ) : (
-                                <div className="w-24 h-24 flex items-center justify-center bg-slate-100 dark:bg-slate-800 rounded">
-                                    <Loader2 className="w-6 h-6 animate-spin text-slate-300" />
+                        {/* Center Section: Job Details Grid */}
+                        <div className="flex-1 grid grid-cols-2 lg:grid-cols-4 gap-4 px-0 xl:px-8 xl:border-x border-slate-100 dark:border-slate-800/50">
+                            {[
+                                { label: 'Posisi', value: data.posisi_jabatan?.nama, icon: Briefcase },
+                                { label: 'Divisi', value: data.divisi?.nama, icon: Building2 },
+                                { label: 'Departemen', value: data.department?.nama, icon: Layers },
+                                { label: 'Site', value: data.lokasi_kerja?.nama, icon: MapPin },
+                            ].map((item, idx) => (
+                                <div key={idx} className="flex flex-col p-3 rounded-xl bg-slate-50/50 dark:bg-slate-800/30 border border-slate-100 dark:border-slate-700/30 transition-all hover:bg-slate-100/50 dark:hover:bg-slate-800/50">
+                                    <span className="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider mb-1.5 flex items-center gap-1 text-xs">
+                                        <item.icon className="w-3 h-3" />
+                                        {item.label}
+                                    </span>
+                                    <span className="font-bold text-slate-700 dark:text-slate-200 text-sm truncate" title={String(item.value)}>
+                                        {item.value || '-'}
+                                    </span>
                                 </div>
-                            )}
+                            ))}
                         </div>
-                        <div className="flex gap-2 w-full justify-end">
-                            <Button
-                                variant="outline"
-                                className="flex-1 md:flex-none h-10 px-4 font-bold text-primary bg-primary/10 hover:bg-primary/20 border-none rounded-lg transition-colors"
-                                onClick={() => navigate(`/hr/karyawan/${empId}/edit`)}
-                            >
-                                <Edit3 className="w-4 h-4 mr-2" />
-                                Edit
-                            </Button>
-                            <Button
-                                className="flex-1 md:flex-none h-10 px-4 font-bold text-slate-600 dark:text-slate-300 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 rounded-lg transition-colors"
-                                onClick={() => setShowCetakModal(true)}
-                            >
-                                <Printer className="w-4 h-4 mr-2" />
-                                Cetak
-                            </Button>
-                            {data.status_karyawan?.nama === 'Aktif' && (!data.status_proses || data.status_proses === 'Aktif') && (
-                                <Button
-                                    variant="outline"
-                                    className="flex-1 md:flex-none h-10 px-4 font-bold text-rose-600 bg-rose-50 hover:bg-rose-100 border-none rounded-lg transition-colors"
-                                    onClick={() => handleInitializeChecklist('offboarding')}
-                                    disabled={isProcessing}
-                                >
-                                    {isProcessing ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : <UserMinus className="w-4 h-4 mr-2" />}
-                                    Offboarding
-                                </Button>
-                            )}
-                            <Button
-                                variant="outline"
-                                className="flex-1 md:flex-none h-10 px-4 font-bold text-red-500 bg-red-50 hover:bg-red-100 border-red-100 dark:bg-red-950/30 dark:border-red-900/50 dark:hover:bg-red-900/40 rounded-lg transition-colors"
-                                onClick={handleDeleteEmployee}
-                            >
-                                <Trash2 className="w-4 h-4 mr-2" />
-                                Hapus
-                            </Button>
+
+                        {/* Right Section: QR & Quick Actions */}
+                        <div className="flex flex-row xl:flex-col items-center xl:items-end justify-between xl:justify-start gap-4 shrink-0">
+                            <div className="bg-white dark:bg-slate-900 p-1.5 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm flex items-center justify-center">
+                                {qrCodeUrl ? (
+                                    <img src={qrCodeUrl} alt="QR Code" className="size-20" />
+                                ) : (
+                                    <div className="size-20 flex items-center justify-center bg-slate-100 dark:bg-slate-800 rounded-lg">
+                                        <Loader2 className="w-5 h-5 animate-spin text-slate-300" />
+                                    </div>
+                                )}
+                            </div>
+
+                            <div className="flex flex-col gap-2 w-full max-w-[200px] xl:max-w-none">
+                                <div className="flex gap-2">
+                                    <Button
+                                        variant="ghost"
+                                        size="sm"
+                                        className="flex-1 h-9 font-bold text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/30 hover:bg-blue-100 dark:hover:bg-blue-900/50 rounded-lg transition-all"
+                                        onClick={() => navigate(`/hr/karyawan/${empId}/edit`)}
+                                    >
+                                        <Edit3 className="w-4 h-4 mr-2" />
+                                        Edit
+                                    </Button>
+                                    <Button
+                                        variant="ghost"
+                                        size="sm"
+                                        className="flex-1 h-9 font-bold text-slate-600 dark:text-slate-300 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 rounded-lg transition-all"
+                                        onClick={() => setShowCetakModal(true)}
+                                    >
+                                        <Printer className="w-4 h-4 mr-2" />
+                                        Cetak
+                                    </Button>
+                                </div>
+                                <div className="flex gap-2">
+                                    {data.status_karyawan?.nama === 'Aktif' && (!data.status_proses || data.status_proses === 'Aktif') && (
+                                        <Button
+                                            variant="ghost"
+                                            size="sm"
+                                            className="flex-1 h-9 font-bold text-orange-600 dark:text-orange-400 bg-orange-50 dark:bg-orange-900/30 hover:bg-orange-100 dark:hover:bg-orange-900/50 rounded-lg transition-all"
+                                            onClick={() => handleInitializeChecklist('offboarding')}
+                                            disabled={isProcessing}
+                                        >
+                                            {isProcessing ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : <UserMinus className="w-4 h-4 mr-2" />}
+                                            Offboard
+                                        </Button>
+                                    )}
+                                    <Button
+                                        variant="ghost"
+                                        size="sm"
+                                        className="flex-1 h-9 font-bold text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-900/30 hover:bg-red-100 dark:hover:bg-red-900/50 rounded-lg transition-all"
+                                        onClick={handleDeleteEmployee}
+                                    >
+                                        <Trash2 className="w-4 h-4 mr-2" />
+                                        Hapus
+                                    </Button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
